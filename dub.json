@@ -6,7 +6,7 @@
 	"homepage": "http://singingbush.com",
 	"license": "GPL-2.0",
 	"dependencies": {
-		"vibe-d": "~>0.7.19"
+		"vibe-d": "~>0.7.23"
 	},
 	"versions": ["VibeDefaultMain"]
 }
