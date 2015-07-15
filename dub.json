@@ -1,0 +1,12 @@
+{
+	"name": "eloquent",
+	"description": "Eloquent is a blogging application written in D.",
+	"copyright": "Copyright © 2015, Samael",
+	"authors": ["Samael"],
+	"homepage": "http://singingbush.com",
+	"license": "GPL-2.0",
+	"dependencies": {
+		"vibe-d": "~>0.7.19"
+	},
+	"versions": ["VibeDefaultMain"]
+}

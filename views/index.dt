@@ -1,0 +1,15 @@
+extends layout
+
+block body
+	.row
+		.col-md-6.col-md-offset-3.col-sm-8.col-sm-offset-2
+			.well
+				- if (authenticated)
+					h4 Signed in
+				- else
+					h4 you need to login
+
+	.row
+		.col-md-12
+			- foreach( p; blogPosts )
+				.well #{p.content}
