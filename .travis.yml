@@ -1,4 +1,6 @@
 # seems that travis supports D, using dub with various compilers
+language: d
+
 d:
  - dmd
  - gdc

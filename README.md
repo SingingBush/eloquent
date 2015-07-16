@@ -1,4 +1,8 @@
-# Eloquent
+Eloquent
+========
+
+[![Build Status](https://travis-ci.org/SingingBush/eloquent.png)](https://travis-ci.org/SingingBush/eloquent)
+
 Eloquent is a lightweight web application written in D.
 
 [Vibe.d](http://vibed.org) is the main dependency.
