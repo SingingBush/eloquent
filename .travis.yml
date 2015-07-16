@@ -1,8 +1,5 @@
-language: dlang
-os: linux
-script: dub build
-before_install:
-- sudo wget http://downloads.dlang.org/releases/2.x/2.067.1/dmd_2.067.1-0_amd64.deb
-- sudo dpkg -i dmd_2.067.1-0_amd64.deb
-- sudo wget http://code.dlang.org/files/dub-0.9.23-linux-x86_64.tar.gz
-- tar -xvf dub-0.9.23-linux-x86_64.tar.gz
+# seems that travis supports D, using dub with various compilers
+d:
+ - dmd
+ - gdc
+ - ldc
