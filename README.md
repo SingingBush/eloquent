@@ -10,9 +10,10 @@ Eloquent is a lightweight web application written in [D](http://dlang.org). It i
 ![Wordpress blog posts being served by Eloquent](screenshot.png)
 
 ## Main dependencies
-[Vibe.d](http://vibed.org) Asynchronous I/O web toolkit.
-[Poodinis](https://github.com/mbierlee/poodinis) Dependency Injection Framework.
-[Hibernated](https://github.com/buggins/hibernated) ORM for D.
+
+ - [Vibe.d](http://vibed.org) Asynchronous I/O web toolkit.
+ - [Poodinis](https://github.com/mbierlee/poodinis) Dependency Injection Framework.
+ - [Hibernated](https://github.com/buggins/hibernated) ORM for D.
 
 ## Yet to implement
 
@@ -40,5 +41,5 @@ log.file=eloquent-error.log
 
 You'll need the D compiler and [DUB](http://code.dlang.org/download). The following versions or higher
 
-dmd v2.069.2
-dub v0.9.24
+ - dmd v2.069.2
+ - dub v0.9.24
