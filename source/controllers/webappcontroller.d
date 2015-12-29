@@ -1,5 +1,6 @@
 module eloquent.controllers;
 
+import poodinis;
 import vibe.core.core;
 import vibe.core.log;
 import vibe.http.router;
@@ -11,12 +12,17 @@ import eloquent.services.UserService, eloquent.services.BlogService;
 
 // This is essentially like using Springs @Controller for handling routes in Spring MVC
 class WebappController {
-	private UserService _userService;
-	private BlogService _blogService;
+
+	//@Autowire!UserServiceImpl
+	public UserService _userService;
+	
+	//@Autowire!BlogServiceImpl
+	public BlogService _blogService;
 
 	public this() {
- 		_userService = new UserServiceImpl;
- 		_blogService = new BlogServiceImpl;
+		auto container = DependencyContainer.getInstance();
+ 		_userService = container.resolve!UserService;
+ 		_blogService = container.resolve!BlogService;
  	}
 
 	private {
@@ -30,7 +36,7 @@ class WebappController {
 	{
 		bool authenticated = ms_authenticated;
 		string username = ms_username;
-		auto blogPosts = _blogService.findRecentPosts(10);
+		auto blogPosts = _blogService.allBlogPosts();
 		render!("index.dt", authenticated, username, blogPosts);
 	}
 
@@ -46,7 +52,9 @@ class WebappController {
 	{
 		logInfo("User attempting to login: %s", username);
 		// todo: create some real authentication
-		enforceHTTP(username == "user" && password == "secret", HTTPStatus.forbidden, "Invalid user name or password.");
+		auto user = _userService.findUser(username);
+
+		enforceHTTP(username == user.username && password == "password", HTTPStatus.forbidden, "Invalid user name or password.");
 		ms_authenticated = true;
 		ms_username = username;
 
@@ -69,8 +77,10 @@ class WebappController {
 		string username = ms_username;
 
 		// todo: put some service layer in place to return a user object for the given username
-		auto user = _userService.getUser(username);
+		auto user = _userService.findUser(username);
 
-		render!("profile.dt", authenticated, username, user);
+		auto blogPosts = _blogService.findAllByUser(user);
+
+		render!("profile.dt", authenticated, username, user, blogPosts);
 	}
 }

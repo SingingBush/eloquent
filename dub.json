@@ -6,7 +6,25 @@
 	"homepage": "http://singingbush.com",
 	"license": "GPL-2.0",
 	"dependencies": {
-		"vibe-d": "~>0.7.23"
+		"proper-d": "~master",
+		"vibe-d": "~>0.7.26",
+		"poodinis": "6.0.0",
+		"hibernated": "~>0.2.25"
 	},
-	"versions": ["VibeDefaultMain"]
+	"targetType": "executable",
+	"buildRequirements": [
+		"silenceWarnings"
+	],
+	"configurations": [
+		{
+			"name": "application",
+			"subConfigurations": {
+				"hibernated": "MySQL"
+			}
+		}
+	],
+	"versions": ["VibeDefaultMain", "Have_vibe_d"],
+	"sourceFiles": [
+		"../../../.dub/packages/proper-d-master/source/proper-d.d"
+	]
 }

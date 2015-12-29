@@ -2,14 +2,15 @@ extends layout
 
 block body
 	.row
-		.col-md-6.col-md-offset-3.col-sm-8.col-sm-offset-2
-			.well
-				- if (authenticated)
-					h4 Signed in
-				- else
-					h4 you need to login
-
-	.row
 		.col-md-12
 			- foreach( p; blogPosts )
-				.well #{p.content}
+				h2 #{p.title}
+				p.lead #{p.author.displayname}
+				p
+					span.glyphicon.glyphicon-time
+					| #{p.created}
+				hr
+				p !{p.content}
+				a.btn.btn-primary(href="#") Read More
+					span.glyphicon.glyphicon-chevron-right
+				hr
