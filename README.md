@@ -15,6 +15,7 @@ Eloquent is a lightweight web application written in [D](http://dlang.org). It i
 [Hibernated](https://github.com/buggins/hibernated) ORM for D.
 
 ## Yet to implement
+
  - editing/creating content
  - error handling (exceptions should result in a readable error page)
  - internationalisation

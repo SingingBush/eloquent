@@ -1,3 +1,4 @@
+# seems that travis supports D, using dub with various compilers
 language: d
 
 d:
@@ -13,7 +14,7 @@ d:
 os:
  - linux
  - osx
- 
+
 sudo: false
 
 addons:
