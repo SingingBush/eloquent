@@ -1,0 +1,21 @@
+{
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": ".",
+			"folder_exclude_patterns": [".dub", ".idea"],
+			"file_exclude_patterns": ["eloquent", "__test__library__"]
+		}
+	],
+	
+	"settings":  {"tab_size": 4},
+
+    "build_systems":
+    [
+        {
+            "name": "dub",
+            "cmd": ["dub test"]
+        }
+    ]
+}
