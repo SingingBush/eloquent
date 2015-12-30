@@ -15,7 +15,7 @@ os:
 
 sudo: false
 
-script: dub build --compiler=$DC
+script: dub build
 
 addons:
   apt:
