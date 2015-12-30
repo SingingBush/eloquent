@@ -10,7 +10,7 @@ d:
 before_install:
  - "if [ ${TRAVIS_OS_NAME} = 'osx' ]; then brew update; fi"
  - "if [ ${TRAVIS_OS_NAME} = 'osx' ]; then brew install libev libevent sqlite; fi"
- 
+
 os:
  - linux
  - osx
@@ -26,6 +26,7 @@ addons:
     - libevent-dev
     - libsqlite3-dev
 
+# only the most recent versions of dmd currently work as both ldc and gdc have not been updated to use new D features.
 matrix:
   allow_failures:
     - d: ldc

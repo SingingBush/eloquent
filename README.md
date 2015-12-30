@@ -43,3 +43,23 @@ You'll need the D compiler and [DUB](http://code.dlang.org/download). The follow
 
  - dmd v2.069.2
  - dub v0.9.24
+
+You will also need libevent on your system
+
+Ubuntu:
+
+```
+sudo apt-get install libevent-dev
+```
+
+Fedora:
+
+```
+sudo dnf install libevent-devel
+```
+
+OSX:
+
+```
+brew install libevent
+```
