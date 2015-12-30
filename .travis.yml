@@ -5,10 +5,12 @@ d:
   - dmd
   - dmd-2.068.2
   - ldc
-  - ldc-0.15.1
   - gdc
-  - gdc-4.9.2
 
+before_install:
+ - "if [ ${TRAVIS_OS_NAME} = 'osx' ]; then brew update; fi"
+ - "if [ ${TRAVIS_OS_NAME} = 'osx' ]; then brew install libev libevent sqlite; fi"
+ 
 os:
  - linux
  - osx
@@ -23,3 +25,8 @@ addons:
     - libev-dev
     - libevent-dev
     - libsqlite3-dev
+
+matrix:
+  allow_failures:
+    - d: ldc
+    - d: gdc
