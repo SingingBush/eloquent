@@ -6,7 +6,7 @@
 	"homepage": "http://singingbush.com",
 	"license": "GPL-2.0",
 	"dependencies": {
-		"proper-d": "~master",
+		"proper-d": "~>0.0.2",
 		"vibe-d": "~>0.7.26",
 		"poodinis": "6.0.0",
 		"hibernated": "~>0.2.25"
@@ -23,8 +23,5 @@
 			}
 		}
 	],
-	"versions": ["VibeDefaultMain", "Have_vibe_d"],
-	"sourceFiles": [
-		"../../../.dub/packages/proper-d-master/source/proper-d.d"
-	]
+	"versions": ["VibeDefaultMain", "Have_vibe_d"]
 }
