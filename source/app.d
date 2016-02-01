@@ -50,15 +50,15 @@ shared static ~this() {
 }
 
 void configureLogFile(string[string] properties) {
-	auto logFile = properties.as!(string)("log.file");
+	auto logFile = properties.as!(string)("log.file", "eloquent-error.log");
 	//auto logLevel = properties.as!(string)("log.level");
 	//logInfo("setting log file: %s, level %s", logFile, logLevel);
 	setLogFile(logFile, LogLevel.error);
 }
 
 SessionFactoryImpl configureDatabase(string[string] properties) {
-	auto dbHost = properties.as!(string)("db.domain");
-	auto dbPort = properties.as!(ushort)("db.port");
+	auto dbHost = properties.as!(string)("db.domain", "localhost");
+	auto dbPort = properties.as!(ushort)("db.port", 3306);
 	auto dbName = properties.as!(string)("db.name");
 	auto dbUser = properties.as!(string)("db.user");
 	auto dbPass = properties.as!(string)("db.password");

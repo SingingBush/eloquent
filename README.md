@@ -55,7 +55,7 @@ sudo apt-get install libevent-dev
 Fedora:
 
 ```
-sudo dnf install libevent-devel
+sudo dnf install libevent-devel openssl-devel sqlite-devel postgresql-devel
 ```
 
 OSX:
