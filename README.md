@@ -49,7 +49,7 @@ You will also need libevent on your system
 Ubuntu:
 
 ```
-sudo apt-get install libevent-dev
+sudo apt-get install libevent-dev libsqlite3-dev libpq-dev
 ```
 
 Fedora:
