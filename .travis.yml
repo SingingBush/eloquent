@@ -23,10 +23,7 @@ script: dub build
 
 addons:
   apt:
-    packages:
-    - libev-dev
-    - libevent-dev
-    - libsqlite3-dev
+    packages: [ libev-dev, libevent-dev, libsqlite3-dev ]
 
 # only the most recent versions of dmd currently work as both ldc and gdc have not been updated to use new D features.
 matrix:

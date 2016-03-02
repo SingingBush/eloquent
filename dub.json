@@ -7,8 +7,8 @@
 	"license": "GPL-2.0",
 	"dependencies": {
 		"proper-d": "~>0.0.2",
-		"vibe-d": "~>0.7.26",
-		"poodinis": "6.0.0",
+		"vibe-d": "~>0.7.28",
+		"poodinis": "~>6.1.0",
 		"hibernated": "~>0.2.25"
 	},
 	"targetType": "executable",
@@ -19,6 +19,7 @@
 		{
 			"name": "application",
 			"subConfigurations": {
+				"vibe-d:core": "libevent",
 				"hibernated": "MySQL"
 			}
 		}
