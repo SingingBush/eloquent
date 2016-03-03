@@ -6,27 +6,26 @@ block title
 block body
 	.row
 		.col-md-6.col-md-offset-3.col-sm-8.col-sm-offset-2
-			.well
-				- if (authenticated)
-					h4 Sign Out
-					hr
-					form.form-horizontal(action="logout", method="POST")
-						button.btn.btn-primary.btn-lg.btn-block(type="submit") Log out
-				- else
-					h4 Log in
-					hr
-					form.form-horizontal(action="login", method="POST")
-						.form-group
-							.col-md-12
-								.input-group
-									input.form-control(type="text", name="username", placeholder="Username")
-									.input-group-addon
-										span.glyphicon.glyphicon-user
-						.form-group
-							.col-md-12
-								.input-group
-									input.form-control(type="password", name="password", placeholder="")
-									.input-group-addon
-										span.glyphicon.glyphicon-lock
+			- if (authenticated)
+				h4 Sign Out
+				hr
+				form.form-horizontal(action="logout", method="POST")
+					button.btn.btn-primary.btn-lg.btn-block(type="submit") Log out
+			- else
+				h4 Log in
+				hr
+				form.form-horizontal(action="login", method="POST")
+					.form-group
+						.input-group
+							label(for='usrName', class='sr-only') Username
+							input.form-control(id="usrName", type="text", name="username", placeholder="Username")
+							.input-group-addon
+								i.fa.fa-user
+					.form-group
+						.input-group
+							label(for='passWrd', class='sr-only') Password
+							input.form-control(id="passWrd", type="password", name="password", placeholder="Password")
+							.input-group-addon
+								i.fa.fa-lock
 
-						button.btn.btn-primary.btn-lg(type="submit") Login
+					button.btn.btn-primary.btn-lg(type="submit") Login
