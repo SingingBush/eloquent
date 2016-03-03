@@ -1,0 +1,15 @@
+header
+    nav.navbar.navbar-light.bg-faded.m-b-1(role='navigation')
+        .container
+            a.navbar-brand(href="/")
+                | Eloquent
+            ul.nav.navbar-nav
+                li.nav-item
+                    a.nav-link(href="/") Home
+                - if (authenticated)
+                    li.nav-item
+                        a.nav-link(href="/profile")
+                            i.fa.fa-user Profile
+                - else
+                    li.nav-item
+                        a.nav-link(href="/login") Login

@@ -38,15 +38,21 @@ shared static this() {
 	settings.port = 8080;
 	settings.bindAddresses = ["::1", "127.0.0.1"];
 	settings.sessionStore = new MemorySessionStore;
+	settings.errorPageHandler = toDelegate(&errorPage);
 	listenHTTP(settings, router);
 
-	logInfo("Eloquent server started on http://127.0.0.1:8080/");
+	logInfo("Eloquent server ready...");
 }
 
 shared static ~this() {
 	logInfo("Clearing all Registered dependencies...");
 	DependencyContainer.getInstance().clearAllRegistrations();
 	logInfo("Application shutting down - goodbye!"); // see also logError and logDiagnostic
+}
+
+void errorPage(HTTPServerRequest req, HTTPServerResponse res, HTTPServerErrorInfo error) {
+    bool authenticated = false; // kludge for getting template to render when serving error page
+    render!("error.dt", req, error, authenticated)(res);
 }
 
 void configureLogFile(string[string] properties) {

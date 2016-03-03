@@ -25,21 +25,7 @@ html(lang='en')
 		script(src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.2/js/bootstrap.min.js')
 	
 	body(role='document')
-		header
-			nav.navbar.navbar-light.bg-faded(role='navigation')
-				.container
-					a.navbar-brand(href="/")
-						| Eloquent
-					ul.nav.navbar-nav
-						li.nav-item
-							a.nav-link(href="/") Home
-						- if (authenticated)
-							li.nav-item
-								a.nav-link(href="/profile")
-									i.fa.fa-user Profile
-						- else
-							li.nav-item
-								a.nav-link(href="/login") Login
+		include header
 
 		div.container(role='main')
 			block body
@@ -48,5 +34,5 @@ html(lang='en')
 			div.container
 				hr(style='margin: 30px 0 10px 0;')
 				p &copy;&nbsp;
-					a(href='#') &copy; Samael Bate
+					a(href='#') Samael Bate
 					| 2016

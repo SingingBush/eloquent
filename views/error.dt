@@ -1,0 +1,18 @@
+extends layout
+
+block title
+    title Error
+
+block body
+    .jumbotron
+        h1 #{error.message}
+        p.lead A #{error.code} error has occurred:
+        //- p path: #{req.path}
+
+        p
+            a.btn.btn-primary(href="/") Return to the home page
+
+        //- This bit should be removed in production environment
+        -if(error.debugMessage.length)
+        p The server produced the following stack trace:
+            pre= error.debugMessage
