@@ -40,34 +40,6 @@ shared static ~this() {
 
 void errorPage(HTTPServerRequest req, HTTPServerResponse res, HTTPServerErrorInfo error) {
     bool authenticated = false; // kludge for getting template to render when serving error page
+    req.params["version"] = "1.0-SNAPSHOT";
     render!("error.dt", req, error, authenticated)(res);
 }
-
-//void configureLogFile(string[string] properties) {
-//	auto logFile = properties.as!(string)("log.file", "eloquent-error.log");
-//	//auto logLevel = properties.as!(string)("log.level");
-//	//logInfo("setting log file: %s, level %s", logFile, logLevel);
-//	setLogFile(logFile, LogLevel.error);
-//}
-
-//SessionFactoryImpl configureDatabase(string[string] properties) {
-//	auto dbHost = properties.as!(string)("db.domain", "localhost");
-//	auto dbPort = properties.as!(ushort)("db.port", 3306);
-//	auto dbName = properties.as!(string)("db.name");
-//	auto dbUser = properties.as!(string)("db.user");
-//	auto dbPass = properties.as!(string)("db.password");
-//	logInfo("db properties: %s:%s %s", dbHost, dbPort, dbName);
-
-//	logInfo("connecting to MySQL...");
-//	MySQLDriver driver = new MySQLDriver();
-//	string url = MySQLDriver.generateUrl(dbHost, dbPort, dbName);
-//	string[string] params = MySQLDriver.setUserAndPassword(dbUser, dbPass);
-//	DataSource dataSource = new ConnectionPoolDataSourceImpl(driver, url, params);
-//	Dialect dialect = new MySQLDialect();
-
-//	logDebug("Creating schema meta data from annotations...");
-//	EntityMetaData schema = new SchemaInfoImpl!(User, UserData, BlogPost, BlogPostData);
-
-//	logDebug("Creating session factory...");
-//	return new SessionFactoryImpl(schema, dialect, dataSource);
-//}

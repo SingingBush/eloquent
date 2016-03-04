@@ -32,8 +32,7 @@ class WebappController {
 	}
 
 	// GET /
-	void index()
-	{
+	void index() {
 		bool authenticated = ms_authenticated;
 		string username = ms_username;
 		auto blogPosts = _blogService.allBlogPosts();
@@ -48,11 +47,12 @@ class WebappController {
 	}
 
 	// POST /login (username and password are automatically read as form fields)
-	void postLogin(string username, string password)
-	{
+	void postLogin(string username, string password) {
 		logInfo("User attempting to login: %s", username);
 		// todo: create some real authentication
 		auto user = _userService.findUser(username);
+
+		logInfo("User retrieved from db: %s", user);
 
 		enforceHTTP(username == user.username && password == "password", HTTPStatus.forbidden, "Invalid user name or password.");
 		ms_authenticated = true;
@@ -62,9 +62,8 @@ class WebappController {
 	}
 
 	// POST /logout
-	@method(HTTPMethod.POST) @path("logout")
-	void postLogout()
-	{
+	@method(HTTPMethod.GET) @path("logout")
+	void getLogout() {
 		ms_username = null;
 		ms_authenticated = false;
 		terminateSession();
