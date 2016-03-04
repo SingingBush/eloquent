@@ -18,6 +18,7 @@ shared static this() {
 	//container.register!(WebappController).existingInstance(webapp);
 
 	auto router = new URLRouter;
+	router.get("*", (req, res) {req.params["version"] = "1.0-SNAPSHOT";});
 	router.get("*", serveStaticFiles("public/"));
 	router.registerWebInterface(new WebappController);
 
