@@ -22,7 +22,7 @@ interface UserService {
 class UserServiceImpl : UserService {
 
 	@Autowire
-	public SessionFactory sessionFactory;
+	private SessionFactory sessionFactory;
 
 
 	public this() {

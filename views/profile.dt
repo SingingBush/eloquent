@@ -17,10 +17,10 @@ block body
 				h2 #{p.title}
 				p.lead #{p.author.displayname}
 				p
-					span.glyphicon.glyphicon-time
+					span.fa.fa-clock-o
 					| #{p.created}
 				hr
 				p !{p.content}
 				a.btn.btn-primary(href="#") Read More
-					span.glyphicon.glyphicon-chevron-right
+					span.fa.fa-chevron-right
 				hr

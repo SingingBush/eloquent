@@ -25,7 +25,7 @@ interface BlogService {
 class BlogServiceImpl : BlogService {
 
 	@Autowire
-	public SessionFactory sessionFactory;
+	private SessionFactory sessionFactory;
 
 
 	public this() {
