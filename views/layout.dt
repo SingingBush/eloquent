@@ -1,14 +1,14 @@
 doctype 5
 html(lang='en')
 	head
-		- auto versionNo = req.params["version"];
+		//- auto versionNo = req.params["version"];
 
 		meta(charset='utf-8')
 		meta(http-equiv='X-UA-Compatible', content='IE=edge')
 		meta(name='viewport', content='width=device-width, initial-scale=1.0')
 
 		meta(name='application-name', content='Eloquent')
-		meta(name='version', content='#{versionNo}')
+		//- meta(name='version', content='#{versionNo}')
 		meta(name='description', content='')
 		meta(name='author', content='')
 		meta(name='keywords', content='')

@@ -40,15 +40,20 @@ class WebappController {
 	}
 
 	// @method(HTTPMethod.GET) @path("login")
-	void getLogin() {
+	void getLogin(string _error = null) {
 		bool authenticated = ms_authenticated;
 		string username = ms_username;
-		render!("login.dt", authenticated, username);
+		render!("login.dt", authenticated, username, _error);
 	}
 
 	// POST /login (username and password are automatically read as form fields)
+	@errorDisplay!getLogin
 	void postLogin(string username, string password) {
 		logInfo("User attempting to login: %s", username);
+
+		enforceHTTP(username !is null && !username.empty, HTTPStatus.forbidden, "Username is a required field.");
+		enforceHTTP(password !is null && !password.empty, HTTPStatus.forbidden, "Password is a required field.");
+
 		// todo: create some real authentication
 		auto user = _userService.findUser(username);
 
@@ -78,7 +83,7 @@ class WebappController {
 		// todo: put some service layer in place to return a user object for the given username
 		auto user = _userService.findUser(username);
 
-		auto blogPosts = _blogService.findAllByUser(user);
+		auto blogPosts = _blogService.findAllByUser(user); // todo: fix this "mysqlddbc.d(541): Unsupported parameter type"
 
 		render!("profile.dt", authenticated, username, user, blogPosts);
 	}

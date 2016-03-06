@@ -29,3 +29,5 @@ block body
 								i.fa.fa-lock
 
 					button.btn.btn-primary.btn-lg(type="submit") Login
+			- if (_error)
+				p.text-danger #{_error}
