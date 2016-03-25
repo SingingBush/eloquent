@@ -26,12 +26,12 @@ html(lang='en')
 		meta(name='msapplication-TileColor', content='#563d7c')
 
 		- css("https://fonts.googleapis.com/css?family=Droid+Sans");
-		- css("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css");
-		- css("https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.2/css/bootstrap.min.css");
+		- css("/css/font-awesome.min.css");
+		- css("/css/bootstrap.min.css");
 		- css("/styles/style.css");
 
-		script(src='/js/jquery-2.2.1.min.js')
-		script(src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.2/js/bootstrap.min.js')
+		script(src='/js/jquery.min.js')
+		script(src='/js/bootstrap.min.js')
 	
 	body(role='document')
 		include header

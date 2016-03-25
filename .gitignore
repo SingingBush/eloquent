@@ -13,9 +13,10 @@ __test__library__
 
 # Ignore client side dependencies
 bower_components/
-public/css/bootstrap.css
+public/css/*.css
 public/js/bootstrap*
 public/js/jquery.min.js
+public/fonts/
 
 # Ignore Intellij IDEA folder:
 .idea
