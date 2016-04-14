@@ -10,6 +10,7 @@ d:
   - gdc
 
 before_install:
+ - npm install -g bower
  - "if [ ${TRAVIS_OS_NAME} = 'osx' ]; then brew update; fi"
  - "if [ ${TRAVIS_OS_NAME} = 'osx' ]; then brew install libev libevent sqlite; fi"
 

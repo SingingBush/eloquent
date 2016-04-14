@@ -13,15 +13,38 @@
 	},
 	"targetType": "executable",
 	"buildRequirements": [
-		"silenceWarnings"
+		"allowWarnings"
 	],
+	"preGenerateCommands": [
+		"if ! type \"npm\" > /dev/null; then echo -e \"You need to have Node.js and npm installed in order to build this project\nvisit https://nodejs.org for more info\"; exit 1; fi",
+		"if ! type \"bower\" > /dev/null; then echo -e \"You need to have Bower installed in order to build this project\n run \"npm install -g bower\" to install it using the Node Package Manager\nvisit http://bower.io/ for more info\"; exit 1; fi",
+		"Installing Bower components...",
+		"bower install",
+		"mkdir -p public/{js,css}",
+		"cp -u bower_components/jquery/dist/jquery.min.js public/js/jquery.min.js",
+		"cp -u bower_components/bootstrap/dist/css/bootstrap.css public/css/bootstrap.css",
+		"cp -u bower_components/bootstrap/dist/js/bootstrap.min.js public/js/bootstrap.min.js",
+		"client-side dependencies done.",
+	],
+	"preBuildCommands": ["echo -e \" -- todo: get SASS compiler running as part of build\""],
 	"configurations": [
 		{
 			"name": "application",
 			"subConfigurations": {
 				"vibe-d:core": "libevent",
-				"hibernated": "MySQL"
+				"hibernated": "MySQL",
+				"ddbc": "MySQL"
 			}
+		},
+		{
+			"name": "test",
+			"libs-posix": ["sqlite3"],
+			"libs-windows": ["sqlite3"],
+			"subConfigurations": {
+				"hibernated": "SQLite",
+				"ddbc": "SQLite"
+			},
+			"buildRequirements": ["silenceWarnings"]
 		}
 	],
 	"versions": ["VibeDefaultMain", "Have_vibe_d"]

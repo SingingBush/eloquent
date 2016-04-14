@@ -11,6 +11,12 @@ __test__library__
 *.lst
 .*.lst
 
+# Ignore client side dependencies
+bower_components/
+public/css/bootstrap.css
+public/js/bootstrap*
+public/js/jquery.min.js
+
 # Ignore Intellij IDEA folder:
 .idea
 
