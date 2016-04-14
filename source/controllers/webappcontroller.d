@@ -48,20 +48,28 @@ class WebappController {
 
 	// POST /login (username and password are automatically read as form fields)
 	@errorDisplay!getLogin
-	void postLogin(string username, string password) {
+	void postLogin(string username, string password) { // todo: look at ValidUsername and ValidPassword structs in http://vibed.org/api/vibe.web.validation/
 		logInfo("User attempting to login: %s", username);
 
-		enforceHTTP(username !is null && !username.empty, HTTPStatus.forbidden, "Username is a required field.");
-		enforceHTTP(password !is null && !password.empty, HTTPStatus.forbidden, "Password is a required field.");
+		enforceHTTP(username !is null && !username.empty, HTTPStatus.badRequest, "Username is a required field.");
+		enforceHTTP(password !is null && !password.empty, HTTPStatus.badRequest, "Password is a required field.");
+
+//        import vibe.utils.validation;
+//        validateUserName(username)
+//        validatePassword(password)
 
 		// todo: create some real authentication
 		auto user = _userService.findUser(username);
 
 		logInfo("User retrieved from db: %s", user);
 
-		enforceHTTP(username == user.username && password == "password", HTTPStatus.forbidden, "Invalid user name or password.");
+		enforceHTTP(user !is null && password == "password", HTTPStatus.forbidden, "Invalid user name or password.");
 		ms_authenticated = true;
 		ms_username = username;
+
+		//auto session = startSession();
+		//session.set("user", user);
+		//logInfo("form: %s", form["password"]);
 
 		redirect("/profile");
 	}
