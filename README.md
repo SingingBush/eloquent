@@ -61,5 +61,71 @@ sudo dnf install libevent-devel openssl-devel sqlite-devel postgresql-devel
 OSX:
 
 ```
-brew install libevent
+brew install libev libevent sqlite
+```
+
+## Setting up the database
+
+### Install Maria DB
+
+Ubuntu: `sudo apt-get install mariadb-client mariadb-server`
+Fedora: `sudo dnf install mariadb mariadb-server`
+
+### Create the database and a user
+
+```
+CREATE DATABASE eloquent;
+CREATE USER 'dbuser'@'localhost' IDENTIFIED BY 'passw0rd';
+GRANT ALL PRIVILEGES ON eloquent.* TO 'dbuser'@'localhost';
+```
+
+### Then import a SQL dump of a wordpress installation
+
+```
+mysql -u dbuser -p eloquent < wordpress-bak.sql
+```
+
+## Running behind Apache
+
+### Make sure you have Apache installed:
+
+
+```
+sudo apt-get install apache2
+```
+
+### Configure a Virtual Host for use with the application `sudo vim /etc/apache2/sites-available/eloquent.conf` using the following content:
+
+```
+<VirtualHost *:80>
+    ServerAdmin webmaster@example.com
+    ServerName example.com
+    ServerAlias www.example.com
+
+    ErrorLog /var/log/apache2/mysite-error.log
+    CustomLog /var/log/apache2/mysite-access.log common
+
+    ProxyRequests off
+    ProxyPreserveHost off
+    ProxyPass / http://127.0.0.1:8080
+    ProxyPassReverse / http://127.0.0.1:8080
+
+</VirtualHost>
+```
+
+### Then make sure to enable the relevant mods and restart Apache
+
+```
+sudo vim /etc/apache2/sites-available/eloquent.conf
+sudo a2enmod proxy proxy_http
+sudo a2ensite eloquent
+```
+
+### Check the config and restart
+
+Verfiy the Apache config with `apachectl configtest` then restart:
+
+
+```
+sudo systemctl restart apache2
 ```
