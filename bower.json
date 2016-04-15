@@ -1,0 +1,28 @@
+{
+  "name": "eloquent",
+  "homepage": "https://github.com/SingingBush/eloquent",
+  "authors": [
+    "SingingBush <singingbush@hotmail.com>"
+  ],
+  "description": "blog application written in D",
+  "main": "",
+  "keywords": [
+    "dlang",
+    "blog",
+    "wordpress"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^2.2.3",
+    "bootstrap": "v4.0.0-alpha.2",
+    "font-awesome": "fontawesome#^4.6.1"
+  }
+}

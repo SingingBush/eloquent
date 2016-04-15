@@ -43,6 +43,20 @@ You'll need the D compiler and [DUB](http://code.dlang.org/download). The follow
 
  - dmd v2.069.2
  - dub v0.9.24
+ 
+Front end dependencies are handled via [Bower](http://bower.io/) which can be installed using npm
+
+On Fedora nodejs and npm can be installed from the repository:
+
+```
+sudo dnf install nodejs npm
+```
+
+Then install bower globally:
+
+```
+sudo npm install -g bower
+```
 
 You will also need libevent on your system
 
