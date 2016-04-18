@@ -1,11 +1,12 @@
 header
-    nav.navbar.navbar-light.bg-faded.m-b-1(role='navigation')
+    nav.navbar.navbar-dark.bg-inverse(role='navigation')
         .container
             a.navbar-brand(href="/")
                 | Eloquent
             ul.nav.navbar-nav
                 li.nav-item
                     a.nav-link(href="/") Home
+            ul.nav.navbar-nav.pull-right
                 - if (authenticated)
                     li.nav-item
                         a.nav-link(href="/profile")

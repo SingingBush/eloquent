@@ -36,7 +36,7 @@ html(lang='en')
 	body(role='document')
 		include header
 
-		div.container(role='main')
+		section
 			block body
 
 		footer

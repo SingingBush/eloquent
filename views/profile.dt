@@ -1,26 +1,27 @@
 extends layout
 
 block body
-	.row
-		.col-md-6.col-md-offset-3.col-sm-8.col-sm-offset-2
-			- if (authenticated)
-				.alert.alert-dismissable.alert-success
-					button.close(type="button", data-dismiss="alert") x
-					| Here are your posts #{user.username}
-			- else
-				.alert.alert-dismissable.alert-danger
-					button.close(type="button", data-dismiss="alert") x
-					| This shouldn't happen
-	.row
-		.col-md-12
-			- foreach( p; blogPosts )
-				h2 #{p.title}
-				p.lead #{p.author.displayname}
-				p
-					span.fa.fa-clock-o
-					| #{p.created}
-				hr
-				p !{p.content}
-				a.btn.btn-primary(href="#") Read More
-					span.fa.fa-chevron-right
-				hr
+	div.container(role='main')
+		.row
+			.col-md-6.col-md-offset-3.col-sm-8.col-sm-offset-2
+				- if (authenticated)
+					.alert.alert-dismissable.alert-success
+						button.close(type="button", data-dismiss="alert") x
+						| Here are your posts #{user.username}
+				- else
+					.alert.alert-dismissable.alert-danger
+						button.close(type="button", data-dismiss="alert") x
+						| This shouldn't happen
+		.row
+			.col-md-12
+				- foreach( p; blogPosts )
+					h2 #{p.title}
+					p.lead #{p.author.displayname}
+					p
+						span.fa.fa-clock-o
+						| #{p.created}
+					hr
+					p !{p.content}
+					a.btn.btn-primary(href="#") Read More
+						span.fa.fa-chevron-right
+					hr

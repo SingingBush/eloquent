@@ -2,3 +2,11 @@
 body {
 	font-family: 'Droid Sans', serif;
 }
+
+.jumbotron-primary {
+	/*background-color: rgba(54, 55, 197, 0.87);*/
+	background-color: #0275d8; /* Same Blue that is used by Bootstrap */
+	box-shadow: inset 0 0 5rem rgba(0,0,0,.5);
+	color: #fff;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}

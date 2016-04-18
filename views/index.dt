@@ -4,16 +4,21 @@ block title
 	title Home
 
 block body
-	.row
-		.col-md-12
-			- foreach( p; blogPosts )
-				h2 #{p.title}
-				p.lead #{p.author.displayname}
-				p
-					span.fa.fa-clock-o
-					| #{p.created}
-				hr
-				p !{p.content}
-				a.btn.btn-primary(href="#") Read More
-					span.fa.fa-chevron-right
-				hr
+	.jumbotron.jumbotron-primary
+		.container
+			h1 Home Page
+
+	.container(role='main')
+		.row
+			.col-md-12
+				- foreach( p; blogPosts )
+					h2 #{p.title}
+					p.lead #{p.author.displayname}
+					p
+						span.fa.fa-clock-o
+						| #{p.created}
+					hr
+					p !{p.content}
+					a.btn.btn-primary(href="#") Read More
+						span.fa.fa-chevron-right
+					hr
