@@ -3,15 +3,19 @@ module eloquent.controllers;
 import poodinis;
 import vibe.core.core;
 import vibe.core.log;
+import vibe.crypto.passwordhash;
 import vibe.http.router;
 import vibe.web.web;
 
-
+import eloquent.config.properties;
 import eloquent.model.User, eloquent.model.BlogPost;
 import eloquent.services.UserService, eloquent.services.BlogService;
 
 // This is essentially like using Springs @Controller for handling routes in Spring MVC
 class WebappController {
+
+    //@Autowire
+    public Properties _properties;
 
 	//@Autowire!UserServiceImpl
 	public UserService _userService;
@@ -21,6 +25,7 @@ class WebappController {
 
 	public this() {
 		auto container = DependencyContainer.getInstance();
+		_properties = container.resolve!Properties;
  		_userService = container.resolve!UserService;
  		_blogService = container.resolve!BlogService;
  	}
@@ -63,7 +68,11 @@ class WebappController {
 
 		logInfo("User retrieved from db: %s", user);
 
-		enforceHTTP(user !is null && password == "password", HTTPStatus.forbidden, "Invalid user name or password.");
+        string salt = _properties.as!(string)("auth.salt");
+        string hash = generateSimplePasswordHash(password, salt); // todo: store password Hash in db a retrieve via user.pwHash
+        auto authed = testSimplePasswordHash(hash, password, salt);
+
+		enforceHTTP(user !is null && authed, HTTPStatus.forbidden, "Invalid user name or password.");
 		ms_authenticated = true;
 		ms_username = username;
 

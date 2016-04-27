@@ -34,6 +34,8 @@ db.name=mywordpressdb
 db.user=dbusername
 db.password=dbPassword
 
+auth.salt=PUT SOME RANDOMLY GENERATED SALT HERE
+
 log.file=eloquent-error.log
 ```
 
