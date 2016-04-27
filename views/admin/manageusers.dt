@@ -1,0 +1,14 @@
+extends layout
+
+block title
+    title Admin | Manage Users
+
+block body
+    .jumbotron.jumbotron-primary
+        .container
+            h1 Manage Users
+
+    .container(role='main')
+        .row
+            .col-md-12
+                h2 todo

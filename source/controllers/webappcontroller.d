@@ -1,4 +1,4 @@
-module eloquent.controllers;
+module eloquent.controllers.web;
 
 import poodinis;
 import vibe.core.core;

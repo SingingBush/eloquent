@@ -3,7 +3,7 @@ import poodinis;
 import vibe.d;
 
 import eloquent.config.context;
-import eloquent.controllers;
+import eloquent.controllers.web, eloquent.controllers.admin;
 
 shared static this() {
 	auto container = DependencyContainer.getInstance();
@@ -19,6 +19,7 @@ shared static this() {
 	//router.get("*", (req, res) {req.params["version"] = "1.0-SNAPSHOT";}); //todo: find out why this breaks things like @errorDisplay
 	router.get("*", serveStaticFiles("public/"));
 	router.registerWebInterface(new WebappController);
+	router.registerWebInterface(new AdminController);
 
 	auto settings = new HTTPServerSettings;
 	settings.port = 8080;

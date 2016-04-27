@@ -1,0 +1,14 @@
+extends layout
+
+block title
+    title Admin | Manage Comments
+
+block body
+    .jumbotron.jumbotron-primary
+        .container
+            h1 Manage Comments
+
+    .container(role='main')
+        .row
+            .col-md-12
+                h2 todo
