@@ -36,7 +36,8 @@
 				"vibe-d:core": "libevent",
 				"hibernated": "MySQL",
 				"ddbc": "MySQL"
-			}
+			},
+			"buildRequirements": ["silenceWarnings"]
 		},
 		{
 			"name": "test",
@@ -46,7 +47,7 @@
 				"hibernated": "SQLite",
 				"ddbc": "SQLite"
 			},
-			"buildRequirements": ["silenceWarnings"]
+			"buildRequirements": ["silenceWarnings", "silenceDeprecations"]
 		}
 	],
 	"versions": ["VibeDefaultMain", "Have_vibe_d"]
