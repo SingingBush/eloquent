@@ -6,10 +6,8 @@ import eloquent.config.context;
 import eloquent.controllers;
 
 shared static this() {
-
-	logInfo("Creating Poodinis Context");
 	auto container = DependencyContainer.getInstance();
-	container.registerContext!PoodinisContext;
+	container.registerContext!PoodinisContext; // Create application context before doing anything else
 
 	//container.register!WebappController;
 	//auto webapp = container.resolve!WebappController;

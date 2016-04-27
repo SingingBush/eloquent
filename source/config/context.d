@@ -1,10 +1,10 @@
 module eloquent.config.context;
 
-import properd; // for loading in app.properties
 import hibernated.core;
 import poodinis;
 import vibe.d;
 
+import eloquent.config.properties;
 import eloquent.model.User;
 import eloquent.model.BlogPost;
 import eloquent.services.UserService;
@@ -12,12 +12,18 @@ import eloquent.services.BlogService;
 
 class PoodinisContext : ApplicationContext {
 
-    public override void registerDependencies(shared(DependencyContainer) container) {
-        logInfo("loading app.properties");
-        auto properties = readProperties("./app.properties");
+    private Properties properties;
 
-        configureLogFile(properties);
-        SessionFactoryImpl sessionFactory = configureDatabase(properties);
+    public this() {
+        properties = new Properties;
+    }
+
+    public override void registerDependencies(shared(DependencyContainer) container) {
+        configureLogging();
+        logInfo("Creating Poodinis Context");
+        container.register!Properties.existingInstance(properties);
+
+        SessionFactoryImpl sessionFactory = configureDatabase();
 
         container.register!(SessionFactory, SessionFactoryImpl)([RegistrationOption.doNotAddConcreteTypeRegistration]).existingInstance(sessionFactory);
         container.register!(UserService, UserServiceImpl);
@@ -25,14 +31,14 @@ class PoodinisContext : ApplicationContext {
     }
 
     //@Component
-    SessionFactoryImpl configureDatabase(string[string] properties) {
+    SessionFactoryImpl configureDatabase() {
     	auto dbHost = properties.as!(string)("db.domain", "localhost");
     	auto dbPort = properties.as!(ushort)("db.port", 3306);
     	auto dbName = properties.as!(string)("db.name");
     	auto dbUser = properties.as!(string)("db.user");
     	auto dbPass = properties.as!(string)("db.password");
 
-    	logInfo("connecting to MySQL...  %s@%s:%s/%s", dbUser, dbHost, dbPort, dbName);
+    	logInfo("PoodinisContext -> connecting to MySQL...  %s@%s:%s/%s", dbUser, dbHost, dbPort, dbName);
 
     	MySQLDriver driver = new MySQLDriver();
     	string url = MySQLDriver.generateUrl(dbHost, dbPort, dbName);
@@ -47,10 +53,11 @@ class PoodinisContext : ApplicationContext {
     	return new SessionFactoryImpl(schema, dialect, dataSource);
     }
 
-    private void configureLogFile(string[string] properties) {
+    private void configureLogging() {
         auto logFile = properties.as!(string)("log.file", "eloquent-error.log");
         //auto logLevel = properties.as!(string)("log.level");
-        //logInfo("setting log file: %s, level %s", logFile, logLevel);
+        setLogFormat(FileLogger.Format.threadTime, FileLogger.Format.threadTime); // plain, thread, or threadTime
+        logInfo("PoodinisContext -> setting log file: %s", logFile);
         setLogFile(logFile, LogLevel.error);
     }
 }

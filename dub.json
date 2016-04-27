@@ -8,7 +8,7 @@
 	"dependencies": {
 		"proper-d": "~>0.0.2",
 		"vibe-d": "~>0.7.28",
-		"poodinis": "~>6.1.0",
+		"poodinis": "~>6.2.0",
 		"hibernated": "~>0.2.25"
 	},
 	"targetType": "executable",
