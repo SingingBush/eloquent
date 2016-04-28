@@ -11,4 +11,12 @@ block body
     .container(role='main')
         .row
             .col-md-12
-                h2 todo
+                - foreach( c; comments )
+                    h2 #{c.type} #{c.authorIP}
+                    p.lead #{c.author}
+                    p
+                        span.fa.fa-clock-o
+                        | #{c.created}
+                    hr
+                    p !{c.content}
+                    hr

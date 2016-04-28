@@ -7,6 +7,7 @@ import vibe.d;
 import eloquent.config.properties;
 import eloquent.model.User;
 import eloquent.model.BlogPost;
+import eloquent.model.Comment;
 import eloquent.services.UserService;
 import eloquent.services.BlogService;
 
@@ -47,7 +48,7 @@ class PoodinisContext : ApplicationContext {
     	Dialect dialect = new MySQLDialect();
 
     	logDebug("Creating schema meta data from annotations...");
-    	EntityMetaData schema = new SchemaInfoImpl!(User, UserData, BlogPost, BlogPostData);
+    	EntityMetaData schema = new SchemaInfoImpl!(User, UserData, BlogPost, BlogPostData, Comment, CommentData);
 
     	logDebug("Creating session factory...");
     	return new SessionFactoryImpl(schema, dialect, dataSource);

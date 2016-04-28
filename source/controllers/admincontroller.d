@@ -40,8 +40,10 @@ class AdminController {
     void manageComments() {
         logInfo("GET: /admin/comments");
 
+        auto comments = _blogService.getComments();
+
         bool authenticated = false; // kludge for getting template to render when serving error page
-        render!("admin/managecomments.dt", authenticated);
+        render!("admin/managecomments.dt", authenticated, comments);
     }
 
     @method(HTTPMethod.GET) @path("/admin/users")
