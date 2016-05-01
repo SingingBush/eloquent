@@ -5,11 +5,8 @@ import poodinis;
 import vibe.d;
 
 import eloquent.config.properties;
-import eloquent.model.User;
-import eloquent.model.BlogPost;
-import eloquent.model.Comment;
-import eloquent.services.UserService;
-import eloquent.services.BlogService;
+import eloquent.model.user, eloquent.model.blogpost, eloquent.model.comment;
+import eloquent.services.userservice, eloquent.services.blogservice;
 
 class PoodinisContext : ApplicationContext {
 

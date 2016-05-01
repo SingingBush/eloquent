@@ -1,10 +1,10 @@
-module eloquent.services.UserService;
+module eloquent.services.userservice;
 
 import std.string;
 import std.algorithm : filter, startsWith;
 import std.array : array;
 
-import eloquent.model.User;
+import eloquent.model.user;
 
 import hibernated.core;
 import hibernated.session;

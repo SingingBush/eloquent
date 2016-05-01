@@ -1,6 +1,6 @@
-module eloquent.model.BlogPost;
+module eloquent.model.blogpost;
 
-import eloquent.model.User;
+import eloquent.model.user;
 
 import hibernated.core;
 

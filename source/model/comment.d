@@ -1,7 +1,7 @@
-module eloquent.model.Comment;
+module eloquent.model.comment;
 
-import eloquent.model.BlogPost;
-import eloquent.model.User;
+import eloquent.model.blogpost;
+import eloquent.model.user;
 
 import hibernated.core;
 

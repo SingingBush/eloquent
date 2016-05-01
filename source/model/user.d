@@ -1,4 +1,4 @@
-module eloquent.model.User;
+module eloquent.model.user;
 
 import hibernated.core;
 

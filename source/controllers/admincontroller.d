@@ -8,7 +8,7 @@ import vibe.http.router;
 import vibe.web.web;
 
 import eloquent.config.properties;
-import eloquent.services.UserService, eloquent.services.BlogService;
+import eloquent.services.userservice, eloquent.services.blogservice;
 
 class AdminController {
 

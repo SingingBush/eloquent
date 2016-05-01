@@ -1,12 +1,10 @@
-module eloquent.services.BlogService;
+module eloquent.services.blogservice;
 
 import std.datetime, std.string;
 import std.algorithm : filter, startsWith;
 import std.array : array;
 
-import eloquent.model.User;
-import eloquent.model.BlogPost;
-import eloquent.model.Comment;
+import eloquent.model.user, eloquent.model.blogpost, eloquent.model.comment;
 
 import hibernated.core;
 import hibernated.session;

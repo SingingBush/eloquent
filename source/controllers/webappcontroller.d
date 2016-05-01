@@ -8,8 +8,8 @@ import vibe.http.router;
 import vibe.web.web;
 
 import eloquent.config.properties;
-import eloquent.model.User, eloquent.model.BlogPost;
-import eloquent.services.UserService, eloquent.services.BlogService;
+import eloquent.model.user, eloquent.model.blogpost;
+import eloquent.services.userservice, eloquent.services.blogservice;
 
 // This is essentially like using Springs @Controller for handling routes in Spring MVC
 class WebappController {
