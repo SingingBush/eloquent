@@ -7,9 +7,10 @@
 	"license": "GPL-2.0",
 	"dependencies": {
 		"proper-d": "~>0.0.2",
-		"vibe-d": "~>0.7.28",
+		"consoled": "~>1.0.1",
+		"vibe-d": "~>0.7.29-beta.1",
 		"poodinis": "~>6.2.0",
-		"hibernated": "~>0.2.25"
+		"hibernated": "~>0.2.26"
 	},
 	"targetType": "executable",
 	"buildRequirements": [

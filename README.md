@@ -36,7 +36,9 @@ db.password=dbPassword
 
 auth.salt=PUT SOME RANDOMLY GENERATED SALT HERE
 
-log.file=eloquent-error.log
+# optional log settings. The default log level is info (options: verbose, debug, trace, error, info) with filename as eloquent-server.log
+log.file=eloquent-server.log
+log.level=trace
 ```
 
 ## Building

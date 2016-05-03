@@ -52,10 +52,128 @@ class PoodinisContext : ApplicationContext {
     }
 
     private void configureLogging() {
-        auto logFile = properties.as!(string)("log.file", "eloquent-error.log");
-        //auto logLevel = properties.as!(string)("log.level");
+        immutable auto logFile = properties.as!(string)("log.file", "eloquent-server.log");
+        immutable auto logLevel = properties.as!(string)("log.level", "info");
+
         setLogFormat(FileLogger.Format.threadTime, FileLogger.Format.threadTime); // plain, thread, or threadTime
-        logInfo("PoodinisContext -> setting log file: %s", logFile);
-        setLogFile(logFile, LogLevel.error);
+
+        LogLevel level;
+
+        switch(logLevel) {
+            case "verbose":
+                level = LogLevel.debugV;
+                setLogFile(logFile, LogLevel.debugV);
+                break;
+            case "debug":
+                level = LogLevel.debug_;
+                setLogFile(logFile, LogLevel.debug_);
+                break;
+            case "trace":
+                level = LogLevel.trace;
+                setLogFile(logFile, LogLevel.trace);
+                break;
+            case "error":
+                level = LogLevel.error;
+                setLogFile(logFile, LogLevel.error);
+                break;
+            default:
+                level = LogLevel.info;
+                setLogFile(logFile, LogLevel.info);
+                break;
+        }
+
+        setLogLevel(LogLevel.none); // this effectively deactivates vibe.d's stdout logger
+
+        // now register a custom Logger that's nicer than the one provided by vibe.d (and outputs correct time)
+        auto console = cast(shared)new ConsoleLogger(level);
+        registerLogger(console);
+
+        logInfo("PoodinisContext -> Logging Configured [%s] will be output to: %s", logLevel, logFile);
+
+        // todo: consider options for HTML Logger and SyslogLogger, see: https://github.com/rejectedsoftware/vibe.d/blob/master/source/vibe/core/log.d
+//        auto logger = cast(shared)new HTMLLogger("log.html");
+//        registerLogger(logger);
     }
+}
+
+
+import std.stdio;
+import consoled;
+
+final class ConsoleLogger : Logger {
+
+    alias Debug = ColorTheme!(Color.blue, Color.initial);
+    alias Info = ColorTheme!(Color.lightGray, Color.initial);
+    alias Error = ColorTheme!(Color.red, Color.initial);
+    alias ReallyBad = ColorTheme!(Color.white, Color.red);
+
+    this(LogLevel level) {
+        minLevel = level;
+    }
+
+	override void beginLine(ref LogLine msg) @trusted {
+		string level;
+		Color fg = foreground;
+		Color bg = background;
+
+		final switch (msg.level) {
+			case LogLevel.trace:
+			    level = "TRACE";
+			    fg = Color.green;
+			    break;
+			case LogLevel.debugV:
+			    level = "VERBOSE";
+			    fg = Color.green;
+			    break;
+			case LogLevel.debug_:
+                level = "DEBUG";
+                fg = Color.green;
+                break;
+			case LogLevel.diagnostic:
+			    level = "DIAGNOSTIC";
+			    fg = Color.blue;
+			    break;
+			case LogLevel.info:
+			    level = "INFO";
+			    fg = Color.blue;
+			    break;
+			case LogLevel.warn:
+			    level = "WARN";
+			    fg = Color.yellow;
+			    break;
+			case LogLevel.error:
+                level = "ERROR";
+                fg = Color.red;
+                break;
+			case LogLevel.critical:
+			    level = "CRITICAL";
+			    fg = Color.white;
+			    bg = Color.red;
+			    break;
+			case LogLevel.fatal:
+			    level = "FATAL";
+			    fg = Color.white;
+			    bg = Color.red;
+			    break;
+			case LogLevel.none: assert(false);
+		}
+
+        write(Clock.currTime().toISOExtString());
+        writef(" - %08X:%08X [", msg.threadID, msg.fiberID);
+
+        foreground = fg;
+        background = bg;
+        writef("%s", level);
+        resetColors();
+
+        write("] - ");
+	}
+
+	override void put(scope const(char)[] text) {
+		write(text);
+	}
+
+	override void endLine() {
+		writeln();
+	}
 }
