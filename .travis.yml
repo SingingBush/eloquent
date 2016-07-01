@@ -7,9 +7,7 @@ dist: trusty
 d:
   - dmd
   - dmd-2.069.2
-  - dmd-2.068.2
-  - dmd-2.068.0
-  - ldc-1.0.0-alpha1
+  - ldc
   - gdc
 
 before_install:
@@ -30,5 +28,5 @@ addons:
 # only the most recent versions of dmd currently work as both ldc and gdc have not been updated to use new D features.
 matrix:
   allow_failures:
-    - d: ldc-1.0.0-alpha1
+    - d: ldc
     - d: gdc
