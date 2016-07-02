@@ -7,7 +7,7 @@
 	"license": "GPL-2.0",
 	"dependencies": {
 		"proper-d": "~>0.0.2",
-		"consoled": "~>1.0.2",
+		"consoled": "~>1.0.3",
 		"vibe-d": "~>0.7.30-alpha.3",
 		"poodinis": "~>6.3.0",
 		"hibernated": "~>0.2.26"
