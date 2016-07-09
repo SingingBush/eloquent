@@ -1,15 +1,19 @@
 module eloquent.config.properties;
 
-import properd; // for the readProperties() method that loads in app.properties
+import properd : readProperties, as;
 import vibe.core.log;
+import vibe.core.args;
 
 class Properties {
 
     private string[string] _properties;
 
     public this() {
-        logInfo("Properties -> loading app.properties file...");
-        _properties = readProperties("./app.properties"); // todo: add error handling
+        string filePath = "./app.properties";
+        readOption("p|properties", &filePath, "path to properites file. Defaults to './app.properties'");
+
+        logInfo("Properties -> loading properties file: '%s'", filePath);
+        _properties = readProperties(filePath);
     }
 
     T as(T)(string name, T alternative=T.init) {

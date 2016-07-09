@@ -33,7 +33,7 @@
 	"configurations": [
 		{
 			"name": "default",
-			"versions": ["USE_MYSQL"],
+			"versions": ["PRODUCTION", "USE_MYSQL"],
 			"subConfigurations": {
 				"vibe-d:core": "libevent",
 				"hibernated": "MySQL",
@@ -43,7 +43,7 @@
 		},
 		{
 			"name": "test",
-			"versions": ["USE_SQLITE"],
+			"versions": ["DEVELOPMENT", "USE_SQLITE"],
 			"libs-posix": ["sqlite3"],
 			"libs-windows": ["sqlite3"],
 			"subConfigurations": {

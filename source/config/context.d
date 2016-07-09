@@ -34,12 +34,11 @@ class PoodinisContext : ApplicationContext {
         DataSource dataSource;
         Dialect dialect;
 
-        version(USE_SQLITE) {
+        version(DEVELOPMENT) {
             auto sqliteFile = properties.as!(string)("db.file");
             logInfo("PoodinisContext -> loading SQLite file...  %s", sqliteFile);
             SQLITEDriver driver = new SQLITEDriver();
-            string[string] params;
-            dataSource = new ConnectionPoolDataSourceImpl(driver, sqliteFile, params);
+            dataSource = new ConnectionPoolDataSourceImpl(driver, sqliteFile, null);
             dialect = new SQLiteDialect();
         } else {
             auto dbHost = properties.as!(string)("db.domain", "localhost");
@@ -114,15 +113,16 @@ class PoodinisContext : ApplicationContext {
 }
 
 
+import std.regex : replaceFirst, regex;
 import std.stdio;
-import consoled;
+import consoled : Color, writec, Fg, foreground, background, resetColors;
 
 final class ConsoledLogger : Logger {
 
-    alias Debug = ColorTheme!(Color.blue, Color.initial);
-    alias Info = ColorTheme!(Color.lightGray, Color.initial);
-    alias Error = ColorTheme!(Color.red, Color.initial);
-    alias ReallyBad = ColorTheme!(Color.white, Color.red);
+//    alias Debug = ColorTheme!(Color.blue, Color.initial);
+//    alias Info = ColorTheme!(Color.lightGray, Color.initial);
+//    alias Error = ColorTheme!(Color.red, Color.initial);
+//    alias ReallyBad = ColorTheme!(Color.white, Color.red);
 
     this(LogLevel level) {
         minLevel = level;
@@ -192,13 +192,12 @@ final class ConsoledLogger : Logger {
         resetColors();
         write("] ");
 
-        import std.regex;
-        string file = replaceFirst(msg.file, regex(".*\\.dub\\/packages\\/.+?\\/"), ""); // don't show path to dub repo
-        writec(Fg.cyan, file, Fg.initial, "(", Fg.lightGray, msg.line, Fg.initial, "): ");
+        string file = replaceFirst(msg.file, regex(r".*\.dub\/packages\/"), ""); // don't show path to local dub repo
+        writec(Fg.cyan, file, Fg.initial, "(", Fg.cyan, msg.line, Fg.initial, "): ");
 	}
 
 	override void put(scope const(char)[] text) {
-		write(text);
+		write(replaceFirst(text, regex(r".*\.dub\/packages\/"), ""));
 	}
 
 	override void endLine() {
