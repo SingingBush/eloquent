@@ -1,4 +1,4 @@
-# seems that travis supports D, using dub with various compilers
+# travis-ci.org supports D, using dub with various compilers
 language: d
 
 sudo: required
@@ -11,22 +11,23 @@ d:
   - gdc
 
 before_install:
- - npm install -g bower
- - "if [ ${TRAVIS_OS_NAME} = 'osx' ]; then brew update; fi"
- - "if [ ${TRAVIS_OS_NAME} = 'osx' ]; then brew install libev libevent sqlite; fi"
+  - npm install -g bower
+  - "if [ ${TRAVIS_OS_NAME} = 'osx' ]; then brew update; fi"
+  - "if [ ${TRAVIS_OS_NAME} = 'osx' ]; then brew install libev libevent sqlite; fi"
 
 os:
- - linux
- - osx
+  - linux
+  - osx
 
-script: dub build
+script:
+  - dub build
+  - dub build --config=test
 
 addons:
   apt:
     packages: [ libev-dev, libevent-dev, libsqlite3-dev ]
 
-# only the most recent versions of dmd currently work as both ldc and gdc have not been updated to use new D features.
+# GDC lags behind DMD
 matrix:
   allow_failures:
-    - d: ldc
     - d: gdc
