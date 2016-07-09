@@ -32,7 +32,8 @@
 	"preBuildCommands": ["printf \"\\033[93mtodo\\033[0m get SASS compiler working as part of build\n\""],
 	"configurations": [
 		{
-			"name": "application",
+			"name": "default",
+			"versions": ["USE_MYSQL"],
 			"subConfigurations": {
 				"vibe-d:core": "libevent",
 				"hibernated": "MySQL",
@@ -42,6 +43,7 @@
 		},
 		{
 			"name": "test",
+			"versions": ["USE_SQLITE"],
 			"libs-posix": ["sqlite3"],
 			"libs-windows": ["sqlite3"],
 			"subConfigurations": {

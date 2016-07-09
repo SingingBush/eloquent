@@ -30,19 +30,32 @@ class PoodinisContext : ApplicationContext {
 
     //@Component
     SessionFactoryImpl configureDatabase() {
-    	auto dbHost = properties.as!(string)("db.domain", "localhost");
-    	auto dbPort = properties.as!(ushort)("db.port", 3306);
-    	auto dbName = properties.as!(string)("db.name");
-    	auto dbUser = properties.as!(string)("db.user");
-    	auto dbPass = properties.as!(string)("db.password");
 
-    	logInfo("PoodinisContext -> connecting to MySQL...  %s@%s:%s/%s", dbUser, dbHost, dbPort, dbName);
+        DataSource dataSource;
+        Dialect dialect;
 
-    	MySQLDriver driver = new MySQLDriver();
-    	string url = MySQLDriver.generateUrl(dbHost, dbPort, dbName);
-    	string[string] params = MySQLDriver.setUserAndPassword(dbUser, dbPass);
-    	DataSource dataSource = new ConnectionPoolDataSourceImpl(driver, url, params);
-    	Dialect dialect = new MySQLDialect();
+        version(USE_SQLITE) {
+            auto sqliteFile = properties.as!(string)("db.file");
+            logInfo("PoodinisContext -> loading SQLite file...  %s", sqliteFile);
+            SQLITEDriver driver = new SQLITEDriver();
+            string[string] params;
+            dataSource = new ConnectionPoolDataSourceImpl(driver, sqliteFile, params);
+            dialect = new SQLiteDialect();
+        } else {
+            auto dbHost = properties.as!(string)("db.domain", "localhost");
+            auto dbPort = properties.as!(ushort)("db.port", 3306);
+            auto dbName = properties.as!(string)("db.name");
+            auto dbUser = properties.as!(string)("db.user");
+            auto dbPass = properties.as!(string)("db.password");
+
+            logInfo("PoodinisContext -> connecting to MySQL...  %s@%s:%s/%s", dbUser, dbHost, dbPort, dbName);
+
+            MySQLDriver driver = new MySQLDriver();
+            string url = MySQLDriver.generateUrl(dbHost, dbPort, dbName);
+            string[string] params = MySQLDriver.setUserAndPassword(dbUser, dbPass);
+            dataSource = new ConnectionPoolDataSourceImpl(driver, url, params);
+            dialect = new MySQLDialect();
+        }
 
     	logDebug("Creating schema meta data from annotations...");
     	EntityMetaData schema = new SchemaInfoImpl!(User, UserData, BlogPost, BlogPostData, Comment, CommentData);
@@ -76,6 +89,10 @@ class PoodinisContext : ApplicationContext {
                 level = LogLevel.error;
                 setLogFile(logFile, LogLevel.error);
                 break;
+            case "warn":
+                level = LogLevel.warn;
+                setLogFile(logFile, LogLevel.warn);
+                break;
             default:
                 level = LogLevel.info;
                 setLogFile(logFile, LogLevel.info);
@@ -85,7 +102,7 @@ class PoodinisContext : ApplicationContext {
         setLogLevel(LogLevel.none); // this effectively deactivates vibe.d's stdout logger
 
         // now register a custom Logger that's nicer than the one provided by vibe.d (and outputs correct time)
-        auto console = cast(shared)new ConsoleLogger(level);
+        auto console = cast(shared)new ConsoledLogger(level);
         registerLogger(console);
 
         logInfo("PoodinisContext -> Logging Configured [%s] will be output to: %s", logLevel, logFile);
@@ -100,7 +117,7 @@ class PoodinisContext : ApplicationContext {
 import std.stdio;
 import consoled;
 
-final class ConsoleLogger : Logger {
+final class ConsoledLogger : Logger {
 
     alias Debug = ColorTheme!(Color.blue, Color.initial);
     alias Info = ColorTheme!(Color.lightGray, Color.initial);
@@ -111,6 +128,7 @@ final class ConsoleLogger : Logger {
         minLevel = level;
     }
 
+    // for more info on LogLine see: http://vibed.org/api/vibe.core.log/LogLine
 	override void beginLine(ref LogLine msg) @trusted {
 		string level;
 		Color fg = foreground;
@@ -158,15 +176,25 @@ final class ConsoleLogger : Logger {
 			case LogLevel.none: assert(false);
 		}
 
-        write(Clock.currTime().toISOExtString());
-        writef(" - %08X:%08X [", msg.threadID, msg.fiberID);
+        // note that I don't use 'write(msg.time)' here because it doesn't output correct time (I'm currently in BST)
+        write(Clock.currTime()); // could also use: write(Clock.currTime().toISOExtString());
 
+        writef(" - %08X", msg.threadID);
+
+        if(msg.threadName !is null) {
+            writef(":'%s'", msg.threadName);
+        }
+
+        write(" [");
         foreground = fg;
         background = bg;
         writef("%s", level);
         resetColors();
+        write("] ");
 
-        write("] - ");
+        import std.regex;
+        string file = replaceFirst(msg.file, regex(".*\\.dub\\/packages\\/.+?\\/"), ""); // don't show path to dub repo
+        writec(Fg.cyan, file, Fg.initial, "(", Fg.lightGray, msg.line, Fg.initial, "): ");
 	}
 
 	override void put(scope const(char)[] text) {
