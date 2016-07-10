@@ -21,7 +21,7 @@
 		"if ! type \"bower\" > /dev/null; then echo -e \"You need to have Bower installed in order to build this project\n run \"npm install -g bower\" to install it using the Node Package Manager\nvisit http://bower.io/ for more info\"; exit 1; fi",
 		"printf \"\\033[94mInstalling Bower components...\\033[0m\n\"",
 		"bower install",
-		"mkdir -p ./public/{js,css,fonts}",
+		"mkdir -p ./public/js ./public/css ./public/fonts",
 		"rsync -u bower_components/jquery/dist/jquery.min.js ./public/js/jquery.min.js",
 		"rsync -u bower_components/bootstrap/dist/css/bootstrap.min.css ./public/css/bootstrap.min.css",
 		"rsync -u bower_components/bootstrap/dist/js/bootstrap.min.js ./public/js/bootstrap.min.js",
