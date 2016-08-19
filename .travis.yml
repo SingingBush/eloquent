@@ -15,13 +15,16 @@ before_install:
   - "if [ ${TRAVIS_OS_NAME} = 'osx' ]; then brew update; fi"
   - "if [ ${TRAVIS_OS_NAME} = 'osx' ]; then brew install libev libevent sqlite && brew link --force sqlite; fi"
 
+install:
+  - wget -q -O - "http://bit.ly/Doveralls" | bash
+
 os:
   - linux
   - osx
 
 script:
-  - dub build
-  - dub build --config=test
+  - dub test -b unittest-cov
+  - ./doveralls
 
 addons:
   apt:
