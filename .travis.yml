@@ -14,7 +14,10 @@ before_install:
   - npm install -g bower
   - "if [ ${TRAVIS_OS_NAME} = 'osx' ]; then brew update; fi"
   - "if [ ${TRAVIS_OS_NAME} = 'osx' ]; then brew install libev libevent sqlite && brew link --force sqlite; fi"
-  - wget -q -O - http://bit.ly/Doveralls | bash
+
+install:
+  - wget -O doveralls "https://github.com/ColdenCullen/doveralls/releases/download/v1.1.5/doveralls_linux_travis"
+  - chmod +x doveralls
 
 os:
   - linux
