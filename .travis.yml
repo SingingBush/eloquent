@@ -14,14 +14,16 @@ before_install:
   - npm install -g bower
   - "if [ ${TRAVIS_OS_NAME} = 'osx' ]; then brew update; fi"
   - "if [ ${TRAVIS_OS_NAME} = 'osx' ]; then brew install libev libevent sqlite && brew link --force sqlite; fi"
-  - wget http://bit.ly/Doveralls | bash
+  - wget -q -O - http://bit.ly/Doveralls | bash
 
 os:
   - linux
   - osx
 
 script:
-  - dub test -b unittest-cov
+  - dub test -b unittest-cov --compiler=${DC}
+
+after_success:
   - ./doveralls
 
 addons:
