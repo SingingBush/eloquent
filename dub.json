@@ -42,7 +42,7 @@
 			"buildRequirements": ["silenceWarnings"]
 		},
 		{
-			"name": "test",
+			"name": "unittest",
 			"versions": ["DEVELOPMENT", "USE_SQLITE"],
 			"libs-posix": ["sqlite3"],
 			"libs-windows": ["sqlite3"],
