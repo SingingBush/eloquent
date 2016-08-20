@@ -34,33 +34,46 @@ class PoodinisContext : ApplicationContext {
         DataSource dataSource;
         Dialect dialect;
 
-        version(DEVELOPMENT) {
-            auto sqliteFile = properties.as!(string)("db.file");
-            logInfo("PoodinisContext -> loading SQLite file...  %s", sqliteFile);
-            SQLITEDriver driver = new SQLITEDriver();
-            dataSource = new ConnectionPoolDataSourceImpl(driver, sqliteFile, null);
-            dialect = new SQLiteDialect();
-        } else {
-            auto dbHost = properties.as!(string)("db.domain", "localhost");
-            auto dbPort = properties.as!(ushort)("db.port", 3306);
-            auto dbName = properties.as!(string)("db.name");
-            auto dbUser = properties.as!(string)("db.user");
-            auto dbPass = properties.as!(string)("db.password");
+		immutable string dbType = properties.as!(string)("db.dialect");
 
-            logInfo("PoodinisContext -> connecting to MySQL...  %s@%s:%s/%s", dbUser, dbHost, dbPort, dbName);
-
-            MySQLDriver driver = new MySQLDriver();
-            string url = MySQLDriver.generateUrl(dbHost, dbPort, dbName);
-            string[string] params = MySQLDriver.setUserAndPassword(dbUser, dbPass);
-            dataSource = new ConnectionPoolDataSourceImpl(driver, url, params);
-            dialect = new MySQLDialect();
-        }
+		final switch(dbType.toUpper) {
+			case "SQLITE":
+				dataSource = createSQLiteDataSource();
+				dialect = new SQLiteDialect();
+				break;
+			case "MYSQL":
+				dataSource = createMySQLDataSource();
+				dialect = new MySQLDialect();
+            	break;
+		}
 
     	logDebug("Creating schema meta data from annotations...");
     	EntityMetaData schema = new SchemaInfoImpl!(User, UserData, BlogPost, BlogPostData, Comment, CommentData);
 
     	logDebug("Creating session factory...");
     	return new SessionFactoryImpl(schema, dialect, dataSource);
+    }
+
+    private DataSource createSQLiteDataSource() {
+		auto sqliteFile = properties.as!(string)("db.file");
+		logInfo("PoodinisContext -> loading SQLite file...  %s", sqliteFile);
+		SQLITEDriver driver = new SQLITEDriver();
+		return new ConnectionPoolDataSourceImpl(driver, sqliteFile, null);
+    }
+
+    private DataSource createMySQLDataSource() {
+    	auto dbHost = properties.as!(string)("db.domain", "localhost");
+		auto dbPort = properties.as!(ushort)("db.port", 3306);
+		auto dbName = properties.as!(string)("db.name");
+		auto dbUser = properties.as!(string)("db.user");
+		auto dbPass = properties.as!(string)("db.password");
+
+		logInfo("PoodinisContext -> connecting to MySQL...  %s@%s:%s/%s", dbUser, dbHost, dbPort, dbName);
+
+		MySQLDriver driver = new MySQLDriver();
+		string url = MySQLDriver.generateUrl(dbHost, dbPort, dbName);
+		string[string] params = MySQLDriver.setUserAndPassword(dbUser, dbPass);
+		return new ConnectionPoolDataSourceImpl(driver, url, params);
     }
 
     private void configureLogging() {
@@ -71,24 +84,24 @@ class PoodinisContext : ApplicationContext {
 
         LogLevel level;
 
-        switch(logLevel) {
-            case "verbose":
+        switch(logLevel.toUpper) {
+            case "VERBOSE":
                 level = LogLevel.debugV;
                 setLogFile(logFile, LogLevel.debugV);
                 break;
-            case "debug":
+            case "DEBUG":
                 level = LogLevel.debug_;
                 setLogFile(logFile, LogLevel.debug_);
                 break;
-            case "trace":
+            case "TRACE":
                 level = LogLevel.trace;
                 setLogFile(logFile, LogLevel.trace);
                 break;
-            case "error":
+            case "ERROR":
                 level = LogLevel.error;
                 setLogFile(logFile, LogLevel.error);
                 break;
-            case "warn":
+            case "WARN":
                 level = LogLevel.warn;
                 setLogFile(logFile, LogLevel.warn);
                 break;

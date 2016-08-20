@@ -8,12 +8,12 @@ class Properties {
 
     private string[string] _properties;
 
-    public this() {
+    public this(string filePath = "./app.properties") {
     	version(DEVELOPMENT) {
-    		logInfo("Properties -> test properties");
+    		logInfo("Properties -> configuring test properties");
+    		_properties["db.dialect"] = "SQLite";
     		_properties["db.file"] = "schema.sql";
     	} else {
-    		string filePath = "./app.properties";
 			readOption("p|properties", &filePath, "path to properites file. Defaults to './app.properties'");
 
 			logInfo("Properties -> loading properties file: '%s'", filePath);
