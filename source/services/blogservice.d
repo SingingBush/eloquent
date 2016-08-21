@@ -80,8 +80,8 @@ class BlogServiceImpl : BlogService {
 		Session session = sessionFactory.openSession();
 		scope(exit) session.close();
 
-		Query q = session.createQuery("FROM BlogPost WHERE postType='post' AND author=:Author ORDER BY created DESC")
-					.setParameter("Author", user);
+		Query q = session.createQuery("FROM BlogPost WHERE postType='post' AND author=:user_id ORDER BY created DESC")
+					.setParameter("user_id", user.id);
 		auto blogPosts = q.list!BlogPost();
 		//logInfo("posts %s", q.listRows()); // shows all params
 		logDebug("BlogService - > found %s BlogPosts: %s", blogPosts.length, blogPosts);

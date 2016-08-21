@@ -19,7 +19,7 @@ class WebappController {
 
 	//@Autowire!UserServiceImpl
 	public UserService _userService;
-	
+
 	//@Autowire!BlogServiceImpl
 	public BlogService _blogService;
 
@@ -97,10 +97,9 @@ class WebappController {
 		bool authenticated = ms_authenticated;
 		string username = ms_username;
 
-		// todo: put some service layer in place to return a user object for the given username
 		auto user = _userService.findUser(username);
 
-		auto blogPosts = _blogService.findAllByUser(user); // todo: fix this "mysqlddbc.d(541): Unsupported parameter type"
+		auto blogPosts = _blogService.findAllByUser(user);
 
 		render!("profile.dt", authenticated, username, user, blogPosts);
 	}

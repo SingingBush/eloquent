@@ -1,5 +1,7 @@
 module eloquent.model.user;
 
+import eloquent.model.blogpost;
+
 import hibernated.core;
 
 import std.datetime;
@@ -16,27 +18,27 @@ enum UserStatus {
 public class User {
 
 public:
-	
+
 	@Id
 	@Generated
-	Uint id; // bigint (20) NOT NULL auto inc
+	uint id; // bigint (20) NOT NULL auto inc
 
 	@Column("user_login",60)
 	@NotNull
 	string username; // user_login varchar(60) NOT NULL
-	
+
 	@Column("user_pass",64)
 	@NotNull
 	string password; // user_pass varchar(64) NOT NULL
-	
+
 	@Column("user_nicename",50)
 	@NotNull
 	string nicename; // user_nicename varchar(50) NOT NULL
-	
+
 	@Column("display_name",250)
 	@NotNull
 	string displayname; // display_name varchar(250) NOT NULL
-	
+
 	@Column("user_status",11)
 	@NotNull
 	UserStatus status; //
@@ -54,7 +56,6 @@ public:
 	DateTime registered; // user_registered datetime NOT NULL
 
 	@OneToMany
-	//UserData[] data;
 	LazyCollection!UserData data;
 
 public:
@@ -75,7 +76,7 @@ public:
 	@Column("umeta_id", 20) // bigint(20)
 	@Id
 	@Generated
-	Uint id;
+	uint id;
 
 	@ManyToOne
 	@JoinColumn("user_id")

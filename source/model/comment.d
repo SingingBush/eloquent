@@ -18,7 +18,7 @@ public:
 	@Id
 	@Generated
 	@Column("comment_ID")
-	Uint id; // bigint (20) NOT NULL auto inc
+	uint id; // bigint (20) NOT NULL auto inc
 
     @ManyToOne
     @JoinColumn("comment_post_ID")
@@ -74,7 +74,7 @@ public:
 	@Column("meta_id", 20) // bigint(20)
 	@Id
 	@Generated
-	Uint id;
+	uint id;
 
 	@ManyToOne
 	@JoinColumn("comment_id")

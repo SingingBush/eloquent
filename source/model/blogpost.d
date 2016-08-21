@@ -21,10 +21,10 @@ public class BlogPost {
 public:
 	@Id
 	@Generated
-	Uint id; // bigint (20) NOT NULL auto inc
+	uint id; // bigint (20) NOT NULL auto inc
 
-	@OneToOne @NotNull @JoinColumn("post_author")
-	User author;
+	@ManyToOne @NotNull @JoinColumn("post_author")
+	Lazy!User author;
 
 	@Column("post_date") @NotNull
 	DateTime created;
@@ -59,11 +59,11 @@ public:
 	@Column("meta_id", 20) // bigint(20)
 	@Id
 	@Generated
-	Uint id;
+	uint id;
 
 	@ManyToOne
 	@JoinColumn("post_id")
-	BlogPost user;
+	BlogPost blogPost;
 
 	@Column("meta_key", 255)
 	@Null
