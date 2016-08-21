@@ -35,7 +35,7 @@ db.name=mywordpressdb
 db.user=dbusername
 db.password=dbPassword
 
-auth.salt=PUT SOME RANDOMLY GENERATED SALT HERE
+auth.salt=RANDOMLY GENERATED 32-bit SALT HERE
 
 # optional log settings. The default log level is info (options: verbose, debug, trace, error, info) with filename as eloquent-server.log
 log.file=eloquent-server.log

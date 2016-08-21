@@ -68,13 +68,15 @@ class WebappController {
 
 		logInfo("User retrieved from db: %s", user);
 
-        string salt = _properties.as!(string)("auth.salt");
-        string hash = generateSimplePasswordHash(password, salt); // todo: store password Hash in db a retrieve via user.pwHash
-        auto authed = testSimplePasswordHash(hash, password, salt);
+		enforceHTTP(user !is null, HTTPStatus.forbidden, "Invalid user name or password.");
 
-		enforceHTTP(user !is null && authed, HTTPStatus.forbidden, "Invalid user name or password.");
-		ms_authenticated = true;
+        string salt = _properties.as!(string)("auth.salt");
+//        string hash = generateSimplePasswordHash(password, salt);
+//        logInfo("salt: %s, hash: %s", salt, hash);
+        ms_authenticated = testSimplePasswordHash(user.pass, password, salt);
 		ms_username = username;
+
+		enforceHTTP(ms_authenticated, HTTPStatus.forbidden, "Invalid user name or password.");
 
 		//auto session = startSession();
 		//session.set("user", user);

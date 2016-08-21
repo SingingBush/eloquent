@@ -29,7 +29,7 @@ public:
 
 	@Column("user_pass",64)
 	@NotNull
-	string password; // user_pass varchar(64) NOT NULL
+	string pass; // user_pass varchar(64) NOT NULL
 
 	@Column("user_nicename",50)
 	@NotNull
