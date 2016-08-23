@@ -10,7 +10,8 @@
 		"consoled": "~>1.0.4",
 		"vibe-d": "~>0.7.30-alpha.4",
 		"poodinis": "~>6.3.0",
-		"hibernated": "~>0.2.26"
+		"hibernated": "~>0.2.26",
+		"ddbc": "0.2.24"
 	},
 	"targetType": "executable",
 	"buildRequirements": [

@@ -38,12 +38,20 @@ class PoodinisContext : ApplicationContext {
 
 		final switch(dbType.toUpper) {
 			case "SQLITE":
-				dataSource = createSQLiteDataSource();
-				dialect = new SQLiteDialect();
+				version(USE_SQLITE) {
+					dataSource = createSQLiteDataSource();
+					dialect = new SQLiteDialect();
+				} else {
+					logError("DB configured for SQLite dialect but SQLite was not enabled in the build");
+				}
 				break;
 			case "MYSQL":
-				dataSource = createMySQLDataSource();
-				dialect = new MySQLDialect();
+				version(USE_MYSQL) {
+					dataSource = createMySQLDataSource();
+					dialect = new MySQLDialect();
+				} else {
+					logError("DB configured for MySQL dialect but MySQL was not enabled in the build");
+				}
             	break;
 		}
 
@@ -54,15 +62,18 @@ class PoodinisContext : ApplicationContext {
     	return new SessionFactoryImpl(schema, dialect, dataSource);
     }
 
-    private DataSource createSQLiteDataSource() {
+version(USE_SQLITE) {
+	private DataSource createSQLiteDataSource() {
 		auto sqliteFile = properties.as!(string)("db.file");
 		logInfo("PoodinisContext -> loading SQLite file...  %s", sqliteFile);
 		SQLITEDriver driver = new SQLITEDriver();
 		return new ConnectionPoolDataSourceImpl(driver, sqliteFile, null);
-    }
+	}
+}
 
-    private DataSource createMySQLDataSource() {
-    	auto dbHost = properties.as!(string)("db.domain", "localhost");
+version(USE_MYSQL) {
+	private DataSource createMySQLDataSource() {
+		auto dbHost = properties.as!(string)("db.domain", "localhost");
 		auto dbPort = properties.as!(ushort)("db.port", 3306);
 		auto dbName = properties.as!(string)("db.name");
 		auto dbUser = properties.as!(string)("db.user");
@@ -74,7 +85,8 @@ class PoodinisContext : ApplicationContext {
 		string url = MySQLDriver.generateUrl(dbHost, dbPort, dbName);
 		string[string] params = MySQLDriver.setUserAndPassword(dbUser, dbPass);
 		return new ConnectionPoolDataSourceImpl(driver, url, params);
-    }
+	}
+}
 
     private void configureLogging() {
         immutable auto logFile = properties.as!(string)("log.file", "eloquent-server.log");
