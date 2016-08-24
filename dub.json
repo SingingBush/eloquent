@@ -24,6 +24,7 @@
 		"bower install",
 		"mkdir -p ./public/js ./public/css ./public/fonts",
 		"rsync -u bower_components/jquery/dist/jquery.min.js ./public/js/jquery.min.js",
+		"rsync -u bower_components/tether/dist/js/tether.min.js ./public/js/tether.min.js",
 		"rsync -u bower_components/bootstrap/dist/css/bootstrap.min.css ./public/css/bootstrap.min.css",
 		"rsync -u bower_components/bootstrap/dist/js/bootstrap.min.js ./public/js/bootstrap.min.js",
 		"rsync -u bower_components/font-awesome/css/font-awesome.min.css ./public/css/font-awesome.min.css",

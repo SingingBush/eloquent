@@ -16,6 +16,7 @@ bower_components/
 public/css/*.css
 public/js/bootstrap*
 public/js/jquery.min.js
+public/js/tether.min.js
 public/fonts/
 
 # Ignore Intellij IDEA folder:
@@ -28,6 +29,7 @@ public/fonts/
 # Ignore the executable and log file that is generated when running the app
 eloquent
 *.log
+*.sqlite
 
 # ignore properties that are used when running the application
 *.properties
