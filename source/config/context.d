@@ -59,7 +59,17 @@ class PoodinisContext : ApplicationContext {
     	EntityMetaData schema = new SchemaInfoImpl!(User, UserData, BlogPost, BlogPostData, Comment, CommentData);
 
     	logDebug("Creating session factory...");
-    	return new SessionFactoryImpl(schema, dialect, dataSource);
+    	SessionFactoryImpl factory = new SessionFactoryImpl(schema, dialect, dataSource);
+
+		immutable bool createSchema = properties.as!(bool)("db.createSchema", false);
+        if(createSchema) {
+			Connection conn = dataSource.getConnection();
+			scope(exit) conn.close();
+			// create tables if not exist
+			logDebug("Creating database tables...");
+			factory.getDBMetaData().updateDBSchema(conn, false, true);
+        }
+        return factory;
     }
 
 version(USE_SQLITE) {

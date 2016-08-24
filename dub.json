@@ -34,6 +34,16 @@
 	"configurations": [
 		{
 			"name": "default",
+			"versions": ["PRODUCTION", "USE_MYSQL", "USE_SQLITE", "USE_PGSQL"],
+			"subConfigurations": {
+				"vibe-d:core": "libevent",
+				"hibernated": "full",
+				"ddbc": "full"
+			},
+			"buildRequirements": ["silenceWarnings"]
+		},
+		{
+			"name": "mysql",
 			"versions": ["PRODUCTION", "USE_MYSQL"],
 			"subConfigurations": {
 				"vibe-d:core": "libevent",

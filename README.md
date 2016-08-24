@@ -34,6 +34,7 @@ db.port=3306
 db.name=mywordpressdb
 db.user=dbusername
 db.password=dbPassword
+db.createSchema=false
 
 auth.salt=RANDOMLY GENERATED 32-bit SALT HERE
 
