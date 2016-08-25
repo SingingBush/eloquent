@@ -25,3 +25,20 @@ class Properties {
         return _properties.as!(T)(name, alternative);
     }
 }
+
+struct TranslationContext {
+	import std.typetuple : TypeTuple;
+	alias languages = TypeTuple!("en_GB", "de_DE");
+
+	import vibe.web.web;
+	mixin translationModule!"text";
+
+	static string determineLanguage(HTTPServerRequest req) {
+		import std.string : split, replace;
+		auto acc_lang = "Accept-Language" in req.headers;
+		if(acc_lang) {
+			return replace(split(*acc_lang, ",")[0], "-", "_");
+		}
+		return null;
+	}
+}

@@ -13,6 +13,7 @@
 		"hibernated": "~>0.2.26",
 		"ddbc": "0.2.24"
 	},
+	"stringImportPaths": ["views", "i18n"],
 	"targetType": "executable",
 	"buildRequirements": [
 		"allowWarnings"
