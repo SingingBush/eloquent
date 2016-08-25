@@ -12,6 +12,7 @@ import eloquent.model.user, eloquent.model.blogpost;
 import eloquent.services.userservice, eloquent.services.blogservice;
 
 // This is essentially like using Springs @Controller for handling routes in Spring MVC
+@translationContext!TranslationContext
 class WebappController {
 
     //@Autowire

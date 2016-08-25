@@ -1,0 +1,6 @@
+
+msgid "home.welcome-message"
+msgstr "Home Page"
+
+msgid "txt.read-more"
+msgstr "Read More"
