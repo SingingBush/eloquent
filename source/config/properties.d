@@ -11,10 +11,12 @@ class Properties {
     public this(string filePath = "./app.properties") {
     	version(DEVELOPMENT) {
     		logInfo("Properties -> configuring test properties");
+    		_properties["http.port"] = "8080";
     		_properties["db.dialect"] = "SQLite";
     		_properties["db.file"] = "testdb.sqlite";
     		_properties["db.createSchema"] = "true";
     		_properties["db.createTestData"] = "true";
+    		_properties["log.level"] = "debug";
     	} else {
 			readOption("p|properties", &filePath, "path to properites file. Defaults to './app.properties'");
 
