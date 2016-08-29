@@ -61,7 +61,7 @@ class EloquentDatabaseImpl : EloquentDatabase {
 			scope(exit) conn.close();
 			// create tables if not exist
 			logInfo("Creating database tables...");
-			factory.getDBMetaData().updateDBSchema(conn, false, true); // bools are: dropTables, createTables
+			factory.getDBMetaData().updateDBSchema(conn, true, true); // bools are: dropTables, createTables
 		}
 
 		immutable bool createTestData = _properties.as!(bool)("db.createTestData", false);

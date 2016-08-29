@@ -12,17 +12,11 @@ shared static this() {
 
 	Properties properties = container.resolve!Properties;
 
-	//container.register!WebappController;
-	//auto webapp = container.resolve!WebappController;
-
-	//WebappController webapp = new WebappController();
-	//container.register!(WebappController).existingInstance(webapp);
-
 	auto router = new URLRouter;
 	//router.get("*", (req, res) {req.params["version"] = "1.0-SNAPSHOT";}); //todo: find out why this breaks things like @errorDisplay
 	router.get("*", serveStaticFiles("public/"));
-	router.registerWebInterface(new WebappController);
-	router.registerWebInterface(new AdminController);
+	router.registerWebInterface(container.resolve!WebappController);
+	router.registerWebInterface(container.resolve!AdminController);
 
 	auto settings = new HTTPServerSettings;
 	settings.port = properties.as!(ushort)("http.port", 80);

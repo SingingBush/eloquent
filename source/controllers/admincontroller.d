@@ -12,21 +12,14 @@ import eloquent.services.userservice, eloquent.services.blogservice;
 
 class AdminController {
 
-    //@Autowire
-    public Properties _properties;
+    @Autowire
+    private Properties _properties;
 
-    //@Autowire!UserServiceImpl
-    public UserService _userService;
+    @Autowire
+    private UserService _userService;
 
-    //@Autowire!BlogServiceImpl
-    public BlogService _blogService;
-
-    public this() {
-        auto container = DependencyContainer.getInstance();
-        _properties = container.resolve!Properties;
-        _userService = container.resolve!UserService;
-        _blogService = container.resolve!BlogService;
-    }
+    @Autowire
+    private BlogService _blogService;
 
     @method(HTTPMethod.GET) @path("/admin")
     void index() {

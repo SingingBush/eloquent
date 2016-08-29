@@ -5,6 +5,7 @@ import poodinis;
 import vibe.core.log; // only the logger is needed
 
 import eloquent.config.properties, eloquent.config.database, eloquent.config.logging;
+import eloquent.controllers.web, eloquent.controllers.admin;
 import eloquent.services.userservice, eloquent.services.blogservice;
 
 class PoodinisContext : ApplicationContext {
@@ -27,6 +28,10 @@ class PoodinisContext : ApplicationContext {
         container.register!(SessionFactory, SessionFactoryImpl)([RegistrationOption.doNotAddConcreteTypeRegistration]).existingInstance(sessionFactory);
         container.register!(UserService, UserServiceImpl)([RegistrationOption.doNotAddConcreteTypeRegistration]);
         container.register!(BlogService, BlogServiceImpl)([RegistrationOption.doNotAddConcreteTypeRegistration]);
+
+		// register Controllers (used as vibe-d WebInterface)
+        container.register!WebappController;
+        container.register!AdminController;
     }
 
 //	@Component
