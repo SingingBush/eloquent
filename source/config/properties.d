@@ -12,7 +12,9 @@ class Properties {
     	version(DEVELOPMENT) {
     		logInfo("Properties -> configuring test properties");
     		_properties["db.dialect"] = "SQLite";
-    		_properties["db.file"] = "schema.sql";
+    		_properties["db.file"] = "testdb.sqlite";
+    		_properties["db.createSchema"] = "true";
+    		_properties["db.createTestData"] = "true";
     	} else {
 			readOption("p|properties", &filePath, "path to properites file. Defaults to './app.properties'");
 

@@ -60,8 +60,43 @@ class EloquentDatabaseImpl : EloquentDatabase {
 			Connection conn = dataSource.getConnection();
 			scope(exit) conn.close();
 			// create tables if not exist
-			logDebug("Creating database tables...");
-			factory.getDBMetaData().updateDBSchema(conn, false, true);
+			logInfo("Creating database tables...");
+			factory.getDBMetaData().updateDBSchema(conn, false, true); // bools are: dropTables, createTables
+		}
+
+		immutable bool createTestData = _properties.as!(bool)("db.createTestData", false);
+		if(createTestData) {
+			Session session = factory.openSession();
+			scope(exit) session.close();
+
+			import std.datetime;
+			SysTime now = Clock.currTime(UTC());
+
+			User user = new User;
+			user.username = "test";
+
+			string salt = _properties.as!(string)("auth.salt");
+			import vibe.crypto.passwordhash;
+			string hash = generateSimplePasswordHash("password", salt);
+			user.pass = hash;
+
+			user.nicename = "Ben";
+			user.displayname = "Benny";
+			user.email = "test@domain.com";
+			user.url = "";
+			user.registered = cast(DateTime) now;
+			user.status = UserStatus.DEFAULT;
+			session.save(user);
+
+			BlogPost bp = new BlogPost;
+			bp.author = user;
+			bp.created = cast(DateTime) now;
+			bp.modified = cast(DateTime) now;
+			bp.title = "Test Post 1";
+			bp.content = "blah blah blah blah blah blah blah blah blah blah";
+			bp.excerpt = "some post about stuff";
+			bp.postType = "post";
+			session.save(bp);
 		}
 		return factory;
 	}
