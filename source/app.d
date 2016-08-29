@@ -2,12 +2,15 @@
 import poodinis;
 import vibe.d;
 
+import eloquent.config.properties;
 import eloquent.config.context;
 import eloquent.controllers.web, eloquent.controllers.admin;
 
 shared static this() {
 	auto container = DependencyContainer.getInstance();
 	container.registerContext!PoodinisContext; // Create application context before doing anything else
+
+	Properties properties = container.resolve!Properties;
 
 	//container.register!WebappController;
 	//auto webapp = container.resolve!WebappController;
@@ -22,7 +25,7 @@ shared static this() {
 	router.registerWebInterface(new AdminController);
 
 	auto settings = new HTTPServerSettings;
-	settings.port = 8080;
+	settings.port = properties.as!(ushort)("http.port", 80);
 	settings.bindAddresses = ["::1", "127.0.0.1"];
 	settings.sessionStore = new MemorySessionStore;
 	settings.errorPageHandler = toDelegate(&errorPage);

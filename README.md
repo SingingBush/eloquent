@@ -28,6 +28,8 @@ You'll need an existing wordpress database running on MySQL or Mariadb. The appl
 The properties file should contain your database connection details and path for an error log in the following format:
 
 ```
+http.port=80
+
 db.dialect=MySQL
 db.domain=localhost
 db.port=3306
