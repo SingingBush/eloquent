@@ -9,7 +9,7 @@ header
             ul.nav.navbar-nav.pull-right
                 - if (authenticated)
                     li.nav-item
-                        a.nav-link(href="/profile")
+                        a.nav-link(href="/profile/#{username}")
                             i.fa.fa-user Profile
                 - else
                     li.nav-item

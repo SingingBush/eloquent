@@ -10,10 +10,11 @@ import vibe.web.web;
 import eloquent.config.properties;
 import eloquent.model.user, eloquent.model.blogpost;
 import eloquent.services.userservice, eloquent.services.blogservice;
+import eloquent.controllers;
 
 // This is essentially like using Springs @Controller for handling routes in Spring MVC
 @translationContext!TranslationContext
-class WebappController {
+class WebappController : BaseController {
 
     @Autowire
     private Properties _properties;
@@ -23,12 +24,6 @@ class WebappController {
 
 	@Autowire
 	private BlogService _blogService;
-
-	private {
-		// stored in the session store
-		SessionVar!(bool, "authenticated") ms_authenticated;
-		SessionVar!(string, "username") ms_username;
-	}
 
 	// GET /
 	void index() {
@@ -76,7 +71,8 @@ class WebappController {
 		//session.set("user", user);
 		//logInfo("form: %s", form["password"]);
 
-		redirect("/profile");
+		import std.string;
+		redirect("/profile/%s".format(username));
 	}
 
 	// POST /logout
@@ -88,12 +84,12 @@ class WebappController {
 		redirect("/");
 	}
 
-	// @method(HTTPMethod.GET) @path("profile")
-	void getProfile() {
+	@method(HTTPMethod.GET) @path("profile/:username")
+	void getProfile(HTTPServerRequest req, string _error = null, string _username = null) {
 		bool authenticated = ms_authenticated;
-		string username = ms_username;
+		string username = _username !is null? _username : ms_username;
 
-		auto user = _userService.findUser(username);
+		auto user = _userService.findUser(_username);
 
 		auto blogPosts = _blogService.findAllByUser(user);
 

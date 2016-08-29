@@ -9,9 +9,9 @@ block body
 						button.close(type="button", data-dismiss="alert") x
 						| Here are your posts #{user.username}
 				- else
-					.alert.alert-dismissable.alert-danger
+					.alert.alert-dismissable.alert-success
 						button.close(type="button", data-dismiss="alert") x
-						| This shouldn't happen
+						| Displaying posts for #{username}
 		.row
 			.col-md-12
 				- foreach( p; blogPosts )

@@ -36,6 +36,7 @@ shared static ~this() {
 
 void errorPage(HTTPServerRequest req, HTTPServerResponse res, HTTPServerErrorInfo error) {
     bool authenticated = false; // kludge for getting template to render when serving error page
+    string username = null;
     req.params["version"] = "1.0-SNAPSHOT";
-    render!("error.dt", req, error, authenticated)(res);
+    render!("error.dt", req, error, authenticated, username)(res);
 }
