@@ -1,4 +1,9 @@
 header
+    #navbar-header.navbar-collapse.inverse.collapse(aria-expanded="false")
+        .container
+            - if (user.authenticated)
+                a.nav-link(href="/logout") Logout
+
     nav.navbar.navbar-sticky-top.navbar-dark.bg-inverse(role='navigation')
         .container
             a.navbar-brand(href="/")
@@ -6,11 +11,18 @@ header
             ul.nav.navbar-nav
                 li.nav-item
                     a.nav-link(href="/") Home
-            ul.nav.navbar-nav.pull-right
-                - if (authenticated)
+                - if (user.administrator)
                     li.nav-item
-                        a.nav-link(href="/profile/#{username}")
-                            i.fa.fa-user Profile
+                        a.nav-link(href="/admin") Admin
+            ul.nav.navbar-nav.pull-right
+                - if (user.authenticated)
+                    li.nav-item
+                        a.nav-link(href="/profile/#{user.username}")
+                            i.fa.fa-user
+                            | Profile
+                    li.nav-item
+                        a.nav-link(href="/logout") Logout
+                    button.navbar-toggler.collapsed(type="button", data-toggle="collapse", data-target="#navbar-header", aria-expanded="false") ☰
                 - else
                     li.nav-item
                         a.nav-link(href="/login") Login

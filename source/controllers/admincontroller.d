@@ -2,7 +2,6 @@ module eloquent.controllers.admin;
 
 import poodinis;
 import vibe.core.core;
-import vibe.core.log;
 import vibe.crypto.passwordhash;
 import vibe.http.router;
 import vibe.web.web;
@@ -11,6 +10,7 @@ import eloquent.config.properties;
 import eloquent.services.userservice, eloquent.services.blogservice;
 import eloquent.controllers;
 
+// handles everything under '/admin'
 class AdminController : BaseController {
 
     @Autowire
@@ -22,36 +22,36 @@ class AdminController : BaseController {
     @Autowire
     private BlogService _blogService;
 
-    @method(HTTPMethod.GET) @path("/admin")
+	@admin
+    @method(HTTPMethod.GET)
     void index() {
         logInfo("GET: /admin");
 
-        bool authenticated = ms_authenticated;
-        string username = ms_username;
+        CurrentUser user = currentUser;
 
-        render!("admin/manageusers.dt", authenticated, username);
+        render!("admin/manageusers.dt", user);
     }
 
-    @method(HTTPMethod.GET) @path("/admin/comments")
+	@admin
+    @method(HTTPMethod.GET) @path("/comments")
     void manageComments() {
         logInfo("GET: /admin/comments");
 
         auto comments = _blogService.getComments();
 
-		bool authenticated = ms_authenticated;
-        string username = ms_username;
+        CurrentUser user = currentUser;
 
-        render!("admin/managecomments.dt", authenticated, username, comments);
+        render!("admin/managecomments.dt", comments, user);
     }
 
-    @method(HTTPMethod.GET) @path("/admin/users")
+	@admin
+    @method(HTTPMethod.GET) @path("/users")
     void manageUsers() {
         logInfo("GET: /admin/users");
 
-		bool authenticated = ms_authenticated;
-        string username = ms_username;
+        CurrentUser user = currentUser;
 
-        render!("admin/manageusers.dt", authenticated, username);
+        render!("admin/manageusers.dt", user);
     }
 
 }

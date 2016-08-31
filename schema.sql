@@ -52,11 +52,12 @@ CREATE TABLE wp_postmeta(
 CREATE TABLE wp_posts(
   ID INTEGER PRIMARY KEY AUTOINCREMENT,
   post_author INTEGER DEFAULT 0,
-  post_date datetime DEFAULT '0000-00-00 00:00:00',
-  post_modified datetime DEFAULT '0000-00-00 00:00:00',
-  post_content longtext,
-  post_title text,
-  post_excerpt text,
+  post_date datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  post_modified datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  post_content longtext NOT NULL,
+  post_title text NOT NULL,
+  post_excerpt text NOT NULL,
+  post_type varchar(20) NOT NULL,
   post_status varchar(20) DEFAULT 'publish',
   comment_status varchar(20) DEFAULT 'open',
   ping_status varchar(20) DEFAULT 'open'
@@ -79,7 +80,7 @@ CREATE TABLE wp_users(
   user_registered datetime DEFAULT '0000-00-00 00:00:00',
   user_activation_key varchar(60),
   user_status int(11) DEFAULT 0,
-  display_name varchar(250)
+  display_name varchar(250) NULL
 );
 
 INSERT INTO wp_users(user_login, user_pass, user_nicename, user_email, user_url, user_registered)

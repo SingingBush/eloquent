@@ -4,7 +4,7 @@ block body
 	div.container(role='main')
 		.row
 			.col-md-6.offset-md-3.col-sm-8.offset-sm-2
-				- if (authenticated)
+				- if (user.authenticated)
 					.alert.alert-dismissable.alert-success
 						button.close(type="button", data-dismiss="alert") x
 						| Here are your posts #{user.username}

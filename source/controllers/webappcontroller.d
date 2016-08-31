@@ -2,10 +2,7 @@ module eloquent.controllers.web;
 
 import poodinis;
 import vibe.core.core;
-import vibe.core.log;
 import vibe.crypto.passwordhash;
-import vibe.http.router;
-import vibe.web.web;
 
 import eloquent.config.properties;
 import eloquent.model.user, eloquent.model.blogpost;
@@ -27,17 +24,15 @@ class WebappController : BaseController {
 
 	// GET /
 	void index() {
-		bool authenticated = ms_authenticated;
-		string username = ms_username;
 		auto blogPosts = _blogService.allBlogPosts();
-		render!("index.dt", authenticated, username, blogPosts);
+		CurrentUser user = currentUser;
+		render!("index.dt", blogPosts, user);
 	}
 
 	// @method(HTTPMethod.GET) @path("login")
 	void getLogin(string _error = null) {
-		bool authenticated = ms_authenticated;
-		string username = ms_username;
-		render!("login.dt", authenticated, username, _error);
+		CurrentUser user = currentUser;
+		render!("login.dt", _error, user);
 	}
 
 	// POST /login (username and password are automatically read as form fields)
@@ -62,37 +57,43 @@ class WebappController : BaseController {
         string salt = _properties.as!(string)("auth.salt");
 //        string hash = generateSimplePasswordHash(password, salt);
 //        logInfo("salt: %s, hash: %s", salt, hash);
-        ms_authenticated = testSimplePasswordHash(user.pass, password, salt);
-		ms_username = username;
 
-		enforceHTTP(ms_authenticated, HTTPStatus.forbidden, "Invalid user name or password.");
+		CurrentUser u;
+        u.authenticated = testSimplePasswordHash(user.pass, password, salt);
+		u.username = username;
+		currentUser = u;
+
+		enforceHTTP(currentUser.authenticated, HTTPStatus.forbidden, "Invalid user name or password.");
 
 		//auto session = startSession();
 		//session.set("user", user);
 		//logInfo("form: %s", form["password"]);
 
-		import std.string;
 		redirect("/profile/%s".format(username));
 	}
 
 	// POST /logout
 	@method(HTTPMethod.GET) @path("logout")
 	void getLogout() {
-		ms_username = null;
-		ms_authenticated = false;
+		CurrentUser u;
+		currentUser = u;
 		terminateSession();
 		redirect("/");
 	}
 
+	@auth
 	@method(HTTPMethod.GET) @path("profile/:username")
-	void getProfile(HTTPServerRequest req, string _error = null, string _username = null) {
-		bool authenticated = ms_authenticated;
-		string username = _username !is null? _username : ms_username;
+	void getProfile(HTTPServerRequest req, Json _user, string _error = null, string _username = null) {
+		string username = _username !is null? _username : currentUser.username;
 
-		auto user = _userService.findUser(_username);
+		auto person = _userService.findUser(_username);
 
-		auto blogPosts = _blogService.findAllByUser(user);
+		if(person is null) {
+			throw new HTTPStatusException(404, "Cannot find user: %s".format(username));
+		}
+		auto blogPosts = _blogService.findAllByUser(person);
 
-		render!("profile.dt", authenticated, username, user, blogPosts);
+		CurrentUser user = currentUser;
+		render!("profile.dt", username, blogPosts, user);
 	}
 }

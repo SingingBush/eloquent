@@ -16,7 +16,9 @@ shared static this() {
 	//router.get("*", (req, res) {req.params["version"] = "1.0-SNAPSHOT";}); //todo: find out why this breaks things like @errorDisplay
 	router.get("*", serveStaticFiles("public/"));
 	router.registerWebInterface(container.resolve!WebappController);
-	router.registerWebInterface(container.resolve!AdminController);
+	auto adminSettings = new WebInterfaceSettings;
+	adminSettings.urlPrefix = "/admin";
+	router.registerWebInterface(container.resolve!AdminController, adminSettings);
 
 	auto settings = new HTTPServerSettings;
 	settings.port = properties.as!(ushort)("http.port", 80);
@@ -35,8 +37,13 @@ shared static ~this() {
 }
 
 void errorPage(HTTPServerRequest req, HTTPServerResponse res, HTTPServerErrorInfo error) {
-    bool authenticated = false; // kludge for getting template to render when serving error page
-    string username = null;
+    CurrentUser user; // kludge for getting template to render when serving error page
     req.params["version"] = "1.0-SNAPSHOT";
-    render!("error.dt", req, error, authenticated, username)(res);
+    render!("error.dt", req, error, user)(res);
+}
+
+struct CurrentUser {
+	string username = null;
+	bool authenticated = false;
+	bool administrator = false;
 }
