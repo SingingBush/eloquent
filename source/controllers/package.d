@@ -1,6 +1,6 @@
 module eloquent.controllers;
 
-public import std.string;
+public import std.array, std.algorithm, std.string;
 public import eloquent.controllers.web, eloquent.controllers.admin;
 public import vibe.core.log, vibe.http.router, vibe.web.web, vibe.data.json;
 

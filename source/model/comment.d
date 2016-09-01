@@ -1,11 +1,6 @@
 module eloquent.model.comment;
 
-import eloquent.model.blogpost;
-import eloquent.model.user;
-
-import hibernated.core;
-
-import std.datetime, std.string;
+import eloquent.model;
 
 //enum CommentType {
 //}

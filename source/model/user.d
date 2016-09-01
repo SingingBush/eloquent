@@ -1,11 +1,6 @@
 module eloquent.model.user;
 
-import eloquent.model.blogpost;
-
-import hibernated.core;
-
-import std.datetime;
-import std.string;
+import eloquent.model;
 
 // supposedly the user_status field is a dead column in the wp_users table but it's still there
 enum UserStatus {
