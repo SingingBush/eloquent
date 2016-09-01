@@ -5,12 +5,12 @@ block title
 	
 block body
 	div.container(role='main')
-		.row
+		.row.login-row
 			.col-md-6.offset-md-3.col-sm-8.offset-sm-2
 				- if (user.authenticated)
 					h4 Sign Out
 					hr
-					form.form-horizontal(action="logout", method="POST")
+					form.form-horizontal(action="logout", method="GET")
 						button.btn.btn-primary.btn-lg.btn-block(type="submit") Log out
 				- else
 					h4 Log in

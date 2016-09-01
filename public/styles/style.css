@@ -7,6 +7,10 @@ body {
 	/*margin-bottom: 1.5rem;*/
 /*}*/
 
+.login-row {
+	margin: 10% -15px;
+}
+
 .jumbotron-primary {
 	/*background-color: rgba(54, 55, 197, 0.87);*/
 	background-color: #0275d8; /* Same Blue that is used by Bootstrap */

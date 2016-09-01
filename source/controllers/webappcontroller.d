@@ -61,6 +61,11 @@ class WebappController : BaseController {
 		CurrentUser u;
         u.authenticated = testSimplePasswordHash(user.pass, password, salt);
 		u.username = username;
+		import std.algorithm;
+		UserData[] data = user.data.find!(ud => ud.key == "user_level");
+		if(data.length > 0) {
+			u.administrator = data[0].value == "10";
+		}
 		currentUser = u;
 
 		enforceHTTP(currentUser.authenticated, HTTPStatus.forbidden, "Invalid user name or password.");

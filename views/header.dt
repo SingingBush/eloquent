@@ -22,7 +22,7 @@ header
                             | Profile
                     li.nav-item
                         a.nav-link(href="/logout") Logout
-                    button.navbar-toggler.collapsed(type="button", data-toggle="collapse", data-target="#navbar-header", aria-expanded="false") ☰
+                    button.navbar-toggler.collapsed(type="button", data-toggle="collapse", data-target="#navbar-header", aria-expanded="false") &#9776;
                 - else
                     li.nav-item
                         a.nav-link(href="/login") Login

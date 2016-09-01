@@ -56,7 +56,7 @@ public:
 	DateTime registered; // user_registered datetime NOT NULL
 
 	@OneToMany
-	LazyCollection!UserData data;
+	UserData[] data;
 
 public:
 	@Transient

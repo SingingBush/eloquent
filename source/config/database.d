@@ -88,13 +88,30 @@ class EloquentDatabaseImpl : EloquentDatabase {
 			user.status = UserStatus.DEFAULT;
 			session.save(user);
 
+			User adminUser = new User;
+			adminUser.username = "admin";
+			adminUser.pass = generateSimplePasswordHash("password", salt);
+			adminUser.nicename = "Administrator";
+			adminUser.displayname = "Administrator";
+			adminUser.email = "admin@domain.com";
+			adminUser.url = "";
+			adminUser.registered = cast(DateTime) now;
+			adminUser.status = UserStatus.DEFAULT;
+			session.save(adminUser);
+
+			UserData adminMetaData = new UserData;
+			adminMetaData.user = adminUser;
+			adminMetaData.key = "user_level";
+			adminMetaData.value = "10";
+			session.save(adminMetaData);
+
 			BlogPost bp = new BlogPost;
 			bp.author = user;
 			bp.created = cast(DateTime) now;
 			bp.modified = cast(DateTime) now;
-			bp.title = "Test Post 1";
-			bp.content = "blah blah blah blah blah blah blah blah blah blah";
-			bp.excerpt = "some post about stuff";
+			bp.title = "Some lovely test data";
+			bp.content = "Lorem ipsum dolor sit amet, ius eu suscipit honestatis consequuntur, velit cotidieque at eam, nullam salutandi ex eum. Errem pertinacia eu est, ea vel primis electram disputationi. Albucius concludaturque te quo, cu est vero soluta consulatu. Qui fugit euismod gloriatur in, solet fierent euripidis ne sit. Duo te melius nonumes molestie, vero detracto mandamus ei eos. Fugit erant vituperatoribus pro ea, ne everti delectus verterem pro.";
+			bp.excerpt = "Lorem ipsum dolor sit amet";
 			bp.postType = "post";
 			session.save(bp);
 		}
