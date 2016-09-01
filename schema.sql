@@ -85,4 +85,10 @@ CREATE TABLE wp_users(
 
 INSERT INTO wp_users(user_login, user_pass, user_nicename, user_email, user_url, user_registered)
 VALUES
-  ('user', 'password', 'Nice Name', 'email@domain.com', NULL, CURRENT_TIMESTAMP);
+  ('admin', 'password', 'Nice Name', 'user@domain.com', NULL, CURRENT_TIMESTAMP),
+  ('user', 'password', 'Administrator', 'admin@domain.com', NULL, CURRENT_TIMESTAMP);
+
+INSERT INTO wp_usermeta(user_id, meta_key, meta_value)
+VALUES
+(2, 'capabilities', 'a:1:{s:13:"administrator";s:1:"1";}'),
+(2, 'user_level', 10);
