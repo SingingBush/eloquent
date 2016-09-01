@@ -101,7 +101,7 @@ class EloquentDatabaseImpl : EloquentDatabase {
 
 			UserData adminMetaData = new UserData;
 			adminMetaData.user = adminUser;
-			adminMetaData.key = "user_level";
+			adminMetaData.key = "wp_user_level";
 			adminMetaData.value = "10";
 			session.save(adminMetaData);
 

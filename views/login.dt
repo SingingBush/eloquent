@@ -19,7 +19,7 @@ block body
 						.form-group
 							.input-group
 								label(for='usrName', class='sr-only') Username
-								input.form-control(id="usrName", type="text", name="username", placeholder="Username")
+								input.form-control(id="usrName", type="text", name="username", placeholder="Username", autofocus)
 								.input-group-addon
 									i.fa.fa-user
 						.form-group

@@ -61,7 +61,7 @@ class WebappController : BaseController {
 		CurrentUser u;
         u.authenticated = testSimplePasswordHash(user.pass, password, salt);
 		u.username = username;
-		UserData[] data = user.data.find!(ud => ud.key == "user_level");
+		UserData[] data = user.data.find!(ud => ud.key == "wp_user_level");
 		if(data.length > 0) {
 			u.administrator = data[0].value == "10";
 		}

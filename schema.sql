@@ -90,5 +90,5 @@ VALUES
 
 INSERT INTO wp_usermeta(user_id, meta_key, meta_value)
 VALUES
-(2, 'capabilities', 'a:1:{s:13:"administrator";s:1:"1";}'),
-(2, 'user_level', 10);
+(2, 'wp_capabilities', 'a:1:{s:13:"administrator";s:1:"1";}'),
+(2, 'wp_user_level', 10);
