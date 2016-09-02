@@ -27,8 +27,6 @@ os:
 script:
   - dub test --compiler=${DC}
 
-#after_success:
-#  - ./doveralls
 
 addons:
   apt:
@@ -36,5 +34,11 @@ addons:
 
 # GDC lags behind DMD
 matrix:
+  include:
+    - d: dmd
+      os: linux
+      script: dub test -b unittest-cov --compiler=${DC}
+      install: wget -O doveralls "https://github.com/ColdenCullen/doveralls/releases/download/v1.1.5/doveralls_linux_travis" && chmod +x doveralls
+      after_success: ./doveralls
   allow_failures:
     - d: gdc
