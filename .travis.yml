@@ -12,9 +12,11 @@ d:
 #  - gdc
 
 before_install:
-  - npm install -g bower
   - "if [ ${TRAVIS_OS_NAME} = 'osx' ]; then brew update; fi"
   - "if [ ${TRAVIS_OS_NAME} = 'osx' ]; then brew install libev libevent sqlite && brew link --force sqlite; fi"
+
+install:
+  - npm install -g bower
 
 # removed test coverage until can get 'dub test -b unittest-cov --compiler=${DC}' working
 #install:
@@ -34,10 +36,12 @@ addons:
 
 matrix:
   include:
-    - d: dmd
+    - env: NAME="Test Coverage - coveralls.io"
+      d: dmd
       os: linux
-      script: dub test --coverage --combined --compiler=${DC}
+      script: dub test -b unittest-cov --compiler=${DC}
       install: dub fetch doveralls
       after_success: dub run doveralls
   allow_failures:
     - d: gdc
+    - env: NAME="Test Coverage - coveralls.io"
