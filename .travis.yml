@@ -37,7 +37,7 @@ matrix:
   include:
     - d: dmd
       os: linux
-      script: dub test -b unittest-cov --compiler=${DC}
+      script: dub test --coverage --combined --compiler=${DC}
       install: dub fetch doveralls
       after_success: dub run doveralls
   allow_failures:
