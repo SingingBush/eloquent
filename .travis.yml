@@ -38,7 +38,7 @@ matrix:
     - d: dmd
       os: linux
       script: dub test -b unittest-cov --compiler=${DC}
-      install: wget -O doveralls "https://github.com/ColdenCullen/doveralls/releases/download/v1.1.5/doveralls_linux_travis" && chmod +x doveralls
-      after_success: ./doveralls
+      install: dub fetch doveralls
+      after_success: dub run doveralls
   allow_failures:
     - d: gdc

@@ -3,6 +3,8 @@ Eloquent
 
 [![Build Status](https://travis-ci.org/SingingBush/eloquent.png)](https://travis-ci.org/SingingBush/eloquent)
 
+[![Coverage Status](https://coveralls.io/repos/github/SingingBush/eloquent/badge.svg?branch=master)](https://coveralls.io/github/SingingBush/eloquent?branch=master)
+
 Eloquent is a lightweight web application written in [D](http://dlang.org). It is essentially an implementation of Wordpress. If you already have a Wordpress installation you can use the existing database and serve the content using Eloquent instead of the usual application written in PHP.
 
 > This application is currently a work in progress and should only currently be used as an example of how to get going with developing web applications in D. Functionality is currently limited to merely displaying existing blog posts.
