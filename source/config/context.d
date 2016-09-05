@@ -25,9 +25,9 @@ class PoodinisContext : ApplicationContext {
 		container.register!(EloquentDatabase, EloquentDatabaseImpl);
         EloquentDatabase dbConfig = container.resolve!EloquentDatabase;
         SessionFactoryImpl sessionFactory = dbConfig.configure();
-        container.register!(SessionFactory, SessionFactoryImpl)([RegistrationOption.doNotAddConcreteTypeRegistration]).existingInstance(sessionFactory);
-        container.register!(UserService, UserServiceImpl)([RegistrationOption.doNotAddConcreteTypeRegistration]);
-        container.register!(BlogService, BlogServiceImpl)([RegistrationOption.doNotAddConcreteTypeRegistration]);
+        container.register!(SessionFactory, SessionFactoryImpl)(RegistrationOption.doNotAddConcreteTypeRegistration).existingInstance(sessionFactory);
+        container.register!(UserService, UserServiceImpl)(RegistrationOption.doNotAddConcreteTypeRegistration);
+        container.register!(BlogService, BlogServiceImpl)(RegistrationOption.doNotAddConcreteTypeRegistration);
 
 		// register Controllers (used as vibe-d WebInterface)
         container.register!WebappController;

@@ -9,7 +9,7 @@
 		"proper-d": "~>0.0.2",
 		"consoled": "~>1.0.4",
 		"vibe-d": "~>0.7.30-beta.1",
-		"poodinis": "~>6.3.0",
+		"poodinis": "~>7.0.1",
 		"hibernated": "~>0.2.26",
 		"ddbc": "0.2.24"
 	},

@@ -7,7 +7,7 @@ import eloquent.config.context;
 import eloquent.controllers.web, eloquent.controllers.admin;
 
 shared static this() {
-	auto container = DependencyContainer.getInstance();
+	auto container = new shared DependencyContainer();
 	container.registerContext!PoodinisContext; // Create application context before doing anything else
 
 	Properties properties = container.resolve!Properties;
