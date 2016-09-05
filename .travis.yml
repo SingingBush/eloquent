@@ -5,10 +5,11 @@ sudo: required
 dist: trusty
 
 d:
-  - dmd
-  - dmd-2.069.2
-  - ldc
-  - gdc
+  - dmd-2.071.1
+#  - dmd-2.069.2
+  - ldc-1.1.0-beta2
+#  - ldc-1.0.0
+#  - gdc
 
 before_install:
   - npm install -g bower
@@ -27,12 +28,10 @@ os:
 script:
   - dub test --compiler=${DC}
 
-
 addons:
   apt:
     packages: [ libev-dev, libevent-dev, libsqlite3-dev ]
 
-# GDC lags behind DMD
 matrix:
   include:
     - d: dmd
