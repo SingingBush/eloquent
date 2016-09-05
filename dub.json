@@ -18,7 +18,7 @@
 	"buildRequirements": [
 		"allowWarnings"
 	],
-	"preGenerateCommands": [
+	"preGenerateCommands-posix": [
 		"if ! type \"npm\" > /dev/null; then echo -e \"You need to have Node.js and npm installed in order to build this project\nvisit https://nodejs.org for more info\"; exit 1; fi",
 		"if ! type \"bower\" > /dev/null; then echo -e \"You need to have Bower installed in order to build this project\n run \"npm install -g bower\" to install it using the Node Package Manager\nvisit http://bower.io/ for more info\"; exit 1; fi",
 		"printf \"\\033[94mInstalling Bower components...\\033[0m\n\"",
@@ -32,7 +32,23 @@
 		"rsync -u bower_components/font-awesome/fonts/fontawesome-webfont.* ./public/fonts/",
 		"echo client-side dependencies done."
 	],
-	"preBuildCommands": ["printf \"\\033[93mtodo\\033[0m get SASS compiler working as part of build\n\""],
+    "preGenerateCommands-windows": [
+        "where /q npm || echo \"You need to have Node.js and npm installed in order to build this project\nvisit https://nodejs.org for more info\"",
+        "where /q bower || echo \"You need to have Bower installed in order to build this project\n run \"npm install -g bower\" to install it using the Node Package Manager\nvisit http://bower.io/ for more info\"; exit 1; fi",
+        "echo Installing Bower components...",
+        "bower install",
+        "if not exist public\\js md public\\js",
+        "if not exist public\\css md public\\css",
+        "if not exist public\\fonts md public\\fonts",
+        "if not exist /public/js/jquery.min.js copy bower_components\\jquery\\dist\\jquery.min.js public\\js\\jquery.min.js",
+        "if not exist /public/js/tether.min.js copy bower_components\\tether\\dist\\js\\tether.min.js public\\js\\tether.min.js",
+        "if not exist /public/css/bootstrap.min.css copy bower_components\\bootstrap\\dist\\css\\bootstrap.min.css public\\css\\bootstrap.min.css",
+        "if not exist /public/js/bootstrap.min.js copy bower_components\\bootstrap\\dist\\js\\bootstrap.min.js public\\js\\bootstrap.min.js",
+        "if not exist /public/css/font-awesome.min.css copy bower_components\\font-awesome\\css\\font-awesome.min.css public\\css\\font-awesome.min.css",
+        "if not exist /public/fonts/fontawesome-webfont.woff copy bower_components\\font-awesome\\fonts\\fontawesome-webfont.* public\\fonts\\",
+        "echo client-side dependencies done."
+    ],
+	"preBuildCommands-posix": ["printf \"\\033[93mtodo\\033[0m get SASS compiler working as part of build\n\""],
 	"configurations": [
 		{
 			"name": "default",

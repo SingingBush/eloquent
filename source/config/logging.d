@@ -131,12 +131,12 @@ final class ConsoledLogger : Logger {
         resetColors();
         write("] ");
 
-        string file = replaceFirst(msg.file, regex(r".*\.dub\/packages\/"), ""); // don't show path to local dub repo
+        string file = replaceFirst(msg.file, regex(r".*\.?dub(\\|\/)packages(\\|\/)"), ""); // don't show path to local dub repo
         writec(Fg.cyan, file, Fg.initial, "(", Fg.cyan, msg.line, Fg.initial, "): ");
 	}
 
 	override void put(scope const(char)[] text) {
-		write(replaceFirst(text, regex(r".*\.dub\/packages\/"), ""));
+		write(replaceFirst(text, regex(r".*\.?dub(\\|\/)packages(\\|\/)"), ""));
 	}
 
 	override void endLine() {

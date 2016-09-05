@@ -29,7 +29,7 @@ class AdminController : BaseController {
 
         CurrentUser user = currentUser;
 
-        render!("admin/manageusers.dt", user);
+        render!("admin_users.dt", user);
     }
 
 	@admin
@@ -41,7 +41,7 @@ class AdminController : BaseController {
 
         CurrentUser user = currentUser;
 
-        render!("admin/managecomments.dt", comments, user);
+        render!("admin_comments.dt", comments, user);
     }
 
 	@auth
@@ -52,7 +52,7 @@ class AdminController : BaseController {
 
         CurrentUser user = currentUser;
 
-        render!("admin/manageusers.dt", user);
+        render!("admin_users.dt", user);
     }
 
 }
