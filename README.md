@@ -20,7 +20,7 @@ Eloquent is a lightweight web application written in [D](http://dlang.org). It i
 ## Yet to implement
 
  - editing/creating content
- - error handling (exceptions should result in a readable error page)
+ - comments
  - internationalisation
 
 ## Running the application
@@ -51,10 +51,26 @@ log.level=trace
 
 You'll need the D compiler and [DUB](http://code.dlang.org/download). The following versions or higher
 
- - dmd v2.069.2
- - dub v0.9.24
- 
-Front end dependencies are handled via [Bower](http://bower.io/) which can be installed using npm
+ - dmd v2.069.2 or ldc v1.0.0
+ - dub v1.0.0
+
+### Build using dub
+
+Release builds can be done using the _default_ configuration.
+
+```bash
+dub --compiler=ldc2
+```
+
+During development the _unittest_ configuration can be used if you only intend to use [sqlite](https://www.sqlite.org/).
+
+```bash
+dub --config=unittest
+```
+
+### Build dependencies (client side)
+
+The front end uses jQuery, Bootstrap 4, and Font Awesome. These dependencies are handled via [Bower](http://bower.io/) which can be installed using npm
 
 On Fedora nodejs and npm can be installed from the repository:
 
@@ -67,6 +83,10 @@ Then install bower globally:
 ```
 sudo npm install -g bower
 ```
+
+There's no need to do a `bower install` as this will be done by dub during the build process.
+
+### Build dependencies (server side)
 
 You will also need libevent on your system
 
