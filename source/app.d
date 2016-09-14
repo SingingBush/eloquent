@@ -4,7 +4,7 @@ import vibe.d;
 
 import eloquent.config.properties;
 import eloquent.config.context;
-import eloquent.controllers.web, eloquent.controllers.admin;
+import eloquent.controllers;
 
 shared static this() {
 	auto container = new shared DependencyContainer();
@@ -13,9 +13,14 @@ shared static this() {
 	Properties properties = container.resolve!Properties;
 
 	auto router = new URLRouter;
-	//router.get("*", (req, res) {req.params["version"] = "1.0-SNAPSHOT";}); //todo: find out why this breaks things like @errorDisplay
-	router.get("*", serveStaticFiles("public/"));
-	router.registerWebInterface(container.resolve!WebappController);
+
+	router
+		.any("*", delegate(req, res) {
+			req.params["version"] = "1.0-SNAPSHOT";
+		})
+		.get("*", serveStaticFiles("public/"))
+		.registerWebInterface(container.resolve!WebappController);
+
 	auto adminSettings = new WebInterfaceSettings;
 	adminSettings.urlPrefix = "/admin";
 	router.registerWebInterface(container.resolve!AdminController, adminSettings);
@@ -24,7 +29,11 @@ shared static this() {
 	settings.port = properties.as!(ushort)("http.port", 80);
 	settings.bindAddresses = ["::1", "127.0.0.1"];
 	settings.sessionStore = new MemorySessionStore;
-	settings.errorPageHandler = toDelegate(&errorPage);
+	settings.errorPageHandler = delegate(req, res, error) {
+		CurrentUser user; // kludge for getting template to render when serving error page
+		render!("error.dt", req, error, user)(res);
+	};
+	
 	listenHTTP(settings, router);
 
 	logInfo("Eloquent server ready...");
@@ -34,12 +43,6 @@ shared static ~this() {
 	logInfo("Clearing all Registered dependencies...");
 	DependencyContainer.getInstance().clearAllRegistrations();
 	logInfo("Application shutting down - goodbye!"); // see also logError and logDiagnostic
-}
-
-void errorPage(HTTPServerRequest req, HTTPServerResponse res, HTTPServerErrorInfo error) {
-    CurrentUser user; // kludge for getting template to render when serving error page
-    req.params["version"] = "1.0-SNAPSHOT";
-    render!("error.dt", req, error, user)(res);
 }
 
 struct CurrentUser {
