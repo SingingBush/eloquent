@@ -23,7 +23,7 @@
 	"dependencies": {
 		"jquery": "^2.2.3",
 		"tether": "^1.1.1",
-		"bootstrap": "v4.0.0-alpha.3",
+		"bootstrap": "v4.0.0-alpha.4",
 		"font-awesome": "fontawesome#^4.6.1"
 	}
 }
