@@ -1,17 +1,6 @@
 module eloquent.services.blogservice;
 
-import std.datetime, std.string;
-import std.algorithm : filter, startsWith;
-import std.array : array;
-
-import eloquent.model.user, eloquent.model.blogpost, eloquent.model.comment;
-
-import hibernated.core;
-import hibernated.session;
-import poodinis;
-import vibe.core.log; // only the logger is needed
-
-import std.conv;
+import eloquent.services;
 
 interface BlogService {
 	BlogPost[] allBlogPosts();

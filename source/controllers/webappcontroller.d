@@ -6,7 +6,7 @@ import vibe.crypto.passwordhash;
 
 import eloquent.config.properties;
 import eloquent.model;
-import eloquent.services.userservice, eloquent.services.blogservice;
+import eloquent.services;
 import eloquent.controllers;
 
 // This is essentially like using Springs @Controller for handling routes in Spring MVC

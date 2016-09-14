@@ -1,21 +1,11 @@
 module eloquent.services.userservice;
 
-import std.string;
-import std.algorithm : filter, startsWith;
-import std.array : array;
-
-import eloquent.model.user;
-
-import hibernated.core;
-import hibernated.session;
-import poodinis;
-import vibe.core.log; // only the logger is needed
-
-import std.conv;
+import eloquent.services;
 
 interface UserService {
 	User findUser(string username);
 	User[] findUsers();
+	User createUser(string username, string passwdHash, string email);
 }
 
 
@@ -54,5 +44,25 @@ class UserServiceImpl : UserService {
 					.createQuery("FROM User WHERE username=:Username ORDER BY nicename")
 					.setParameter("Username", username);
 		return q.uniqueResult!User();
+	}
+
+	public User createUser(string username, string passwdHash, string email) {
+		Session session = sessionFactory.openSession();
+		scope(exit) session.close();
+
+		User user = new User;
+		user.username = username;
+		user.pass = passwdHash;
+		user.nicename = "";
+		user.displayname = username;
+		user.email = email;
+		user.url = "";
+		import std.datetime;
+		SysTime now = Clock.currTime(UTC());
+		user.registered = cast(DateTime) now;
+		user.status = UserStatus.DEFAULT;
+		session.save(user);
+		logInfo("new user created: %s", user);
+		return user;
 	}
 }

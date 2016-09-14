@@ -5,8 +5,8 @@ import poodinis;
 import vibe.core.log; // only the logger is needed
 
 import eloquent.config.properties, eloquent.config.database, eloquent.config.logging;
-import eloquent.controllers.web, eloquent.controllers.admin;
-import eloquent.services.userservice, eloquent.services.blogservice;
+import eloquent.controllers;
+import eloquent.services;
 
 class PoodinisContext : ApplicationContext {
 

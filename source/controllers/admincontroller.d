@@ -7,7 +7,7 @@ import vibe.http.router;
 import vibe.web.web;
 
 import eloquent.config.properties;
-import eloquent.services.userservice, eloquent.services.blogservice;
+import eloquent.services;
 import eloquent.controllers;
 
 // handles everything under '/admin'
@@ -47,12 +47,27 @@ class AdminController : BaseController {
 	@auth
 	@admin
     @method(HTTPMethod.GET) @path("/users")
-    void manageUsers(Json _user) {
+    void getUsers(Json _user) {
         logInfo("GET: /admin/users");
 
         CurrentUser user = currentUser;
 
         render!("admin_users.dt", user);
     }
+
+    @auth
+	@admin
+	@method(HTTPMethod.POST) @path("/user/create")
+	void postUsers(Json _user, string username, string password, string email) {
+		string salt = _properties.as!(string)("auth.salt");
+		import vibe.crypto.passwordhash;
+		string hash = generateSimplePasswordHash(password, salt);
+
+		logInfo("POST: /admin/user/create: %s %s", username, email, hash);
+
+		_userService.createUser(username, hash, email);
+
+		redirect("/profile/%s".format(username));
+	}
 
 }

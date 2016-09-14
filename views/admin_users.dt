@@ -11,4 +11,26 @@ block body
     .container(role='main')
         .row
             .col-md-12
-                h2 todo
+                h2 Create User
+                form.form-horizontal(action='/admin/user/create', method="POST")
+                    .form-group
+                        .input-group
+                            label(for='usrName', class='sr-only') Username
+                            input.form-control(id="usrName", type="text", name="username", placeholder="Username", autofocus)
+                            .input-group-addon
+                                i.fa.fa-user
+                    .form-group
+                        .input-group
+                            label(for='passWrd', class='sr-only') Password
+                            input.form-control(id="passWrd", type="password", name="password", placeholder="Password")
+                            .input-group-addon
+                                i.fa.fa-lock
+
+                    .form-group
+                        .input-group
+                            label(for='email', class='sr-only') Password
+                            input.form-control(id="email", type="email", name="email", placeholder="Email")
+                            .input-group-addon
+                                i @
+
+                    button.btn.btn-primary.btn-lg(type="submit") Submit
