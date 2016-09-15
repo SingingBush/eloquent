@@ -38,7 +38,7 @@ matrix:
   include:
     - env: NAME="Test Coverage - coveralls.io"
       d: dmd
-      os: linux
+      os: osx
       before_install: dub fetch doveralls
       script: dub test -b unittest-cov --compiler=${DC}
       after_success: dub run doveralls
