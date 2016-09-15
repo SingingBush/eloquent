@@ -6,10 +6,13 @@ dist: trusty
 
 d:
   - dmd-2.071.1
-#  - dmd-2.069.2
+  - dmd-2.069.2
   - ldc-1.1.0-beta2
-#  - ldc-1.0.0
+  - ldc-1.0.0
 #  - gdc
+
+# use OSX 10.11 rather than default (10.9). see: https://docs.travis-ci.com/user/osx-ci-environment/#OS-X-Version
+osx_image: xcode7.3
 
 before_install:
   - "if [ ${TRAVIS_OS_NAME} = 'osx' ]; then brew update; fi"
