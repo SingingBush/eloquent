@@ -42,8 +42,7 @@ matrix:
     - env: NAME="Test Coverage - coveralls.io"
       d: dmd
       os: osx
-      before_install: dub fetch doveralls
-      script: dub test -b unittest-cov --compiler=${DC}
+      script: dub fetch doveralls && dub test -b unittest-cov --compiler=${DC}
       after_success: dub run doveralls
   allow_failures:
     - d: gdc
