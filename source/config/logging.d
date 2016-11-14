@@ -2,7 +2,7 @@ module eloquent.config.logging;
 
 import eloquent.config.properties;
 import vibe.core.log; // only the logger is needed
-import std.regex : toUpper, replaceFirst, regex;
+import std.regex : toUpper, matchFirst, replaceFirst, regex;
 import std.stdio;
 import consoled : Color, writec, Fg, foreground, background, resetColors; // for the ConsoledLogger
 
@@ -55,19 +55,37 @@ void configureLogging(Properties properties) {
 }
 
 
+/**
+ * An implementation of vibe.core.log.Logger that provides multi-color output in supported terminals by using ConsoleD.
+ *
+ * Besides the usual option for setting a minimum LogLevel, there is also an option to set the level that applies
+ * to logging that is being done from within vibe-d. This makes it possible to set the minimum to LogLevel.debugV
+ * without lots of debug messages comming from vibe-d. The LogLevel for vibe-d is set to LogLevel.info by default.
+ *
+ * The file paths that get output in log lines are cleaned up making log output much more readable.
+ *
+ * Authors: Sam Bate
+ * Date: November 14, 2016
+ * See_Also:
+ *    https://github.com/robik/ConsoleD
+ */
 final class ConsoledLogger : Logger {
 
-//    alias Debug = ColorTheme!(Color.blue, Color.initial);
-//    alias Info = ColorTheme!(Color.lightGray, Color.initial);
-//    alias Error = ColorTheme!(Color.red, Color.initial);
-//    alias ReallyBad = ColorTheme!(Color.white, Color.red);
+	bool ignoreVibe = false;
+	bool skip = false;
 
-    this(LogLevel level) {
-        minLevel = level;
+    this(LogLevel min = LogLevel.info, LogLevel vibeLevel = LogLevel.info) {
+        minLevel = min;
+        ignoreVibe = vibeLevel > minLevel;
     }
 
     // for more info on LogLine see: http://vibed.org/api/vibe.core.log/LogLine
 	override void beginLine(ref LogLine msg) @trusted {
+		if(ignoreVibe && matchFirst(msg.file, regex(r"(\\|\/)vibe-d(\\|\/)source(\\|\/)"))) {
+			skip = true;
+			return;
+		}
+
 		string level;
 		Color fg = foreground;
 		Color bg = background;
@@ -136,10 +154,15 @@ final class ConsoledLogger : Logger {
 	}
 
 	override void put(scope const(char)[] text) {
-		write(replaceFirst(text, regex(r".*\.?dub(\\|\/)packages(\\|\/)"), ""));
+		if(!skip) {
+			write(replaceFirst(text, regex(r".*\.?dub(\\|\/)packages(\\|\/)"), ""));
+		}
 	}
 
 	override void endLine() {
-		writeln();
+		if(!skip) {
+			writeln();
+		}
+		skip = false;
 	}
 }
