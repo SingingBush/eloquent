@@ -8,7 +8,7 @@
 	"dependencies": {
 		"proper-d": "~>0.0.2",
 		"consoled": "~>1.0.4",
-		"vibe-d": "~>0.7.30-rc.2",
+		"vibe-d": "~>0.7.30",
 		"poodinis": "~>7.0.1",
 		"hibernated": "~>0.2.27"
 	},
