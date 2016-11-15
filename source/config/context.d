@@ -4,7 +4,7 @@ import hibernated.session;
 import poodinis;
 import vibe.core.log; // only the logger is needed
 
-import eloquent.config.properties, eloquent.config.database, eloquent.config.logging;
+import eloquent.config.properties, eloquent.config.database, eloquent.config.logging, eloquent.config.motd;
 import eloquent.controllers;
 import eloquent.services;
 
@@ -13,14 +13,14 @@ class PoodinisContext : ApplicationContext {
     private Properties _properties;
 
     public this() {
-    	logInfo("Creating Poodinis Context");
-        _properties = new Properties;
-        configureLogging(_properties);
+    	displayBanner();
     }
 
     public override void registerDependencies(shared(DependencyContainer) container) {
-        logInfo("Registering Dependencies");
-        container.register!Properties.existingInstance(_properties);
+        Properties properties = new Properties;
+        configureLogging(properties);
+        logInfo("Registering Dependencies with Poodinis Context");
+        container.register!Properties.existingInstance(properties);
 
 		container.register!(EloquentDatabase, EloquentDatabaseImpl);
         EloquentDatabase dbConfig = container.resolve!EloquentDatabase;
