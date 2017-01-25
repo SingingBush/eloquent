@@ -21,9 +21,9 @@
 		"tests"
 	],
 	"dependencies": {
-		"jquery": "^2.2.3",
-		"tether": "^1.1.1",
-		"bootstrap": "v4.0.0-alpha.4",
-		"font-awesome": "fontawesome#^4.6.1"
+		"jquery": "^2.2.4",
+		"tether": "^1.4.0",
+		"bootstrap": "v4.0.0-alpha.6",
+		"font-awesome": "fontawesome#^4.6.3"
 	}
 }
