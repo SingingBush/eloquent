@@ -20,7 +20,7 @@ public:
 	uint id; // bigint (20) NOT NULL auto inc
 
 	@ManyToOne @NotNull @JoinColumn("post_author")
-	Lazy!User author;
+	User author;
 
 	@Column("post_date") @NotNull
 	DateTime created;
