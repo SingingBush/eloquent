@@ -87,6 +87,7 @@ class EloquentDatabaseImpl : EloquentDatabase {
 			user.registered = cast(DateTime) now;
 			user.status = UserStatus.DEFAULT;
 			session.save(user);
+			logInfo("Created user: %s", user);
 
 			User adminUser = new User;
 			adminUser.username = "admin";
@@ -98,6 +99,7 @@ class EloquentDatabaseImpl : EloquentDatabase {
 			adminUser.registered = cast(DateTime) now;
 			adminUser.status = UserStatus.DEFAULT;
 			session.save(adminUser);
+			logInfo("Created user: %s", adminUser);
 
 			UserData adminMetaData = new UserData;
 			adminMetaData.user = adminUser;
@@ -114,6 +116,7 @@ class EloquentDatabaseImpl : EloquentDatabase {
 			bp.excerpt = "Lorem ipsum dolor sit amet";
 			bp.postType = "post";
 			session.save(bp);
+			logInfo("Created BlogPost: %s", bp);
 		}
 		return factory;
 	}
