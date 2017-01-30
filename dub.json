@@ -55,6 +55,7 @@
 			"name": "default",
 			"versions": ["PRODUCTION", "USE_MYSQL", "USE_SQLITE", "USE_PGSQL"],
 			"subConfigurations": {
+				"vibe-d:core": "libevent",
 				"hibernated": "full",
 				"ddbc": "full"
 			},
@@ -64,6 +65,7 @@
 			"name": "mysql",
 			"versions": ["PRODUCTION", "USE_MYSQL"],
 			"subConfigurations": {
+				"vibe-d:core": "libevent",
 				"hibernated": "MySQL",
 				"ddbc": "MySQL"
 			},
