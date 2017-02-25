@@ -125,6 +125,7 @@ class EloquentDatabaseImpl : EloquentDatabase {
     	private DataSource createSQLiteDataSource() {
     		auto sqliteFile = _properties.as!(string)("db.file");
     		logInfo("PoodinisContext -> loading SQLite file...  %s", sqliteFile);
+    		import ddbc.drivers.sqliteddbc;
     		SQLITEDriver driver = new SQLITEDriver();
     		return new ConnectionPoolDataSourceImpl(driver, sqliteFile, null);
     	}
@@ -140,6 +141,7 @@ class EloquentDatabaseImpl : EloquentDatabase {
 
     		logInfo("PoodinisContext -> connecting to MySQL...  %s@%s:%s/%s", dbUser, dbHost, dbPort, dbName);
 
+			import ddbc.drivers.mysqlddbc;
     		MySQLDriver driver = new MySQLDriver();
     		string url = MySQLDriver.generateUrl(dbHost, dbPort, dbName);
     		string[string] params = MySQLDriver.setUserAndPassword(dbUser, dbPass);

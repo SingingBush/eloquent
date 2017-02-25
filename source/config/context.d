@@ -1,7 +1,10 @@
 module eloquent.config.context;
 
 import hibernated.session;
-import poodinis;
+import poodinis.context : ApplicationContext, DependencyContainer;
+import poodinis.container : RegistrationOption;
+import poodinis.registration;
+
 import vibe.core.log; // only the logger is needed
 
 import eloquent.config.properties, eloquent.config.database, eloquent.config.logging, eloquent.config.motd;

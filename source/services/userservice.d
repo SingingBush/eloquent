@@ -1,6 +1,10 @@
 module eloquent.services.userservice;
 
-import eloquent.services;
+import std.conv;
+
+import eloquent.model;
+import poodinis.autowire : Autowire;
+import vibe.core.log;
 
 interface UserService {
 	User findUser(string username);

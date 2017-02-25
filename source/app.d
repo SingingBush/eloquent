@@ -1,6 +1,9 @@
 
-import poodinis;
-import vibe.d;
+import poodinis.container : DependencyContainer;
+
+import vibe.core.log;
+import vibe.http.fileserver : serveStaticFiles;
+import vibe.http.router : URLRouter;
 
 import eloquent.config.properties;
 import eloquent.config.context;
@@ -33,7 +36,7 @@ shared static this() {
 		CurrentUser user; // kludge for getting template to render when serving error page
 		render!("error.dt", req, error, user)(res);
 	};
-	
+
 	listenHTTP(settings, router);
 
 	logInfo("Eloquent server ready...");

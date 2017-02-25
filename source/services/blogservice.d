@@ -1,6 +1,8 @@
 module eloquent.services.blogservice;
 
-import eloquent.services;
+import eloquent.model;
+import poodinis.autowire : Autowire;
+import vibe.core.log;
 
 interface BlogService {
 	BlogPost[] allBlogPosts();

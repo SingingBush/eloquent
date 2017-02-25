@@ -8,12 +8,11 @@
 	"dependencies": {
 		"proper-d": "~>0.0.2",
 		"consoled": "~>1.0.4",
-		"vibe-d": "~>0.8.0-alpha.1",
+		"vibe-d:core": "0.8.0-alpha.1",
+		"vibe-d:web": "0.8.0-alpha.1",
 		"poodinis": "~>7.0.1",
-		"hibernated": "0.2.27",
-		"ddbc": "0.2.26"
+		"hibernated": "0.2.33"
 	},
-	"lflags-osx": ["-L/usr/local/opt/openssl/lib", "-L/usr/local/opt/sqlite/lib"],
 	"stringImportPaths": ["views", "i18n"],
 	"targetType": "executable",
 	"buildRequirements": [
