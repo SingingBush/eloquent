@@ -5,15 +5,15 @@ sudo: required
 dist: trusty
 
 d:
-  - dmd
+  - dmd-2.073.0
   - dmd-2.072.2
   - dmd-2.071.1
-  - ldc-1.1.0-beta6
+  - ldc-1.1.0
   - ldc-1.0.0
-  - gdc
+  - gdc-6.3.0+2.068.2
 
-# use OSX 10.11 rather than default (10.9). see: https://docs.travis-ci.com/user/osx-ci-environment/#OS-X-Version
-osx_image: xcode7.3
+# use OSX 10.12 rather than default (10.11). see: https://docs.travis-ci.com/user/osx-ci-environment/#OS-X-Version
+osx_image: xcode8.2
 
 before_install:
   - "if [ ${TRAVIS_OS_NAME} = 'osx' ]; then brew update; fi"
@@ -31,6 +31,8 @@ script:
 
 addons:
   apt:
+    sources:
+      - ubuntu-toolchain-r-test
     packages: [ libev-dev, libevent-dev, libsqlite3-dev ]
 
 matrix:
@@ -41,4 +43,4 @@ matrix:
       script: dub fetch doveralls && dub test -b unittest-cov --compiler=${DC}
       after_success: dub run doveralls
   allow_failures:
-    - d: gdc
+    - d: gdc-6.3.0+2.068.2
