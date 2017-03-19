@@ -17,7 +17,7 @@ osx_image: xcode8.2
 
 before_install:
   - "if [ ${TRAVIS_OS_NAME} = 'osx' ]; then brew update; fi"
-  - "if [ ${TRAVIS_OS_NAME} = 'osx' ]; then brew install libev libevent openssl sqlite && brew link --force sqlite; fi"
+  - "if [ ${TRAVIS_OS_NAME} = 'osx' ]; then brew bundle && brew link --force sqlite; fi"
 
 install:
   - npm install -g bower
