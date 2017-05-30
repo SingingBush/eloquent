@@ -5,11 +5,11 @@ sudo: required
 dist: trusty
 
 d:
-  - dmd-2.073.0
+  - dmd
+  - dmd-2.073.2
   - dmd-2.072.2
-  - dmd-2.071.1
-  - ldc-1.1.0
-  - ldc-1.0.0
+  - ldc-1.2.0
+  - ldc-1.1.1
   - gdc-6.3.0+2.068.2
 
 # use OSX 10.12 rather than default (10.11). see: https://docs.travis-ci.com/user/osx-ci-environment/#OS-X-Version
