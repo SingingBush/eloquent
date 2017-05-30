@@ -15,6 +15,7 @@
 		"hibernated": "0.2.33",
 		"mysql-native": "0.1.7"
 	},
+	"lflags-osx": ["-L/usr/local/opt/openssl/lib", "-L/usr/local/opt/sqlite/lib"],
 	"stringImportPaths": ["views", "i18n"],
 	"targetType": "executable",
 	"buildRequirements": [
