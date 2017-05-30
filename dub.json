@@ -8,9 +8,9 @@
 	"dependencies": {
 		"proper-d": "~>0.0.2",
 		"consoled": "~>1.0.4",
-		"vibe-d:core": "~>0.8.0-beta.4",
+		"vibe-d:core": "~>0.8.0-beta.6",
 		"vibe-d:diet": ">=0.0.0",
-		"vibe-d:web": "~>0.8.0-beta.4",
+		"vibe-d:web": "~>0.8.0-beta.6",
 		"poodinis": "~>7.0.1",
 		"hibernated": "0.2.33",
 		"mysql-native": "0.1.7"
