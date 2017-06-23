@@ -8,12 +8,12 @@
 	"dependencies": {
 		"proper-d": "~>0.0.2",
 		"consoled": "~>1.0.4",
-		"vibe-d:core": "~>0.8.0-beta.6",
+		"vibe-d:core": "~>0.8.0-rc.1",
 		"vibe-d:diet": ">=0.0.0",
-		"vibe-d:web": "~>0.8.0-beta.6",
+		"vibe-d:web": "~>0.8.0-rc.1",
 		"poodinis": "~>7.0.1",
 		"hibernated": "0.2.33",
-		"mysql-native": "0.1.7"
+		"ddbc": "0.3.3"
 	},
 	"lflags-osx": ["-L/usr/local/opt/openssl/lib", "-L/usr/local/opt/sqlite/lib"],
 	"stringImportPaths": ["views", "i18n"],
