@@ -10,7 +10,7 @@ d:
   - dmd-2.072.2
   - ldc-1.2.0
   - ldc-1.1.1
-  - gdc-6.3.0+2.068.2
+  - gdc
 
 # use OSX 10.12 rather than default (10.11). see: https://docs.travis-ci.com/user/osx-ci-environment/#OS-X-Version
 osx_image: xcode8.2
@@ -43,4 +43,4 @@ matrix:
       script: dub fetch doveralls && dub test -b unittest-cov --compiler=${DC}
       after_success: dub run doveralls
   allow_failures:
-    - d: gdc-6.3.0+2.068.2
+    - d: gdc
