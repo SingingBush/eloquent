@@ -45,6 +45,7 @@ void configureLogging(Properties properties) {
 
 	// now register a custom Logger that's nicer than the one provided by vibe.d (and outputs correct time)
 	auto console = cast(shared)new ConsoledLogger(level);
+	//auto console = cast(shared)new ColourfulMoonLogger(level);
 	registerLogger(console);
 
 	logInfo("PoodinisContext -> Logging Configured [%s] will be output to: %s", logLevel, logFile);
@@ -140,7 +141,9 @@ final class ConsoledLogger : Logger {
 
         if(msg.threadName !is null) {
             writef(":'%s'", msg.threadName);
-        }
+        } else {
+			writef(":%08X", msg.fiberID);
+		}
 
         write(" [");
         foreground = fg;
@@ -151,6 +154,128 @@ final class ConsoledLogger : Logger {
 
         string file = replaceFirst(msg.file, regex(r".*\.?dub(\\|\/)packages(\\|\/)"), ""); // don't show path to local dub repo
         writec(Fg.cyan, file, Fg.initial, "(", Fg.cyan, msg.line, Fg.initial, "): ");
+	}
+
+	override void put(scope const(char)[] text) {
+		if(!skip) {
+			write(replaceFirst(text, regex(r".*\.?dub(\\|\/)packages(\\|\/)"), ""));
+		}
+	}
+
+	override void endLine() {
+		if(!skip) {
+			writeln();
+		}
+		skip = false;
+	}
+}
+
+
+// ------- requires ColourfulMoon
+import ColourfulMoon;
+
+/**
+ * An implementation of vibe.core.log.Logger that provides multi-color output in supported terminals by using ColourfulMoon.
+ *
+ * Besides the usual option for setting a minimum LogLevel, there is also an option to set the level that applies
+ * to logging that is being done from within vibe-d. This makes it possible to set the minimum to LogLevel.debugV
+ * without lots of debug messages comming from vibe-d. The LogLevel for vibe-d is set to LogLevel.info by default.
+ *
+ * The file paths that get output in log lines are cleaned up making log output much more readable.
+ *
+ * Authors: Sam Bate
+ * Date: June 25, 2017
+ * See_Also:
+ *    https://github.com/azbukagh/ColourfulMoon
+ */
+final class ColourfulMoonLogger : Logger {
+
+	bool ignoreVibe = false;
+	bool skip = false;
+
+	// colours used are from Twitter Bootstrap
+    auto Debug = Colour(92, 184, 92);
+    auto Info = Colour(51, 122, 183);
+    auto Warn = Colour(240, 173, 78);
+    auto Error = Colour(217, 83, 79);
+
+    this(LogLevel min = LogLevel.info, LogLevel vibeLevel = LogLevel.info) {
+		minLevel = min;
+		ignoreVibe = vibeLevel > minLevel;
+	}
+
+	override void beginLine(ref LogLine msg) @trusted {
+		if(ignoreVibe && matchFirst(msg.file, regex(r"(\\|\/)vibe-d(\\|\/)source(\\|\/)"))) {
+			skip = true;
+			return;
+		}
+
+		string level;
+		auto fg = Colour();
+		auto bg = Colour();
+
+		final switch (msg.level) {
+			case LogLevel.trace:
+			    level = "TRACE";
+			    fg = Debug;
+			    break;
+			case LogLevel.debugV:
+			    level = "VERBOSE";
+			    fg = Debug;
+			    break;
+			case LogLevel.debug_:
+                level = "DEBUG";
+                fg = Debug;
+                break;
+			case LogLevel.diagnostic:
+			    level = "DIAGNOSTIC";
+			    fg = Info;
+			    break;
+			case LogLevel.info:
+			    level = "INFO";
+			    fg = Info;
+			    break;
+			case LogLevel.warn:
+			    level = "WARN";
+			    fg = Warn;
+			    break;
+			case LogLevel.error:
+                level = "ERROR";
+                fg = Error;
+                break;
+			case LogLevel.critical:
+			    level = "CRITICAL";
+			    bg = Error;
+			    break;
+			case LogLevel.fatal:
+			    level = "FATAL";
+			    bg = Error;
+			    break;
+			case LogLevel.none: assert(false);
+		}
+
+		// note that I don't use 'write(msg.time)' here because it doesn't output correct time (I'm currently in BST)
+		import std.datetime : Clock;
+		write(Clock.currTime()); // could also use: write(Clock.currTime().toISOExtString());
+
+		writef(" - %08X", msg.threadID);
+
+		if(msg.threadName !is null) {
+			writef(":'%s'", msg.threadName);
+		} else {
+			writef(":%08X", msg.fiberID);
+		}
+
+        write(" [");
+		level.Background(bg).Foreground(fg).Reset.write;
+		write("] ");
+
+		string file = replaceFirst(msg.file, regex(r".*\.?dub(\\|\/)packages(\\|\/)"), ""); // don't show path to local dub repo
+
+		file.Foreground(Colour(80, 238, 238)).Reset.write;
+		write("(");
+		msg.line.Foreground(Colour(80, 238, 238)).Reset.write;
+		write("): ");
 	}
 
 	override void put(scope const(char)[] text) {

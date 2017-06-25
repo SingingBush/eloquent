@@ -8,12 +8,12 @@
 	"dependencies": {
 		"proper-d": "~>0.0.2",
 		"consoled": "~>1.0.4",
+		"colourfulmoon": "~>1.0.2",
 		"vibe-d:core": "~>0.8.0-rc.1",
 		"vibe-d:diet": ">=0.0.0",
 		"vibe-d:web": "~>0.8.0-rc.1",
 		"poodinis": "~>7.0.1",
-		"hibernated": "0.2.33",
-		"ddbc": "0.3.3"
+		"hibernated": "~>0.2.33"
 	},
 	"lflags-osx": ["-L/usr/local/opt/openssl/lib", "-L/usr/local/opt/sqlite/lib"],
 	"stringImportPaths": ["views", "i18n"],
@@ -57,7 +57,7 @@
 			"name": "default",
 			"versions": ["PRODUCTION", "USE_MYSQL", "USE_SQLITE", "USE_PGSQL"],
 			"subConfigurations": {
-				"vibe-d:core": "libevent",
+				"vibe-d:core": "vibe-core",
 				"hibernated": "full",
 				"ddbc": "full"
 			},
@@ -67,7 +67,7 @@
 			"name": "mysql",
 			"versions": ["PRODUCTION", "USE_MYSQL"],
 			"subConfigurations": {
-				"vibe-d:core": "libevent",
+				"vibe-d:core": "vibe-core",
 				"hibernated": "MySQL",
 				"ddbc": "MySQL"
 			},
@@ -79,7 +79,7 @@
 			"libs-posix": ["sqlite3"],
 			"libs-windows": ["sqlite3"],
 			"subConfigurations": {
-				"vibe-d:core": "libevent",
+				"vibe-d:core": "vibe-core",
 				"hibernated": "SQLite",
 				"ddbc": "SQLite"
 			},
