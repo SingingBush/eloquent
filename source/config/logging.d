@@ -272,9 +272,10 @@ final class ColourfulMoonLogger : Logger {
 
 		string file = replaceFirst(msg.file, regex(r".*\.?dub(\\|\/)packages(\\|\/)"), ""); // don't show path to local dub repo
 
-		file.Foreground(Colour(80, 238, 238)).Reset.write;
+		auto cyan = Colour(80, 238, 238);
+		file.Foreground(cyan).Reset.write;
 		write("(");
-		msg.line.Foreground(Colour(80, 238, 238)).Reset.write;
+		(std.conv.to!string(msg.line)).Foreground(cyan).Reset.write;
 		write("): ");
 	}
 
