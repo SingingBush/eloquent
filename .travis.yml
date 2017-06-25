@@ -9,7 +9,6 @@ d:
   - dmd-2.073.2
   - dmd-2.072.2
   - ldc-1.2.0
-  - ldc-1.1.1
   - gdc
 
 # use OSX 10.12 rather than default (10.11). see: https://docs.travis-ci.com/user/osx-ci-environment/#OS-X-Version
