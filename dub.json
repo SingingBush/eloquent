@@ -9,10 +9,10 @@
 		"proper-d": "~>0.0.2",
 		"consoled": "~>1.0.4",
 		"colourfulmoon": "~>1.0.2",
-		"vibe-d:core": "~>0.8.0-rc.3",
+		"vibe-d:core": "~>0.8.0",
 		"vibe-d:diet": ">=0.0.0",
-		"vibe-d:web": "~>0.8.0-rc.3",
-		"poodinis": "~>7.0.1",
+		"vibe-d:web": "~>0.8.0",
+		"poodinis": "~>8.0.0",
 		"hibernated": "~>0.3.2"
 	},
 	"lflags-osx": ["-L/usr/local/opt/openssl/lib", "-L/usr/local/opt/sqlite/lib"],
@@ -86,5 +86,5 @@
 			"buildRequirements": ["silenceWarnings", "silenceDeprecations"]
 		}
 	],
-	"versions": ["VibeDefaultMain", "Have_vibe_d"]
+	"versions": ["VibeDefaultMain", "Have_vibe_d_core"]
 }

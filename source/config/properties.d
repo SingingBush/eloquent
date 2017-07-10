@@ -3,6 +3,7 @@ module eloquent.config.properties;
 import properd : readProperties, as;
 import vibe.core.log;
 import vibe.core.args;
+import vibe.web.common : HTTPServerRequest;
 
 class Properties {
 

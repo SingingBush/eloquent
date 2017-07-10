@@ -275,7 +275,9 @@ final class ColourfulMoonLogger : Logger {
 		auto cyan = Colour(80, 238, 238);
 		file.Foreground(cyan).Reset.write;
 		write("(");
-		(std.conv.to!string(msg.line)).Foreground(cyan).Reset.write;
+
+		import std.conv;
+		(to!string(msg.line)).Foreground(cyan).Reset.write;
 		write("): ");
 	}
 

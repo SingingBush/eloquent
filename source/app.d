@@ -1,5 +1,6 @@
 
 import poodinis.container : DependencyContainer;
+import poodinis.context : registerContext;
 
 import vibe.core.log;
 import vibe.http.fileserver : serveStaticFiles;
@@ -43,8 +44,6 @@ shared static this() {
 }
 
 shared static ~this() {
-	logInfo("Clearing all Registered dependencies...");
-	DependencyContainer.getInstance().clearAllRegistrations();
 	logInfo("Application shutting down - goodbye!"); // see also logError and logDiagnostic
 }
 
