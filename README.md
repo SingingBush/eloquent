@@ -54,6 +54,8 @@ You'll need the D compiler and [DUB](http://code.dlang.org/download). The follow
  - dmd v2.069.2 or ldc v1.0.0
  - dub v1.0.0
 
+If your system uses version 1.1 of OpenSSL (such as Fedora) use *VibeUseOpenSSL11* in the _versions_ of `dub.json`
+
 ### Build using dub
 
 Release builds can be done using the _default_ configuration.
