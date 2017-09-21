@@ -18,9 +18,6 @@ public/css/*.css
 public/js/*.js
 public/fonts/
 
-# Ignore yarn file
-yarn.lock
-
 # Ignore Intellij IDEA folder:
 .idea
 *.iml
