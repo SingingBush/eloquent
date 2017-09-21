@@ -2,8 +2,8 @@ extends layout
 
 block body
 	div.container(role='main')
-		.row
-			.col-md-6.offset-md-3.col-sm-8.offset-sm-2
+		.row.justify-content-md-center
+			.col-md-6.col-sm-8
 				- if (user.authenticated)
 					.alert.alert-dismissable.alert-success
 						button.close(type="button", data-dismiss="alert") x

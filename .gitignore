@@ -13,12 +13,13 @@ __test__library__
 .*.lst
 
 # Ignore client side dependencies
-bower_components/
+node_modules/
 public/css/*.css
-public/js/bootstrap*
-public/js/jquery.min.js
-public/js/tether.min.js
+public/js/*.js
 public/fonts/
+
+# Ignore yarn file
+yarn.lock
 
 # Ignore Intellij IDEA folder:
 .idea

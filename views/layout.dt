@@ -30,8 +30,8 @@ html(lang='en')
 		- css("/css/bootstrap.min.css");
 		- css("/styles/style.css");
 
-		script(src='/js/jquery.min.js')
-		script(src='/js/tether.min.js')
+		script(src='/js/jquery.slim.min.js')
+		script(src='/js/popper.min.js')
 		script(src='/js/bootstrap.min.js')
 	
 	body(role='document')
