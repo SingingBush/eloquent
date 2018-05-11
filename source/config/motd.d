@@ -1,14 +1,16 @@
 module eloquent.config.motd;
 
-import consoled : writec, Fg;
+import std.stdio;
+import ColourfulMoon;
 
 void displayBanner() {
-	writec(Fg.cyan, `
+	auto cyan = Colour(80, 238, 238);
+`
  ___________.__                                      __
  \_   _____/|  |   ____   ________ __   ____   _____/  |_
   |    __)_ |  |  /  _ \ / ____/  |  \_/ __ \ /    \   __\
   |        \|  |_(  <_> < <_|  |  |  /\  ___/|   |  \  |
  /_______  /|____/\____/ \__   |____/  \___  >___|  /__|
          \/                 |__|           \/     \/
-`, Fg.initial, "\n");
+`.Foreground(cyan).Reset.write;
 }
