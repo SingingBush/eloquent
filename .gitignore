@@ -1,5 +1,6 @@
 .dub
 dub.selections.json
+settings.json
 docs.json
 __dummy.html
 *.dll
