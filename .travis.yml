@@ -38,6 +38,11 @@ addons:
       - ubuntu-toolchain-r-test
     packages: [ libev-dev, libevent-dev, libsqlite3-dev ]
 
+cache:
+  yarn: true
+  directories:
+    - node_modules
+
 matrix:
   include:
     - env: NAME="Test Coverage - coveralls.io"
