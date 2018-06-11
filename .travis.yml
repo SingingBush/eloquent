@@ -8,7 +8,7 @@ group: edge
 d:
   - ldc
   - dmd
-  - dmd-2.079.0
+  - dmd-2.079.1
   - dmd-2.078.3
   - dmd-2.077.1
   - ldc-1.8.0 # eq to dmd v2.078.3
