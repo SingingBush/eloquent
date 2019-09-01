@@ -1,26 +1,16 @@
 # travis-ci.org supports D, using dub with various compilers
 language: d
 
-sudo: required
-dist: trusty
-group: edge
-
 d:
   - ldc
   - dmd
-  - dmd-2.079.1
-  - dmd-2.078.3
-  - dmd-2.077.1
-  - ldc-1.8.0 # eq to dmd v2.078.3
-  - ldc-1.7.0 # eq to dmd v2.077.1
+  - dmd-2.087.0
+  - dmd-2.086.1
+  - dmd-2.085.1
+  - ldc-1.17.0 # eq to dmd v2.087
+  - ldc-1.16.0 # eq to dmd v2.086.1
+  - ldc-1.15.0 # eq to dmd v2.085.1
   - gdc
-
-# use OSX 10.13 rather than default (10.11). see: https://docs.travis-ci.com/user/osx-ci-environment/#OS-X-Version
-osx_image: xcode9
-
-before_install:
-  - "if [ ${TRAVIS_OS_NAME} = 'osx' ]; then brew update; fi"
-  - "if [ ${TRAVIS_OS_NAME} = 'osx' ]; then brew bundle && brew link --force sqlite; fi"
 
 install:
   - npm install -g bower
@@ -34,9 +24,12 @@ script:
 
 addons:
   apt:
+    update: true
     sources:
       - ubuntu-toolchain-r-test
     packages: [ libev-dev, libevent-dev, libsqlite3-dev ]
+  homebrew:
+    brewfile: true
 
 cache:
   yarn: true

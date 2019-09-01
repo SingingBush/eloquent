@@ -123,6 +123,7 @@ Fedora: `sudo dnf install mariadb mariadb-server`
 CREATE DATABASE eloquent;
 CREATE USER 'dbuser'@'localhost' IDENTIFIED BY 'passw0rd';
 GRANT ALL PRIVILEGES ON eloquent.* TO 'dbuser'@'localhost';
+FLUSH PRIVILEGES;
 ```
 
 ### Then import a SQL dump of a wordpress installation
