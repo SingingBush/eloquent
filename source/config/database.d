@@ -70,14 +70,14 @@ class EloquentDatabaseImpl : EloquentDatabase {
 			scope(exit) session.close();
 
 			import std.datetime;
-			SysTime now = Clock.currTime(UTC());
+			immutable SysTime now = Clock.currTime(UTC());
 
 			User user = new User;
 			user.username = "test";
 
 			string salt = _properties.as!(string)("auth.salt");
-			import vibe.crypto.passwordhash;
-			string hash = generateSimplePasswordHash("password", salt);
+			import vibe.crypto.passwordhash : generateSimplePasswordHash;
+			immutable string hash = generateSimplePasswordHash("password", salt);
 			user.pass = hash;
 
 			user.nicename = "Ben";
@@ -111,9 +111,9 @@ class EloquentDatabaseImpl : EloquentDatabase {
 			bp.author = user;
 			bp.created = cast(DateTime) now;
 			bp.modified = cast(DateTime) now;
-			bp.title = "Some lovely test data";
-			bp.content = "Lorem ipsum dolor sit amet, ius eu suscipit honestatis consequuntur, velit cotidieque at eam, nullam salutandi ex eum. Errem pertinacia eu est, ea vel primis electram disputationi. Albucius concludaturque te quo, cu est vero soluta consulatu. Qui fugit euismod gloriatur in, solet fierent euripidis ne sit. Duo te melius nonumes molestie, vero detracto mandamus ei eos. Fugit erant vituperatoribus pro ea, ne everti delectus verterem pro.";
-			bp.excerpt = "Lorem ipsum dolor sit amet";
+			bp.title = "Lorem ipsum";
+			bp.content = "Lorem ipsum dolor sit amet, ius eu suscipit honestatis consequuntur, velit cotidieque at eam.";
+			bp.excerpt = "ius eu suscipit honestatis consequuntur";
 			bp.postType = "post";
 			session.save(bp);
 			logInfo("Created BlogPost: %s", bp);
@@ -125,9 +125,8 @@ class EloquentDatabaseImpl : EloquentDatabase {
     	private DataSource createSQLiteDataSource() {
     		auto sqliteFile = _properties.as!(string)("db.file");
     		logInfo("PoodinisContext -> loading SQLite file...  %s", sqliteFile);
-    		import ddbc.drivers.sqliteddbc;
-    		SQLITEDriver driver = new SQLITEDriver();
-    		return new ConnectionPoolDataSourceImpl(driver, sqliteFile, null);
+    		import ddbc.drivers.sqliteddbc : SQLITEDriver;
+    		return new ConnectionPoolDataSourceImpl(new SQLITEDriver(), sqliteFile, null);
     	}
     }
 
@@ -141,11 +140,10 @@ class EloquentDatabaseImpl : EloquentDatabase {
 
     		logInfo("PoodinisContext -> connecting to MySQL...  %s@%s:%s/%s", dbUser, dbHost, dbPort, dbName);
 
-			import ddbc.drivers.mysqlddbc;
-    		MySQLDriver driver = new MySQLDriver();
+			import ddbc.drivers.mysqlddbc : MySQLDriver;
     		string url = MySQLDriver.generateUrl(dbHost, dbPort, dbName);
     		string[string] params = MySQLDriver.setUserAndPassword(dbUser, dbPass);
-    		return new ConnectionPoolDataSourceImpl(driver, url, params);
+    		return new ConnectionPoolDataSourceImpl(new MySQLDriver(), url, params);
     	}
     }
 }
