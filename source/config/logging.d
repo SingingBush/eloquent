@@ -2,7 +2,15 @@ module eloquent.config.logging;
 
 import eloquent.config.properties;
 import vibe.core.log; // only the logger is needed
-import std.regex : toUpper, matchFirst, replaceFirst, regex;
+import std.regex : matchFirst, replaceFirst, regex;
+
+static if(__VERSION__ < 2086) {
+    import std.regex : toUpper;
+} else {
+	// or perhaps import std.string : toUpper;
+    import std.uni : toUpper;
+}
+
 import std.stdio;
 
 void configureLogging(Properties properties) {
