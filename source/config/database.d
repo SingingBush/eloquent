@@ -28,7 +28,12 @@ class EloquentDatabaseImpl : EloquentDatabase {
 
 		immutable string dbType = _properties.as!(string)("db.dialect");
 
-		import std.regex : toUpper;
+		static if(__VERSION__ < 2086) {
+			import std.regex : toUpper;
+		} else {
+			// or perhaps import std.string : toUpper;
+			import std.uni : toUpper;
+		}
 
 		final switch(dbType.toUpper) {
 			case "SQLITE":
