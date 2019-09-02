@@ -3,7 +3,7 @@ module eloquent.config.properties;
 import properd : readProperties, as;
 import vibe.core.log;
 import vibe.core.args;
-import vibe.web.common : HTTPServerRequest;
+import vibe.http.server : HTTPServerRequest;
 
 class Properties {
 
@@ -38,7 +38,7 @@ struct TranslationContext {
 	import vibe.web.web;
 	mixin translationModule!"text";
 
-	static string determineLanguage(HTTPServerRequest req) {
+	static string determineLanguage(scope HTTPServerRequest req) {
 		import std.string : split, replace;
 		auto acc_lang = "Accept-Language" in req.headers;
 		if(acc_lang) {
