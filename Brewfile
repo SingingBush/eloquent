@@ -2,4 +2,4 @@
 brew 'libev'
 brew 'libevent'
 brew 'sqlite'
-brew 'yarn', args: ['without-node'] unless system 'yarn'
+brew 'yarn' unless system 'yarn'
