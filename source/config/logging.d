@@ -1,7 +1,8 @@
 module eloquent.config.logging;
 
 import eloquent.config.properties;
-import vibe.core.log; // only the logger is needed
+import vibe.core.log : FileLogger, setLogFormat, setLogFile, setLogLevel, registerLogger, logInfo;
+alias VibeLogLevel = vibe.core.log.LogLevel;
 import std.regex : matchFirst, replaceFirst, regex;
 
 static if(__VERSION__ < 2086) {
@@ -12,6 +13,7 @@ static if(__VERSION__ < 2086) {
 }
 
 import std.stdio;
+import std.conv : to;
 
 void configureLogging(Properties properties) {
 	immutable auto logFile = properties.as!(string)("log.file", "eloquent-server.log");
@@ -19,36 +21,55 @@ void configureLogging(Properties properties) {
 
 	setLogFormat(FileLogger.Format.threadTime, FileLogger.Format.threadTime); // plain, thread, or threadTime
 
-	LogLevel level;
+	VibeLogLevel level;
 
 	switch(logLevel.toUpper) {
 		case "VERBOSE":
-			level = LogLevel.debugV;
-			setLogFile(logFile, LogLevel.debugV);
+			level = VibeLogLevel.debugV;
 			break;
 		case "DEBUG":
-			level = LogLevel.debug_;
-			setLogFile(logFile, LogLevel.debug_);
+			level = VibeLogLevel.debug_;
 			break;
 		case "TRACE":
-			level = LogLevel.trace;
-			setLogFile(logFile, LogLevel.trace);
+			level = VibeLogLevel.trace;
 			break;
 		case "ERROR":
-			level = LogLevel.error;
-			setLogFile(logFile, LogLevel.error);
+			level = VibeLogLevel.error;
 			break;
 		case "WARN":
-			level = LogLevel.warn;
-			setLogFile(logFile, LogLevel.warn);
+			level = VibeLogLevel.warn;
 			break;
+		case "INFO":
 		default:
-			level = LogLevel.info;
-			setLogFile(logFile, LogLevel.info);
+			level = VibeLogLevel.info;
 			break;
 	}
 
-	setLogLevel(LogLevel.none); // this effectively deactivates vibe.d's stdout logger
+	setLogFile(logFile, level);
+
+	static if(__traits(compiles, (){ import std.experimental.logger; } )) {
+		import std.experimental.logger : sharedLog, LogLevel;
+		pragma(msg, "eloquent will redirect anything logged via 'std.experimental.logger : sharedLog' to StdColourfulMoonLogger.");
+		switch(logLevel.toUpper) {
+			case "VERBOSE":
+			case "DEBUG":
+			case "TRACE":
+				sharedLog = new StdColourfulMoonLogger(LogLevel.trace);
+				break;
+			case "ERROR":
+				sharedLog = new StdColourfulMoonLogger(LogLevel.error);
+				break;
+			case "WARN":
+				sharedLog = new StdColourfulMoonLogger(LogLevel.warning);
+				break;
+			case "INFO":
+			default:
+				sharedLog = new StdColourfulMoonLogger(LogLevel.info);
+				break;
+		}
+	}
+
+	setLogLevel(VibeLogLevel.none); // this effectively deactivates vibe.d's stdout logger
 
 	// now register a custom Logger that's nicer than the one provided by vibe.d (and outputs correct time)
 	auto console = cast(shared)new ColourfulMoonLogger(level);
@@ -65,6 +86,12 @@ void configureLogging(Properties properties) {
 // ------- requires ColourfulMoon
 import ColourfulMoon;
 
+// colours used are from Twitter Bootstrap
+auto Debug = Colour(92, 184, 92);
+auto Info = Colour(51, 122, 183);
+auto Warn = Colour(240, 173, 78);
+auto Error = Colour(217, 83, 79);
+
 /**
  * An implementation of vibe.core.log.Logger that provides multi-color output in supported terminals by using ColourfulMoon.
  *
@@ -79,20 +106,16 @@ import ColourfulMoon;
  * See_Also:
  *    https://github.com/azbukagh/ColourfulMoon
  */
-final class ColourfulMoonLogger : Logger {
+final class ColourfulMoonLogger : vibe.core.log.Logger {
+
+	import vibe.core.log : LogLevel, LogLine;
 
 	bool ignoreVibe = false;
 	bool skip = false;
 
-	// colours used are from Twitter Bootstrap
-    auto Debug = Colour(92, 184, 92);
-    auto Info = Colour(51, 122, 183);
-    auto Warn = Colour(240, 173, 78);
-    auto Error = Colour(217, 83, 79);
-
     this(LogLevel min = LogLevel.info, LogLevel vibeLevel = LogLevel.info) {
 		minLevel = min;
-		ignoreVibe = vibeLevel > minLevel;
+		ignoreVibe = vibeLevel == LogLevel.none || vibeLevel > minLevel;
 	}
 
 	override void beginLine(ref LogLine msg) @trusted {
@@ -103,7 +126,6 @@ final class ColourfulMoonLogger : Logger {
 
 		string level;
 		auto fg = Colour();
-		auto bg = Colour();
 
 		final switch (msg.level) {
 			case LogLevel.trace:
@@ -136,11 +158,11 @@ final class ColourfulMoonLogger : Logger {
                 break;
 			case LogLevel.critical:
 			    level = "CRITICAL";
-			    bg = Error;
+			    fg = Error;
 			    break;
 			case LogLevel.fatal:
 			    level = "FATAL";
-			    bg = Error;
+			    fg = Error;
 			    break;
 			case LogLevel.none: assert(false);
 		}
@@ -158,7 +180,7 @@ final class ColourfulMoonLogger : Logger {
 		}
 
         write(" [");
-		level.Background(bg).Foreground(fg).Reset.write;
+		level.Foreground(fg).Reset.write;
 		write("] ");
 
 		string file = replaceFirst(msg.file, regex(r".*\.?dub(\\|\/)packages(\\|\/)"), ""); // don't show path to local dub repo
@@ -167,7 +189,6 @@ final class ColourfulMoonLogger : Logger {
 		file.Foreground(cyan).Reset.write;
 		write("(");
 
-		import std.conv;
 		(to!string(msg.line)).Foreground(cyan).Reset.write;
 		write("): ");
 	}
@@ -183,5 +204,102 @@ final class ColourfulMoonLogger : Logger {
 			writeln();
 		}
 		skip = false;
+	}
+}
+
+static if(__traits(compiles, (){ import std.experimental.logger; } )) {
+    import std.experimental.logger;
+	alias StdLogLevel = std.experimental.logger.core.LogLevel;
+
+	class StdColourfulMoonLogger : std.experimental.logger.core.Logger {
+
+		this(const StdLogLevel lv = StdLogLevel.all) @safe {
+			super(lv);
+		}
+
+		override protected void beginLogMsg(string file, int line, string funcName,
+										string prettyFuncName, string moduleName, StdLogLevel logLevel,
+										Tid threadId, SysTime timestamp, std.experimental.logger.core.Logger logger) @trusted {
+            string level = "UNKNOWN";
+			auto fg = Colour();
+
+			switch (logLevel) {
+				case StdLogLevel.trace:
+					level = "TRACE";
+					fg = Debug;
+					break;
+				case StdLogLevel.info:
+					level = "INFO";
+					fg = Info;
+					break;
+				case StdLogLevel.warning:
+					level = "WARN";
+					fg = Warn;
+					break;
+				case StdLogLevel.error:
+					level = "ERROR";
+					fg = Error;
+					break;
+				case StdLogLevel.critical:
+					level = "CRITICAL";
+					fg = Error;
+					break;
+				case StdLogLevel.fatal:
+					level = "FATAL";
+					fg = Error;
+					break;
+				default:
+					level = logLevel.to!string;
+					break;
+			}
+
+			// note that I don't use 'write(msg.time)' here because it doesn't output correct time (I'm currently in BST)
+			//import std.datetime : Clock;
+			//write(Clock.currTime()); // could also use: write(Clock.currTime().toISOExtString());
+			write(timestamp);
+
+			writef(" - %s", threadId);
+
+			write(" [");
+			level.Foreground(fg).Reset.write;
+			write("] ");
+
+			file = replaceFirst(file, regex(r".*\.?dub(\\|\/)packages(\\|\/)"), ""); // don't show path to local dub repo
+
+			auto cyan = Colour(80, 238, 238);
+			file.Foreground(cyan).Reset.write;
+			write("(");
+
+			(to!string(line)).Foreground(cyan).Reset.write;
+			write("): ");
+
+			// alternative::
+    		// auto ltw = stdout.lockingTextWriter();
+			// import std.format : formattedWrite;
+			// formattedWrite(ltw, "%s - %s [%s] %s(%u): ", timestamp, threadId, level, file, line);
+        }
+
+        override protected void logMsgPart(scope const(char)[] msg) @trusted {
+			write(replaceFirst(msg, regex(r".*\.?dub(\\|\/)packages(\\|\/)"), ""));
+
+			// auto ltw = stdout.lockingTextWriter();
+			// import std.format : formattedWrite;
+            // formattedWrite(ltw, replaceFirst(msg, regex(r".*\.?dub(\\|\/)packages(\\|\/)"), ""));
+        }
+
+        override protected void finishLogMsg() @trusted {
+            writeln();
+        }
+
+		override protected void writeLogMsg(ref LogEntry payload) {
+			this.beginLogMsg(payload.file, payload.line, payload.funcName,
+                payload.prettyFuncName, payload.moduleName, payload.logLevel,
+                payload.threadId, payload.timestamp, payload.logger);
+
+            this.logMsgPart(payload.msg);
+            
+			this.finishLogMsg();
+		}
+
 	}
 }
