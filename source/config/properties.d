@@ -1,9 +1,9 @@
 module eloquent.config.properties;
 
-import properd : readProperties, as;
-import vibe.core.log;
-import vibe.core.args;
-import vibe.http.server : HTTPServerRequest;
+private import properd : readProperties, as;
+private import vibe.core.log;
+private import vibe.core.args;
+private import vibe.http.server : HTTPServerRequest;
 
 class Properties {
 
@@ -32,10 +32,10 @@ class Properties {
 }
 
 struct TranslationContext {
-	import std.typetuple : TypeTuple;
+	private import std.typetuple : TypeTuple;
 	alias languages = TypeTuple!("en_GB", "de_DE");
 
-	import vibe.web.web;
+	private import vibe.web.web;
 	mixin translationModule!"text";
 
 	static string determineLanguage(scope HTTPServerRequest req) {

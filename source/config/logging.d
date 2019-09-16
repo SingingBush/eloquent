@@ -1,19 +1,19 @@
 module eloquent.config.logging;
 
-import eloquent.config.properties;
-import vibe.core.log : FileLogger, setLogFormat, setLogFile, setLogLevel, registerLogger, logInfo;
-alias VibeLogLevel = vibe.core.log.LogLevel;
-import std.regex : matchFirst, replaceFirst, regex;
+private import eloquent.config.properties;
+private import vibe.core.log : Logger, FileLogger, setLogFormat, setLogFile, setLogLevel, registerLogger, logInfo, LogLevel;
+private alias VibeLogger = Logger;
+private alias VibeLogLevel = LogLevel;
+private import std.regex : matchFirst, replaceFirst, regex;
 
-static if(__VERSION__ < 2086) {
-    import std.regex : toUpper;
+static if(__VERSION__ < 2085) {
+    private import std.regex : toUpper;
 } else {
-	// or perhaps import std.string : toUpper;
-    import std.uni : toUpper;
+	private import std.string : toUpper; // previously had:		import std.uni : toUpper;
 }
 
-import std.stdio;
-import std.conv : to;
+private import std.stdio;
+private import std.conv : to;
 
 void configureLogging(Properties properties) {
 	immutable auto logFile = properties.as!(string)("log.file", "eloquent-server.log");
@@ -106,7 +106,7 @@ auto Error = Colour(217, 83, 79);
  * See_Also:
  *    https://github.com/azbukagh/ColourfulMoon
  */
-final class ColourfulMoonLogger : vibe.core.log.Logger {
+final class ColourfulMoonLogger : VibeLogger {
 
 	import vibe.core.log : LogLevel, LogLine;
 
@@ -208,8 +208,10 @@ final class ColourfulMoonLogger : vibe.core.log.Logger {
 }
 
 static if(__traits(compiles, (){ import std.experimental.logger; } )) {
-    import std.experimental.logger;
-	alias StdLogLevel = std.experimental.logger.core.LogLevel;
+	private import std.concurrency : Tid;
+	private import std.datetime.systime : SysTime;
+    private import std.experimental.logger;
+	private alias StdLogLevel = std.experimental.logger.core.LogLevel;
 
 	class StdColourfulMoonLogger : std.experimental.logger.core.Logger {
 

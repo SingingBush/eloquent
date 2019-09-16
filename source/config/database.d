@@ -1,11 +1,11 @@
 module eloquent.config.database;
 
-import hibernated.core;
-import poodinis.autowire;
-import vibe.core.log; // only the logger is needed
+private import hibernated.core;
+private import poodinis.autowire;
+private import vibe.core.log; // only the logger is needed
 
-import eloquent.config.properties;
-import eloquent.model.user, eloquent.model.blogpost, eloquent.model.comment;
+private import eloquent.config.properties;
+private import eloquent.model.user, eloquent.model.blogpost, eloquent.model.comment;
 
 interface EloquentDatabase {
 	SessionFactoryImpl configure();
@@ -28,11 +28,10 @@ class EloquentDatabaseImpl : EloquentDatabase {
 
 		immutable string dbType = _properties.as!(string)("db.dialect");
 
-		static if(__VERSION__ < 2086) {
+		static if(__VERSION__ < 2085) {
 			import std.regex : toUpper;
 		} else {
-			// or perhaps import std.string : toUpper;
-			import std.uni : toUpper;
+			import std.string : toUpper; // previously had:		import std.uni : toUpper;
 		}
 
 		final switch(dbType.toUpper) {
