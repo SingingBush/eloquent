@@ -8,10 +8,10 @@
 	"dependencies": {
 		"proper-d": "~>0.0.2",
 		"colourfulmoon": "~>1.0.2",
-		"vibe-d:core": "~>0.8.5",
-		"vibe-d:web": "~>0.8.5",
+		"vibe-d:core": "~>0.8.6-rc.1",
+		"vibe-d:web": "~>0.8.6-rc.1",
 		"poodinis": "~>8.0.3",
-		"hibernated": "~>0.3.4"
+		"hibernated": "~>0.3.5"
 	},
 	"lflags-osx": ["-L/usr/local/opt/openssl/lib", "-L/usr/local/opt/sqlite/lib"],
 	"stringImportPaths": ["views", "i18n"],
