@@ -1,4 +1,5 @@
 # travis-ci.org supports D, using dub with various compilers
+# For available compilers see: https://semitwist.com/travis-d-compilers
 language: d
 
 d:
@@ -39,15 +40,15 @@ matrix:
     - env: NAME="Test Coverage - coveralls.io"
       d: dmd
       os: osx
-      osx_image: xcode11
+      osx_image: xcode11.2 # use OSX 10.14
       before_script: dub fetch doveralls && dub test -b unittest-cov --compiler=${DC}
       script: dub run doveralls
     - d: dmd
       os: osx
-      osx_image: xcode11
+      osx_image: xcode11.2 # use OSX 10.14
     - d: ldc
       os: osx
-      osx_image: xcode11
+      osx_image: xcode11.2 # use OSX 10.14
     - d: dmd-beta
     - d: gdc
   allow_failures:
