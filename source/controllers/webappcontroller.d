@@ -2,7 +2,6 @@ module eloquent.controllers.web;
 
 import poodinis;
 import vibe.core.core;
-import vibe.crypto.passwordhash;
 
 import eloquent.config.properties;
 import eloquent.model;
@@ -54,12 +53,15 @@ class WebappController : BaseController {
 
 		enforceHTTP(user !is null, HTTPStatus.forbidden, "Invalid user name or password.");
 
-        string salt = _properties.as!(string)("auth.salt");
-//        string hash = generateSimplePasswordHash(password, salt);
-//        logInfo("salt: %s, hash: %s", salt, hash);
+        //string salt = _properties.as!(string)("auth.salt"); // todo: use salt again?
+
+		// SHA 3:
+        import sha3d.sha3 : sha3_256Of;
+		import std.digest : toHexString;
+        string hash = toHexString(sha3_256Of(password));
 
 		CurrentUser u;
-        u.authenticated = testSimplePasswordHash(user.pass, password, salt);
+		u.authenticated = (user.pass == hash);
 		u.username = username;
 		UserData[] data = user.data.find!(ud => ud.key == "wp_user_level");
 		if(data.length > 0) {

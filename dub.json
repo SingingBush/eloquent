@@ -3,13 +3,14 @@
 	"description": "Eloquent is a blogging application written in D.",
 	"copyright": "Copyright © 2015, Samael",
 	"authors": ["Samael"],
-	"homepage": "http://singingbush.com",
+	"homepage": "https://singingbush.com",
 	"license": "GPL-2.0",
 	"dependencies": {
 		"proper-d": "~>0.0.2",
 		"colourfulmoon": "~>1.0.2",
-		"vibe-d:core": "~>0.8.6",
-		"vibe-d:web": "~>0.8.6",
+		"vibe-d:core": "~>0.9.2",
+		"vibe-d:web": "~>0.9.2",
+		"sha3-d": "~>1.0.0",
 		"poodinis": "~>8.0.3",
 		"hibernated": "~>0.3.6"
 	},

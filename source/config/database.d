@@ -79,10 +79,13 @@ class EloquentDatabaseImpl : EloquentDatabase {
 			User user = new User;
 			user.username = "test";
 
-			string salt = _properties.as!(string)("auth.salt");
-			import vibe.crypto.passwordhash : generateSimplePasswordHash;
-			immutable string hash = generateSimplePasswordHash("password", salt);
-			user.pass = hash;
+			//string salt = _properties.as!(string)("auth.salt"); // todo: use salt again?
+
+			// SHA 3:
+			import sha3d.sha3 : sha3_256Of;
+			import std.digest : toHexString;
+
+			user.pass = toHexString(sha3_256Of("password"));
 
 			user.nicename = "Ben";
 			user.displayname = "Benny";
@@ -95,7 +98,7 @@ class EloquentDatabaseImpl : EloquentDatabase {
 
 			User adminUser = new User;
 			adminUser.username = "admin";
-			adminUser.pass = generateSimplePasswordHash("password", salt);
+			adminUser.pass = toHexString(sha3_256Of("password"));
 			adminUser.nicename = "Administrator";
 			adminUser.displayname = "Administrator";
 			adminUser.email = "admin@domain.com";

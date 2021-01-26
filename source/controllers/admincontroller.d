@@ -2,7 +2,6 @@ module eloquent.controllers.admin;
 
 import poodinis;
 import vibe.core.core;
-import vibe.crypto.passwordhash;
 import vibe.http.router;
 import vibe.web.web;
 
@@ -59,9 +58,12 @@ class AdminController : BaseController {
 	@admin
 	@method(HTTPMethod.POST) @path("/user/create")
 	void postUsers(Json _user, string username, string password, string email) {
-		string salt = _properties.as!(string)("auth.salt");
-		import vibe.crypto.passwordhash;
-		string hash = generateSimplePasswordHash(password, salt);
+		// string salt = _properties.as!(string)("auth.salt"); // todo: use salt again?
+
+        // SHA 3:
+        import sha3d.sha3 : sha3_256Of;
+        import std.digest : toHexString;
+        string hash = toHexString(sha3_256Of(password));
 
 		logInfo("POST: /admin/user/create: %s %s", username, email, hash);
 
