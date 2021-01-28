@@ -45,4 +45,5 @@ html(lang='en')
 				hr(style='margin: 30px 0 10px 0;')
 				p &copy;&nbsp;
 					a(href='#') Samael Bate
-					| 2021
+					|
+					| 2022

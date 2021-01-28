@@ -16,9 +16,11 @@ block body
 					p.lead Author #{p.author.displayname} (#{p.author.username})
 					p
 						span.fa.fa-clock-o
+						|
 						| #{p.created}
 					hr
 					p !{p.content}
 					a.btn.btn-primary(href="#")& txt.read-more
+						|
 						span.fa.fa-chevron-right
 					hr
