@@ -58,18 +58,18 @@ class WebappController : BaseController {
 		// SHA 3:
         import sha3d.sha3 : sha3_256Of;
 		import std.digest : toHexString;
-        string hash = toHexString(sha3_256Of(password));
 
 		CurrentUser u;
-		u.authenticated = (user.pass == hash);
+		u.authenticated = (user.pass == toHexString(sha3_256Of(password)));
+
+		enforceHTTP(u.authenticated, HTTPStatus.forbidden, "Invalid user name or password.");
+
 		u.username = username;
 		UserData[] data = user.data.find!(ud => ud.key == "wp_user_level");
 		if(data.length > 0) {
 			u.administrator = data[0].value == "10";
 		}
 		currentUser = u;
-
-		enforceHTTP(currentUser.authenticated, HTTPStatus.forbidden, "Invalid user name or password.");
 
 		//auto session = startSession();
 		//session.set("user", user);
@@ -81,7 +81,7 @@ class WebappController : BaseController {
 	// POST /logout
 	@method(HTTPMethod.GET) @path("logout")
 	void getLogout() {
-		CurrentUser u;
+		immutable CurrentUser u;
 		currentUser = u;
 		terminateSession();
 		redirect("/");
@@ -99,7 +99,7 @@ class WebappController : BaseController {
 		}
 		auto blogPosts = _blogService.findAllByUser(person);
 
-		CurrentUser user = currentUser;
+		immutable CurrentUser user = currentUser;
 		render!("profile.dt", username, blogPosts, user);
 	}
 }
