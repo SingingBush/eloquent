@@ -13,7 +13,7 @@ block body
 			.col-md-12
 				- foreach( p; blogPosts )
 					h2 #{p.title}
-					p.lead #{p.author.displayname}
+					p.lead Author #{p.author.displayname} (#{p.author.username})
 					p
 						span.fa.fa-clock-o
 						| #{p.created}

@@ -31,6 +31,18 @@ class AdminController : BaseController {
         render!("admin_users.dt", user);
     }
 
+    @admin
+    @method(HTTPMethod.GET) @path("/blogposts")
+    void manageBlogposts(Json _user) {
+        logInfo("GET: /admin/blogposts");
+
+        auto blogposts = _blogService.allBlogPosts();
+
+        CurrentUser user = currentUser;
+
+        render!("admin_blogposts.dt", blogposts, user);
+    }
+
 	@admin
     @method(HTTPMethod.GET) @path("/comments")
     void manageComments(Json _user) {

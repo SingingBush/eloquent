@@ -32,7 +32,7 @@ class BlogServiceImpl : BlogService {
 		Session session = sessionFactory.openSession();
 		scope(exit) session.close();
 
-		Query q = session.createQuery("FROM BlogPost WHERE postType='post' ORDER BY created DESC");
+		Query q = session.createQuery("FROM BlogPost WHERE type='post' ORDER BY created DESC");
 		auto blogPosts = q.list!BlogPost();
 		//logInfo("posts %s", q.listRows()); // shows all params
 		logDebug("BlogService - > found %s BlogPosts: %s", blogPosts.length, blogPosts);
@@ -43,7 +43,7 @@ class BlogServiceImpl : BlogService {
 		Session session = sessionFactory.openSession();
 		scope(exit) session.close();
 
-		auto blogPost = session.createQuery("FROM BlogPost WHERE postType='post' AND id=:Id ORDER BY created DESC")
+		auto blogPost = session.createQuery("FROM BlogPost WHERE type='post' AND id=:Id ORDER BY created DESC")
 					.setParameter("Id", id)
 					.uniqueResult!BlogPost;
 
@@ -71,7 +71,7 @@ class BlogServiceImpl : BlogService {
 		Session session = sessionFactory.openSession();
 		scope(exit) session.close();
 
-		Query q = session.createQuery("FROM BlogPost WHERE postType='post' AND author=:user_id ORDER BY created DESC")
+		Query q = session.createQuery("FROM BlogPost WHERE type='post' AND author=:user_id ORDER BY created DESC")
 					.setParameter("user_id", user.id);
 		auto blogPosts = q.list!BlogPost();
 		//logInfo("posts %s", q.listRows()); // shows all params

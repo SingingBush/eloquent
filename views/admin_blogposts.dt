@@ -1,0 +1,22 @@
+extends layout
+
+block title
+    title Admin | Manage Blog Posts
+
+block body
+    .jumbotron.jumbotron-primary
+        .container
+            h1 Manage Blog Posts
+
+    .container(role='main')
+        .row
+            .col-md-12
+                - foreach( p; blogposts )
+                    h2 #{p.type} : #{p.title}
+                    p.lead Author #{p.author.displayname} (#{p.author.username})
+                    p
+                        span.fa.fa-clock-o
+                        | #{p.created}
+                    hr
+                    p !{p.content}
+                    hr

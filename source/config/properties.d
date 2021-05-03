@@ -35,7 +35,7 @@ struct TranslationContext {
 	private import std.typetuple : TypeTuple;
 	alias languages = TypeTuple!("en_GB", "de_DE");
 
-	private import vibe.web.web;
+	private import vibe.web.web : translationModule, extractDeclStrings;
 	mixin translationModule!"text";
 
 	static string determineLanguage(scope HTTPServerRequest req) {

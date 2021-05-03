@@ -38,13 +38,13 @@ public:
 	string excerpt; // TEXT
 
 	@Column("post_type",20) @NotNull
-	string postType;
+	string type;
 
 	@OneToMany
 	LazyCollection!BlogPostData data;
 
 	override string toString() {
-		return format("{id:%s, %s, %s, author:%s, created:%s}", id, postType, title, author.username, created);
+		return format("{id:%s, %s, %s, author:%s, created:%s}", id, type, title, author.username, created);
 	}
 }
 

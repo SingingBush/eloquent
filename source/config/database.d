@@ -121,7 +121,7 @@ class EloquentDatabaseImpl : EloquentDatabase {
 			bp.title = "Lorem ipsum";
 			bp.content = "Lorem ipsum dolor sit amet, ius eu suscipit honestatis consequuntur, velit cotidieque at eam.";
 			bp.excerpt = "ius eu suscipit honestatis consequuntur";
-			bp.postType = "post";
+			bp.type = "post";
 			session.save(bp);
 			logInfo("Created BlogPost: %s", bp);
 		}
