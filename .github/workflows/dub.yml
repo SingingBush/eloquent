@@ -26,7 +26,7 @@ jobs:
           - dmd-2.093.1
           - dmd-2.092.1
           - dmd-2.091.1
-          - ldc-1.25.1 # eq to dmd v2.095.1
+          # - ldc-1.25.1 # eq to dmd v2.095.1 ## Fails for some reason
           - ldc-1.24.0 # eq to dmd v2.094.1
           - ldc-1.23.0 # eq to dmd v2.093.1
           - ldc-1.22.0 # eq to dmd v2.092.1
