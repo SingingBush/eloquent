@@ -13,7 +13,7 @@ block body
             .col-md-12
                 - foreach( c; comments )
                     h2 #{c.type} #{c.authorIP}
-                    p.lead Author #{c.author.displayname} (#{c.author.username})
+                    p.lead Author #{c.author}
                     p
                         span.fa.fa-clock-o
                         | #{c.created}
