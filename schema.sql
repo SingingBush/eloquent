@@ -83,10 +83,10 @@ CREATE TABLE wp_users(
   display_name varchar(250) NULL
 );
 
-INSERT INTO wp_users(user_login, user_pass, user_nicename, user_email, user_url, user_registered)
+INSERT INTO wp_users(user_login, user_pass, user_nicename, display_name, user_email, user_url, user_registered)
 VALUES
-  ('admin', 'password', 'Nice Name', 'user@domain.com', NULL, CURRENT_TIMESTAMP),
-  ('user', 'password', 'Administrator', 'admin@domain.com', NULL, CURRENT_TIMESTAMP);
+  ('admin', 'password', 'Nice Name', 'Display Name', 'user@domain.com', NULL, CURRENT_TIMESTAMP),
+  ('user', 'password', 'Administrator', 'Display Name', 'admin@domain.com', NULL, CURRENT_TIMESTAMP);
 
 INSERT INTO wp_usermeta(user_id, meta_key, meta_value)
 VALUES

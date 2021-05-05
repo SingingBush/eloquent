@@ -26,7 +26,7 @@ class AdminController : BaseController {
     void index(Json _user) {
         logInfo("GET: /admin");
 
-        CurrentUser user = currentUser;
+        immutable CurrentUser user = currentUser;
 
         render!("admin_users.dt", user);
     }
@@ -38,7 +38,7 @@ class AdminController : BaseController {
 
         auto blogposts = _blogService.allBlogPosts();
 
-        CurrentUser user = currentUser;
+        immutable CurrentUser user = currentUser;
 
         render!("admin_blogposts.dt", blogposts, user);
     }
@@ -50,7 +50,7 @@ class AdminController : BaseController {
 
         auto comments = _blogService.getComments();
 
-        CurrentUser user = currentUser;
+        immutable CurrentUser user = currentUser;
 
         render!("admin_comments.dt", comments, user);
     }
@@ -61,7 +61,7 @@ class AdminController : BaseController {
     void getUsers(Json _user) {
         logInfo("GET: /admin/users");
 
-        CurrentUser user = currentUser;
+        immutable CurrentUser user = currentUser;
 
         render!("admin_users.dt", user);
     }
