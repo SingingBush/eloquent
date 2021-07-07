@@ -11,7 +11,7 @@
 		"vibe-d:core": "~>0.9.3",
 		"vibe-d:web": "~>0.9.3",
 		"sha3-d": "~>1.0.0",
-		"poodinis": "~>8.1.0-beta.5",
+		"poodinis": "~>8.1.0",
 		"hibernated": "~>0.3.6"
 	},
 	"lflags-osx": ["-L/usr/local/opt/openssl/lib", "-L/usr/local/opt/sqlite/lib"],
@@ -20,6 +20,11 @@
 	"buildRequirements": [
 		"allowWarnings"
 	],
+	"toolchainRequirements": {
+        "dub": ">=1.14.0",
+        "frontend": ">=2.087",
+        "gdc": "no"
+    },
 	"preGenerateCommands-posix": [
 		"if ! type \"npm\" > /dev/null; then echo -e \"You need to have Node.js and npm installed in order to build this project\nvisit https://nodejs.org for more info\"; exit 1; fi",
 		"if ! type \"yarn\" > /dev/null; then echo -e \"You need to have yarn installed in order to build this project\nvisit https://yarnpkg.com for more info\"; exit 1; fi",
