@@ -50,10 +50,10 @@ log.level=trace
 
 ## Building
 
-You'll need the D compiler and [DUB](http://code.dlang.org/download). The following versions or higher
+You'll need a D compiler and [DUB](http://code.dlang.org/download). The following versions or higher
 
- - dmd v2.069.2 or ldc v1.0.0
- - dub v1.0.0
+ - dmd v2.086.1 or ldc v1.16.0 (gdc may work if the front end is above 2.086.1 but is unsupported)
+ - dub v1.14.0
 
 If your system uses version 1.1 of OpenSSL (such as Fedora) use *VibeUseOpenSSL11* in the _versions_ of `dub.json`
 

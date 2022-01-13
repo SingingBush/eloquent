@@ -18,14 +18,30 @@ jobs:
       matrix:
         os: [ ubuntu-latest ] # don't bother with windows-latest or macOS-latest
         compiler:
-          - dmd-latest
+          # - dmd-latest
           - ldc-latest
+          # - dmd-2.098.1  ## Won't work with hibernated-0.3.6 ##
+          - dmd-2.097.2
           - dmd-2.096.1
           - dmd-2.095.1
           - dmd-2.094.2
           - dmd-2.093.1
           - dmd-2.092.1
           - dmd-2.091.1
+          - dmd-2.090.1
+          - dmd-2.089.1
+          - dmd-2.088.1
+          - dmd-2.087.1
+          - dmd-2.086.1
+          # - dmd-2.085.1
+          # - dmd-2.084.1
+          # - dmd-2.083.1
+          # - dmd-2.082.1
+          # - dmd-2.081.2
+          # - dmd-2.080.1
+          # - dmd-2.076.1 # compatibility with GDC will require 2076 compatibility (from 2017)
+          - ldc-1.27.1 # eq to dmd v2.097.2
+          - ldc-1.26.0 # eq to dmd v2.096.1
           # - ldc-1.25.1 # eq to dmd v2.095.1 ## Fails for some reason
           - ldc-1.24.0 # eq to dmd v2.094.1
           - ldc-1.23.0 # eq to dmd v2.093.1
@@ -50,3 +66,33 @@ jobs:
 
       - name: build and run the unittest config
         run: dub test
+
+
+### Uncomment the GDC bit once github update ubuntu-latest to be more recent than 20.04 
+
+  # # On Ubuntu we can use GDC (so keep working for D version 2.076)
+  # test-gdc:
+  #   name: GDC on Ubuntu
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+
+  #     - name: Install DMD (so dub is available)
+  #       uses: dlang-community/setup-dlang@v1
+  #       with:
+  #         compiler: dmd-latest
+
+  #     - name: Install dependencies on Ubuntu
+  #       if: startsWith(matrix.os, 'ubuntu')
+  #       run: sudo apt-get update && sudo apt-get install libev-dev libevent-dev libsqlite3-dev -y
+
+  #     - name: Install GDC
+  #       run: |
+  #         sudo apt-get update
+  #         sudo apt-get install gdc -y
+  #         gdc --version
+
+  #     - name: Build library
+  #       env:
+  #         DC: gdc
+  #       run: dub build --compiler=gdc --build=release

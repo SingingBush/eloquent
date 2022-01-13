@@ -22,8 +22,7 @@
 	],
 	"toolchainRequirements": {
         "dub": ">=1.14.0",
-        "frontend": ">=2.087",
-        "gdc": "no"
+        "frontend": ">=2.086"
     },
 	"preGenerateCommands-posix": [
 		"if ! type \"npm\" > /dev/null; then echo -e \"You need to have Node.js and npm installed in order to build this project\nvisit https://nodejs.org for more info\"; exit 1; fi",
