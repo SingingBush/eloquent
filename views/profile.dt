@@ -22,6 +22,6 @@ block body
 						| #{p.created}
 					hr
 					p !{p.content}
-					a.btn.btn-primary(href="#") Read More
+					a.btn.btn-primary(href="#")& txt.read-more
 						span.fa.fa-chevron-right
 					hr

@@ -33,7 +33,7 @@ class Properties {
 
 struct TranslationContext {
 	private import std.typetuple : TypeTuple;
-	alias languages = TypeTuple!("en_GB", "de_DE");
+	alias languages = TypeTuple!("en_GB", "en_US", "de_DE", "ru_RU"); // first one is also the default
 
 	private import vibe.web.web : translationModule, extractDeclStrings;
 	mixin translationModule!"text";

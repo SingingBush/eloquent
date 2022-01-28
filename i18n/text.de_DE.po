@@ -1,6 +1,21 @@
+#
+# The msgctxt must match the file of the diet template the message will be used in
+#
 
+
+## Messages for index.dt
+
+msgctxt "index"
 msgid "home.welcome-message"
 msgstr "Startseite"
 
+msgctxt "index"
+msgid "txt.read-more"
+msgstr "Read More"
+
+
+## Messages for profile.dt
+
+msgctxt "profile"
 msgid "txt.read-more"
 msgstr "Read More"

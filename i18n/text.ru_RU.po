@@ -7,7 +7,7 @@
 
 msgctxt "index"
 msgid "home.welcome-message"
-msgstr "Home Page"
+msgstr "Добро пожаловать"
 
 msgctxt "index"
 msgid "txt.read-more"
