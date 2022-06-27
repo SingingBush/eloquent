@@ -10,6 +10,11 @@ on:
     branches:
       - master
 
+#
+# todo: Add GDC builds. The compatibility of gdc is:
+#   gcc gdc-12  -> 2.098
+#   gcc gdc-11  -> 2.076
+
 jobs:
   test:
     name: ${{ matrix.compiler }} on ${{ matrix.os }}
@@ -18,35 +23,40 @@ jobs:
       matrix:
         os: [ ubuntu-latest ] # don't bother with windows-latest or macOS-latest
         compiler:
-          # - dmd-latest
+          - dmd-latest
           - ldc-latest
-          # - dmd-2.098.1  ## Won't work with hibernated-0.3.6 ##
-          - dmd-2.097.2
-          - dmd-2.096.1
-          - dmd-2.095.1
-          - dmd-2.094.2
-          - dmd-2.093.1
-          - dmd-2.092.1
-          - dmd-2.091.1
-          - dmd-2.090.1
-          - dmd-2.089.1
-          - dmd-2.088.1
-          - dmd-2.087.1
-          - dmd-2.086.1
+          - dmd-2.099.1
+          - dmd-2.098.1  ## Won't work with hibernated-0.3.6 ##
+          - dmd-2.097.2 # (released in 2021)
+          - dmd-2.096.1 # (released in 2021)
+          - dmd-2.095.1 # (released in 2021)
+          # - dmd-2.094.2 # (released in 2020)
+          # - dmd-2.093.1 # (released in 2020)
+          # - dmd-2.092.1 # (released in 2020)
+          # - dmd-2.091.1 # (released in 2020)
+          # - dmd-2.090.1 # (released in 2020)
+          # - dmd-2.089.1 # (released in 2019)
+          # - dmd-2.088.1 # (released in 2019)
+          # - dmd-2.087.1 # (released in 2019)
+          # - dmd-2.086.1 # (released in 2019)
           # - dmd-2.085.1
           # - dmd-2.084.1
           # - dmd-2.083.1
           # - dmd-2.082.1
           # - dmd-2.081.2
           # - dmd-2.080.1
-          # - dmd-2.076.1 # compatibility with GDC will require 2076 compatibility (from 2017)
+          # - dmd-2.076.1 # compatibility with GDC 11 will require 2076 compatibility (from 2017)
+          - ldc-1.28.1 # eq to dmd v2.098.1
           - ldc-1.27.1 # eq to dmd v2.097.2
           - ldc-1.26.0 # eq to dmd v2.096.1
           # - ldc-1.25.1 # eq to dmd v2.095.1 ## Fails for some reason
-          - ldc-1.24.0 # eq to dmd v2.094.1
-          - ldc-1.23.0 # eq to dmd v2.093.1
-          - ldc-1.22.0 # eq to dmd v2.092.1
-          - ldc-1.21.0 # eq to dmd v2.091.1
+          # - ldc-1.24.0 # eq to dmd v2.094.1
+          # - ldc-1.23.0 # eq to dmd v2.093.1
+          # - ldc-1.22.0 # eq to dmd v2.092.1
+          # - ldc-1.21.0 # eq to dmd v2.091.1
+        exclude:
+          - { os: windows-latest, compiler: dmd-latest }
+          - { os: macos-latest, compiler: dmd-latest }
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
@@ -68,7 +78,7 @@ jobs:
         run: dub test
 
 
-### Uncomment the GDC bit once github update ubuntu-latest to be more recent than 20.04 
+### Uncomment the GDC bit once github update ubuntu-latest to be more recent than 20.04 (There is now a beta ubuntu-22.04)
 
   # # On Ubuntu we can use GDC (so keep working for D version 2.076)
   # test-gdc:

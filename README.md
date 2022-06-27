@@ -2,7 +2,6 @@ Eloquent
 ========
 
 ![dub test](https://github.com/SingingBush/eloquent/workflows/dub%20test/badge.svg)
-[![Build Status](https://travis-ci.org/SingingBush/eloquent.png)](https://travis-ci.org/SingingBush/eloquent)
 
 [![Coverage Status](https://coveralls.io/repos/github/SingingBush/eloquent/badge.svg?branch=master)](https://coveralls.io/github/SingingBush/eloquent?branch=master)
 
@@ -78,13 +77,14 @@ The front end uses jQuery, Bootstrap 4, and Font Awesome. These dependencies are
 On Fedora nodejs and npm can be installed from the repository:
 
 ```
-sudo dnf install nodejs npm
+sudo dnf module enable nodejs:18
+sudo dnf module install nodejs:18/development
 ```
 
-Then install bower globally:
+Then install yarn globally:
 
 ```
-sudo npm install -g bower
+sudo npm install -g yarn
 ```
 
 There's no need to do a `bower install` as this will be done by dub during the build process.
@@ -102,7 +102,7 @@ sudo apt-get install libevent-dev libsqlite3-dev libpq-dev
 Fedora:
 
 ```
-sudo dnf install libevent-devel openssl-devel sqlite-devel postgresql-devel
+sudo dnf install libevent-devel openssl-devel sqlite-devel postgresql-devel unixODBC-devel
 ```
 
 OSX:
