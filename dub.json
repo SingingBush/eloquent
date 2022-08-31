@@ -8,8 +8,8 @@
 	"dependencies": {
 		"proper-d": "~>0.0.2",
 		"colourfulmoon": "~>1.0.2",
-		"vibe-d:core": "~>0.9.4",
-		"vibe-d:web": "~>0.9.4",
+		"vibe-d:core": "~>0.9.5",
+		"vibe-d:web": "~>0.9.5",
 		"sha3-d": "~>1.0.0",
 		"poodinis": "~>8.1.2",
 		"hibernated": "~>0.3.7"
