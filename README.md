@@ -29,9 +29,10 @@ You'll need an existing wordpress database running on MySQL or Mariadb. The appl
 
 The properties file should contain your database connection details and path for an error log in the following format:
 
-```
+```properties
 http.port=80
 
+## if not specified the db will default to SQLite
 db.dialect=MySQL
 db.domain=localhost
 db.port=3306
@@ -45,6 +46,13 @@ auth.salt=RANDOMLY GENERATED 32-bit SALT HERE
 # optional log settings. The default log level is info (options: verbose, debug, trace, error, info) with filename as eloquent-server.log
 log.file=eloquent-server.log
 log.level=trace
+```
+
+Or for a more minimal config for local development use SQLite:
+
+```properties
+db.dialect=SQLite
+db.createSchema=true
 ```
 
 ## Building
