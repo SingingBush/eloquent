@@ -6,6 +6,7 @@ __dummy.html
 *.dll
 *.o
 *.obj
+*.pdb
 
 __test__library__
 

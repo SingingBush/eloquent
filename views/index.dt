@@ -4,8 +4,8 @@ block title
 	title Home
 
 block body
-	.jumbotron.jumbotron-primary
-		.container
+	.p-5.mb-4.bg-light.rounded-3
+		.container.py-5
 			h1& home.welcome-message
 
 	.container(role='main')
