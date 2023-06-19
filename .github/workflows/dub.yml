@@ -21,12 +21,15 @@ jobs:
         compiler:
           - dmd-latest
           - ldc-latest
-          - dmd-2.100.0
-          - dmd-2.099.1
-          - dmd-2.098.1  ## Won't work with hibernated-0.3.6 ##
-          - dmd-2.097.2 # (released in 2021)
-          - dmd-2.096.1 # (released in 2021)
-          - dmd-2.095.1 # (released in 2021)
+          - dmd-2.103.1 # (released in 2023)
+          - dmd-2.102.2 # (released in 2023)
+          - dmd-2.101.2 # (released in 2023)
+          - dmd-2.100.2 # (released in 2022) ## GDC 12 can support 2.100
+          - dmd-2.099.1 # (released in 2022)
+          - dmd-2.098.1 # (released in 2021)
+          - dmd-2.097.2 # (released in 2021) ## hibernated-0.3.8 requires >=2.097
+          # - dmd-2.096.1 # (released in 2021)
+          # - dmd-2.095.1 # (released in 2021)
           # - dmd-2.094.2 # (released in 2020)
           # - dmd-2.093.1 # (released in 2020)
           # - dmd-2.092.1 # (released in 2020)
@@ -45,7 +48,7 @@ jobs:
           # - dmd-2.076.1 # compatibility with GDC 11 will require 2076 compatibility (from 2017)
           - ldc-1.28.1 # eq to dmd v2.098.1
           - ldc-1.27.1 # eq to dmd v2.097.2
-          - ldc-1.26.0 # eq to dmd v2.096.1
+          # - ldc-1.26.0 # eq to dmd v2.096.1
           # - ldc-1.25.1 # eq to dmd v2.095.1 ## Fails for some reason
           # - ldc-1.24.0 # eq to dmd v2.094.1
           # - ldc-1.23.0 # eq to dmd v2.093.1
@@ -58,7 +61,7 @@ jobs:
           # - { os: macos-12, compiler: dmd-latest }
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Install D ${{ matrix.compiler }}
         uses: dlang-community/setup-dlang@v1
@@ -86,37 +89,37 @@ jobs:
 ## Note that Github's ubuntu-latest isn't actually the latest release. It's currently set to "ubuntu-20.04" despite github having "ubuntu-22.04" runners (similar situation with macos-latest)
 ## For this reason it's best to use ubuntu-22.04
 
-##  test-gdc:
-##    name: ${{ matrix.compiler }} on ${{ matrix.os }}
-##    strategy:
-##      fail-fast: false
-##      matrix:
-##        os: [ ubuntu-22.04 ]
-##        compiler: [ gdc-10, gdc-11, gdc-12 ]
-##    runs-on: ${{ matrix.os }}
-##    steps:
-##      - uses: actions/checkout@v2
-##
-##      - name: Install DMD (so dub is available)
-##        uses: dlang-community/setup-dlang@v1
-##        with:
-##          compiler: dmd-latest
-##
-##      - name: Install dependencies on Ubuntu
-##        if: startsWith(matrix.os, 'ubuntu')
-##        run: sudo apt-get update && sudo apt-get install libev-dev libevent-dev libsqlite3-dev -y
-##
-##      - name: Install ${{ matrix.compiler }}
-##        run: |
-##          sudo apt-get update
-##          sudo apt-get install ${{ matrix.compiler }} -y
-##
-##      - name: Show version
-##        run: |
-##          ${{ matrix.compiler }} --version
-##          dub --version
-##
-##      - name: Build library
-##        env:
-##          DC: ${{ matrix.compiler }}
-##        run: dub build --compiler=${{ matrix.compiler }} --build=release
+  test-gdc:
+    name: ${{ matrix.compiler }} on ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-22.04 ]
+        compiler: [ gdc-12 ]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install DMD (so dub is available)
+        uses: dlang-community/setup-dlang@v1
+        with:
+          compiler: dmd-latest
+
+      - name: Install dependencies on Ubuntu
+        if: startsWith(matrix.os, 'ubuntu')
+        run: sudo apt-get update && sudo apt-get install libev-dev libevent-dev libsqlite3-dev -y
+
+      - name: Install ${{ matrix.compiler }}
+        run: |
+          sudo apt-get update
+          sudo apt-get install ${{ matrix.compiler }} -y
+
+      - name: Show version
+        run: |
+          ${{ matrix.compiler }} --version
+          dub --version
+
+      - name: Build library
+        env:
+          DC: ${{ matrix.compiler }}
+        run: dub build --compiler=${{ matrix.compiler }} --build=release
