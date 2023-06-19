@@ -1,8 +1,8 @@
 name: dub test
 
 on:
-  schedule:
-    - cron: '30 7 1 * *'
+#  schedule:
+#    - cron: '30 7 1 * *'
   push:
     branches:
       - master
