@@ -4,13 +4,13 @@ block title
     title Admin | Manage Users
 
 block body
-    .jumbotron.jumbotron-primary
-        .container
+    .mb-4.bg-primary.bg-shadow
+        .container.py-5
             h1 Manage Users
 
     .container(role='main')
         .row
-            .col-md-12
+            .col-md-6
                 h2 Create User
                 form.form-horizontal(action='/admin/user/create', method="POST")
                     .mb-3

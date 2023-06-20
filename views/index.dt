@@ -4,7 +4,7 @@ block title
 	title Home
 
 block body
-	.p-5.mb-4.bg-light.rounded-3
+	.mb-4.bg-primary.bg-shadow
 		.container.py-5
 			h1& home.welcome-message
 

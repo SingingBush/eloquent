@@ -8,7 +8,7 @@ header
         .container
             a.navbar-brand(href="/")
                 | Eloquent
-            ul.nav.navbar-nav.mr-auto
+            ul.nav.navbar-nav.me-auto
                 li.nav-item
                     a.nav-link(href="/") Home
                 - if (user.administrator)
@@ -18,7 +18,7 @@ header
                 - if (user.authenticated)
                     li.nav-item
                         a.nav-link(href="/profile/#{user.username}")
-                            i.fa.fa-user
+                            i.fa.fa-user.mx-1
                             | Profile
                     li.nav-item
                         a.nav-link(href="/logout") Logout
