@@ -8,7 +8,7 @@
 	"dependencies": {
 		"proper-d": "~>0.0.2",
 		"colourfulmoon": "~>1.0.2",
-		"vibe-core": "~>1.24.0",
+		"vibe-core": "~>2.4.0",
 		"vibe-d:web": "~>0.9.7",
 		"vibe-d:tls": "~>0.9.7",
 		"sha3-d": "~>1.0.0",
