@@ -1,15 +1,16 @@
 module eloquent.config.context;
 
-import hibernated.session;
-import poodinis.context : ApplicationContext;
-import poodinis.container : RegistrationOption, DependencyContainer;
-import poodinis.registration;
+private import hibernated.core : SessionFactory, SessionFactoryImpl;
 
-import vibe.core.log; // only the logger is needed
+private import poodinis.context : ApplicationContext;
+private import poodinis.container : RegistrationOption, DependencyContainer;
+private import poodinis.registration;
 
-import eloquent.config.properties, eloquent.config.database, eloquent.config.logging, eloquent.config.motd;
-import eloquent.controllers;
-import eloquent.services;
+private import vibe.core.log; // only the logger is needed
+
+private import eloquent.config.properties, eloquent.config.database, eloquent.config.logging, eloquent.config.motd;
+private import eloquent.controllers;
+private import eloquent.services;
 
 class PoodinisContext : ApplicationContext {
 

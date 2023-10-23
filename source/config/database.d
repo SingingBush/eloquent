@@ -1,7 +1,8 @@
 module eloquent.config.database;
 
-private import hibernated.core;
-private import poodinis.autowire;
+private import hibernated.core : Connection, ConnectionPoolDataSourceImpl, DataSource, Dialect, EntityMetaData, SchemaInfoImpl, Session, SessionFactoryImpl;
+
+private import poodinis.autowire: Autowire;
 private import vibe.core.log; // only the logger is needed
 
 private import eloquent.config.properties;
@@ -37,6 +38,7 @@ class EloquentDatabaseImpl : EloquentDatabase {
 		final switch(dbType.toUpper) {
 			case "SQLITE":
 				version(USE_SQLITE) {
+					import hibernated.core : SQLiteDialect;
 					dataSource = createSQLiteDataSource();
 					dialect = new SQLiteDialect();
 				} else {
@@ -45,6 +47,7 @@ class EloquentDatabaseImpl : EloquentDatabase {
 				break;
 			case "MYSQL":
 				version(USE_MYSQL) {
+					import hibernated.core : MySQLDialect;
 					dataSource = createMySQLDataSource();
 					dialect = new MySQLDialect();
 				} else {
