@@ -21,6 +21,7 @@ jobs:
         compiler:
           - dmd-latest
           - ldc-latest
+          - dmd-2.105.3 # (released in 2023) 
           - dmd-2.104.2 # (released in 2023)
           - dmd-2.103.1 # (released in 2023)
           - dmd-2.102.2 # (released in 2023)
@@ -29,34 +30,13 @@ jobs:
           - dmd-2.099.1 # (released in 2022)
           # - dmd-2.098.1 # (released in 2021) ## Has issue re: phobos/std/variant.d
           - dmd-2.097.2 # (released in 2021) ## HibernateD & DDBC require >=2.097
-          # - dmd-2.096.1 # (released in 2021)
-          # - dmd-2.095.1 # (released in 2021)
-          # - dmd-2.094.2 # (released in 2020)
-          # - dmd-2.093.1 # (released in 2020)
-          # - dmd-2.092.1 # (released in 2020)
-          # - dmd-2.091.1 # (released in 2020)
-          # - dmd-2.090.1 # (released in 2020)
-          # - dmd-2.089.1 # (released in 2019)
-          # - dmd-2.088.1 # (released in 2019)
-          # - dmd-2.087.1 # (released in 2019)
-          # - dmd-2.086.1 # (released in 2019)
-          # - dmd-2.085.1
-          # - dmd-2.084.1
-          # - dmd-2.083.1
-          # - dmd-2.082.1
-          # - dmd-2.081.2
-          # - dmd-2.080.1
-          # - dmd-2.076.1 # compatibility with GDC 11 will require 2076 compatibility (from 2017)
+
+          - ldc-1.35.0 # eq to dmd v2.105.2
           - ldc-1.34.0 # eq to dmd v2.104.2
           - ldc-1.33.0 # eq to dmd v2.103.1
           - ldc-1.28.1 # eq to dmd v2.098.1
           - ldc-1.27.1 # eq to dmd v2.097.2
-          # - ldc-1.26.0 # eq to dmd v2.096.1
-          # - ldc-1.25.1 # eq to dmd v2.095.1 ## Fails for some reason
-          # - ldc-1.24.0 # eq to dmd v2.094.1
-          # - ldc-1.23.0 # eq to dmd v2.093.1
-          # - ldc-1.22.0 # eq to dmd v2.092.1
-          # - ldc-1.21.0 # eq to dmd v2.091.1
+
         include:
           - { os: windows-latest, compiler: dmd-latest }  # Windows Server 2022
           - { os: windows-latest, compiler: ldc-latest }  # Windows Server 2022
@@ -84,46 +64,37 @@ jobs:
         run: dub test
 
 
-## On Ubuntu we can use GDC. The compatibility of gdc is:
-##   gcc gdc-10  -> D 2.076 (the default on Ubuntu 20.04 (ubuntu-latest), also available on 22.04)
-##   gcc gdc-11  -> D 2.076 (requires Ubuntu 22.04)
-##   gcc gdc-12  -> D 2.100 (requires Ubuntu 22.04)
-##   gcc gdc-12.2 -> D 2.100.1
-##   gcc gdc-12.1 -> D 2.100-rc1
-## Note that Github's ubuntu-latest isn't actually the latest release. It's currently set to "ubuntu-20.04" despite github having "ubuntu-22.04" runners (similar situation with macos-latest)
-## For this reason it's best to use ubuntu-22.04
-
-##  test-gdc:
-##    name: ${{ matrix.compiler }} on ${{ matrix.os }}
-##    strategy:
-##      fail-fast: false
-##      matrix:
-##        os: [ ubuntu-22.04 ]
-##        compiler: [ gdc-12 ]
-##    runs-on: ${{ matrix.os }}
-##    steps:
-##      - uses: actions/checkout@v3
-##
-##      - name: Install DMD (so dub is available)
-##        uses: dlang-community/setup-dlang@v1
-##        with:
-##          compiler: dmd-latest
-##
-##      - name: Install dependencies on Ubuntu
-##        if: startsWith(matrix.os, 'ubuntu')
-##        run: sudo apt-get update && sudo apt-get install libev-dev libevent-dev libsqlite3-dev -y
-##
-##      - name: Install ${{ matrix.compiler }}
-##        run: |
-##          sudo apt-get update
-##          sudo apt-get install ${{ matrix.compiler }} -y
-##
-##      - name: Show version
-##        run: |
-##          ${{ matrix.compiler }} --version
-##          dub --version
-##
-##      - name: Build library
-##        env:
-##          DC: ${{ matrix.compiler }}
-##        run: dub build --compiler=${{ matrix.compiler }} --build=release
+#  ## On Ubuntu we can use GDC. The compatibility of gdc is:
+#  ##   gcc gdc-10  -> D 2.076 (the default on Ubuntu 20.04 (ubuntu-latest), also available on 22.04)
+#  ##   gcc gdc-11  -> D 2.076 (requires Ubuntu 22.04)
+#  ##   gcc gdc-12  -> D 2.100 (requires Ubuntu 22.04)
+#  ##   gcc gdc-13  -> D 2.??? (requires Ubuntu 23.04 - no runners yet)
+#  ## Until DDBC can support gdc this cannot be used. See https://github.com/buggins/ddbc/issues/122
+#  gdc:
+#    name: ${{ matrix.compiler }} on ${{ matrix.os }}
+#    strategy:
+#      fail-fast: false
+#      matrix:
+#        os: [ ubuntu-22.04 ]
+#        compiler: [ gdc-12 ]
+#    runs-on: ${{ matrix.os }}
+#    steps:
+#      - uses: actions/checkout@v4
+#      - name: Install DMD (so dub is available)
+#        uses: dlang-community/setup-dlang@v1
+#        with:
+#          compiler: dmd-latest
+#      - name: Install ${{ matrix.compiler }}
+#        run: |
+#          sudo apt update
+#          sudo apt install ${{ matrix.compiler }} -y
+#      - name: Install system dependencies
+#        run: sudo apt install libev-dev libevent-dev libsqlite3-dev -y
+#      - name: Show version
+#        run: |
+#          ${{ matrix.compiler }} --version
+#          dub --version
+#      - name: Dub Build (Release)
+#        env:
+#          DC: ${{ matrix.compiler }}
+#        run: dub build --compiler=${{ matrix.compiler }} --build=release
